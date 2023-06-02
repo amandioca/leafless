@@ -14,6 +14,10 @@ public class Documento {
 	private int temporalidade;
 	private List<Grupo> permissoes;
 
+	public LocalDateTime  getDataVencimento(LocalDateTime dataInclusao, int temporalidade) {
+		return dataInclusao.plusYears(temporalidade);
+	}
+
 	public String getTitulo() {
 		return titulo;
 	}
