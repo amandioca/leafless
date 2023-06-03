@@ -1,4 +1,4 @@
-package testeTelas;
+package telas;
 
 import db.Conexao;
 
@@ -143,13 +143,13 @@ public class TelaLoggin extends javax.swing.JFrame {
                     // Caso seja um gerente
                     JOptionPane.showMessageDialog(null, "Sucesso!");
                     dispose();
-                    TelaPrincipal telaPrincipal = new TelaPrincipal();
+                    TelaPrincipalUA telaPrincipal = new TelaPrincipalUA();
                     telaPrincipal.setVisible(true);
                 } else {
                     // Caso não seja um gerente
 
                     dispose();
-                    TelaUsuario telaUsuario = new TelaUsuario();
+                    TelaPrincipalUC telaUsuario = new TelaPrincipalUC();
                     telaUsuario.setVisible(true);
                 }
             } else {

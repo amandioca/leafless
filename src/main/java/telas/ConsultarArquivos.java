@@ -1,7 +1,7 @@
-package testeTelas;
+package telas;
 import db.Conexao;
 
-        import javax.swing.JTable;
+import javax.swing.JTable;
         import javax.swing.table.DefaultTableModel;
         import java.sql.Connection;
         import java.sql.PreparedStatement;
