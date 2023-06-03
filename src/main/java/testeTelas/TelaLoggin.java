@@ -124,10 +124,11 @@ public class TelaLoggin extends javax.swing.JFrame {
             ps.setString(2, new String(tfSenha.getPassword()));
 
             ResultSet rs = ps.executeQuery();
-            Usuario novo = new Usuario(tfUsuario.getText());
-            Usuario.setUsuarioAtual(novo);
+
             if (rs.next()) {
                 // Caso o usuário exista e as credenciais estejam corretas
+                Usuario novo = new Usuario(tfUsuario.getText());
+                Usuario.setUsuarioAtual(novo);
 
                 String cargo = rs.getString("cargo");
 

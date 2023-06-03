@@ -29,6 +29,10 @@ public class TelaUsuario extends javax.swing.JFrame {
         bjConsulrta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bjConsulrtaActionPerformed(evt);
+                ConsultarArquivos novo = new ConsultarArquivos();
+                novo.setVisible(true);
+
+
             }
         });
 
@@ -110,7 +114,7 @@ public class TelaUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaUsuario().setVisible(true);
+
             }
         });
     }

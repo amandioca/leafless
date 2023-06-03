@@ -78,10 +78,11 @@ public class ConsultarArquivos extends javax.swing.JFrame {
 
     private void exibirDocumentos() {
         try {
+            String a =  Usuario.getUsuarioAtual();
             Connection con = Conexao.fazConexao();
-            String sql = "SELECT * FROM tb_documentos where autor = 'well'";
+            String sql = "SELECT * FROM tb_documentos where autor =?";
             PreparedStatement ps = con.prepareStatement(sql);
-            //ps.setString(1, String.valueOf(Usuario.getUsuarioAtual()));
+            ps.setString(1,  a);
             ResultSet rs = ps.executeQuery();
 
             DefaultTableModel model = (DefaultTableModel) tabelaDocumentos.getModel();
@@ -116,6 +117,7 @@ public class ConsultarArquivos extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
+        System.out.println("agora");
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

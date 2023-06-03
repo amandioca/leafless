@@ -1,5 +1,6 @@
 package testeTelas;
 
+import javax.swing.*;
 import java.util.Date;
 
 public class Usuario {
@@ -22,11 +23,12 @@ public class Usuario {
 
 
 
-        public static Usuario getUsuarioAtual() {
-            return usuarioAtual;
+        public static String getUsuarioAtual() {
+            return usuarioAtual.getUsername();
         }
 
         public static void setUsuarioAtual(Usuario usuario) {
+
             usuarioAtual = usuario;
         }
 
