@@ -24,7 +24,7 @@ public class Usuario {
 
 
         public static String getUsuarioAtual() {
-            return usuarioAtual.getUsername();
+            return "'"+usuarioAtual.getUsername()+"'";
         }
 
         public static void setUsuarioAtual(Usuario usuario) {

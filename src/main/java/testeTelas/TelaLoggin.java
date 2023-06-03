@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author wellersonelucas
  */
 public class TelaLoggin extends javax.swing.JFrame {
-
+    public static String naofazer;
     /**
      * Creates new form TelaLoggin
      */
@@ -124,11 +124,12 @@ public class TelaLoggin extends javax.swing.JFrame {
             ps.setString(2, new String(tfSenha.getPassword()));
 
             ResultSet rs = ps.executeQuery();
+            naofazer = tfUsuario.getText();
+            System.out.println(tfUsuario.getText());
 
             if (rs.next()) {
                 // Caso o usuário exista e as credenciais estejam corretas
-                Usuario novo = new Usuario(tfUsuario.getText());
-                Usuario.setUsuarioAtual(novo);
+
 
                 String cargo = rs.getString("cargo");
 
@@ -205,6 +206,6 @@ public class TelaLoggin extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField tfSenha;
-    private javax.swing.JTextField tfUsuario;
+    public javax.swing.JTextField tfUsuario;
     // End of variables declaration
 }

@@ -11,6 +11,7 @@ import java.sql.SQLException;
  */
 public class Conexao {
     public static Connection fazConexao() throws SQLException{
+        System.out.println("");
         try{
             Class.forName("com.mysql.jdbc.Driver");
 

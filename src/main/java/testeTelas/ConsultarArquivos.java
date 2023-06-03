@@ -78,20 +78,20 @@ public class ConsultarArquivos extends javax.swing.JFrame {
 
     private void exibirDocumentos() {
         try {
-            String a =  Usuario.getUsuarioAtual();
+
             Connection con = Conexao.fazConexao();
-            String sql = "SELECT * FROM tb_documentos where autor =?";
+            String sql = "SELECT * FROM tb_documentos where nome_autor=?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1,  a);
+            ps.setString(1,TelaLoggin.naofazer );
             ResultSet rs = ps.executeQuery();
 
             DefaultTableModel model = (DefaultTableModel) tabelaDocumentos.getModel();
 
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_autor");
                 String titulo = rs.getString("titulo");
                 String dataInclusao = rs.getString("data_inclusao");
-                String autor = rs.getString("autor");
+                String autor = rs.getString("nome_autor");
                 String caminho = rs.getString("caminho");
                 String extensao = rs.getString("extensao");
                 String versao = rs.getString("versao");
