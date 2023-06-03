@@ -19,6 +19,11 @@ public class Usuario {
 	private String password;
 	private List<Grupo> grupos;
 
+	public Usuario(String username) {
+		super();
+		this.username = username;
+	}
+
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
