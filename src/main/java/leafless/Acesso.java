@@ -23,39 +23,49 @@ public class Acesso {
 	private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
 	private static final String KEY = "Leaƒl€sS@2O23";
 
-	public static boolean cadastrarUsuario(Usuario usuario) throws SQLException {
+	public static boolean login(String string, String string2) {
+		return true;
+	}
+
+	public static boolean alterarSenha(String username, String password) throws SQLException {
 		Connection connection = Conexao.fazConexao();
 
-		String select = "SELECT * FROM tb_usuarios WHERE username = ?";
-		PreparedStatement ps = connection.prepareStatement(select);
-		ps.setString(1, usuario.getUsername());
+		String update = "UPDATE tb_usuarios SET password = ? WHERE username = ?;";
+		PreparedStatement ps = connection.prepareStatement(update);
+		ps.setString(1, password);
+		ps.setString(2, username);
+
 		ResultSet rs = ps.executeQuery();
 
-//		if (!rs.next()) {
-			String insert = "INSERT INTO tb_usuarios(`nome_completo`, `nome_apresentacao`, `data_cadastro`, `cpf`, `email`, `empresa`, `cargo`, "
-					+ "`telefone_comercial`, `username`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-			ps = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+		if (rs.next()) {
+			return true;
+		}
+		return false;
+	}
 
-			ps.setString(1, usuario.getNomeCompleto());
-			ps.setString(2, usuario.getNomeApresentacao());
-			ps.setString(3, usuario.getDataCadastro().toString());
-			ps.setString(4, usuario.getCpf());
-			ps.setString(5, usuario.getEmail());
-			ps.setString(6, usuario.getEmpresa());
-			ps.setString(7, usuario.getCargo());
-			ps.setString(8, usuario.getTelComercial());
-			ps.setString(9, usuario.getUsername());
-			ps.setString(10, usuario.getPassword());
+	public static boolean cadastrarUsuario(Usuario usuario) throws SQLException {
+		Connection connection = Conexao.fazConexao();
+		String insert = "INSERT INTO tb_usuarios(`nome_completo`, `nome_apresentacao`, `data_cadastro`, `cpf`, `email`, `empresa`, `cargo`, "
+				+ "`telefone_comercial`, `username`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		PreparedStatement ps = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
 
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
+		ps.setString(1, usuario.getNomeCompleto());
+		ps.setString(2, usuario.getNomeApresentacao());
+		ps.setString(3, usuario.getDataCadastro().toString());
+		ps.setString(4, usuario.getCpf());
+		ps.setString(5, usuario.getEmail());
+		ps.setString(6, usuario.getEmpresa());
+		ps.setString(7, usuario.getCargo());
+		ps.setString(8, usuario.getTelComercial());
+		ps.setString(9, usuario.getUsername());
+		ps.setString(10, usuario.getPassword());
 
-			if (rs.next()) {
-				return true;
-			}
-//		} else {
-//			throw new SQLException("1062");
-//		}
+		ps.executeUpdate();
+		ResultSet rs = ps.getGeneratedKeys();
+
+		if (rs.next()) {
+			return true;
+		}
 		return false;
 	}
 
