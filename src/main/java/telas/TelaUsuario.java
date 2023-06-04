@@ -1,5 +1,8 @@
 package telas;
 
+import telas.documento.ConsultarArquivos;
+import telas.documento.InserirArquivo;
+
 public class TelaUsuario extends javax.swing.JFrame {
 
 	public TelaUsuario() {

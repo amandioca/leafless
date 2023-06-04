@@ -1,6 +1,7 @@
-package telas;
+package telas.documento;
 
 import db.Conexao;
+import telas.TelaLoggin;
 
 import java.awt.Color;
 import java.sql.Connection;
