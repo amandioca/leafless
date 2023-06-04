@@ -1,4 +1,4 @@
-package testeTelas;
+package telas;
 public class TelaUsuario extends javax.swing.JFrame {
 
     /**

@@ -1,4 +1,4 @@
-package testeTelas;
+package telas;
 
 import javax.swing.*;
 import java.util.Date;

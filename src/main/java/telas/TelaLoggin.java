@@ -1,4 +1,4 @@
-package testeTelas;
+package telas;
 
 import db.Conexao;
 
