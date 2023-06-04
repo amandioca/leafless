@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import telas.TelaUsuario;
+import telas.TelaPrincipalUC;
 
 /**
  *
@@ -152,14 +152,14 @@ public class TelaLoggin extends javax.swing.JFrame {
                     // Caso seja um gerente
                     JOptionPane.showMessageDialog(null, "Sucesso!");
                     dispose();
-                    TelaPrincipal telaPrincipal = new TelaPrincipal();
+                    TelaPrincipalUA telaPrincipal = new TelaPrincipalUA();
                     telaPrincipal.setVisible(true);
                     telaPrincipal.setLocationRelativeTo(null);
                 } else {
                     // Caso não seja um gerente
 
                     dispose();
-                    TelaUsuario telaUsuario = new TelaUsuario();
+                    TelaPrincipalUC telaUsuario = new TelaPrincipalUC();
                     telaUsuario.setVisible(true);
                     telaUsuario.setLocationRelativeTo(null);
                 }
