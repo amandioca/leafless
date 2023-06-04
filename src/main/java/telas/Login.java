@@ -13,14 +13,14 @@ import javax.swing.JOptionPane;
  *
  * @author wellersonelucas
  */
-public class TelaLoggin extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
 
 	public static String naofazer;
 
 	/**
 	 * Creates new form TelaLoggin
 	 */
-	public TelaLoggin() {
+	public Login() {
 		initComponents();
 		getContentPane().setBackground(Color.BLACK);
 	}
@@ -140,14 +140,14 @@ public class TelaLoggin extends javax.swing.JFrame {
 					// Caso seja um gerente
 					JOptionPane.showMessageDialog(null, "Sucesso!");
 					dispose();
-					TelaPrincipal telaPrincipal = new TelaPrincipal();
+					TelaPrincipalAdmin telaPrincipal = new TelaPrincipalAdmin();
 					telaPrincipal.setVisible(true);
 					telaPrincipal.setLocationRelativeTo(null);
 				} else {
 					// Caso não seja um gerente
 
 					dispose();
-					TelaUsuario telaUsuario = new TelaUsuario();
+					TelaPrincipalComum telaUsuario = new TelaPrincipalComum();
 					telaUsuario.setVisible(true);
 					telaUsuario.setLocationRelativeTo(null);
 				}
@@ -182,16 +182,16 @@ public class TelaLoggin extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(TelaLoggin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(TelaLoggin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(TelaLoggin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(TelaLoggin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		}
 		// </editor-fold>
@@ -199,7 +199,7 @@ public class TelaLoggin extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				TelaLoggin telaLoggin = new TelaLoggin();
+				Login telaLoggin = new Login();
 				telaLoggin.setVisible(true);
 				telaLoggin.setLocationRelativeTo(null); // Centraliza a janela
 			}

@@ -3,9 +3,9 @@ package telas;
 import telas.documento.ConsultarArquivos;
 import telas.documento.InserirArquivo;
 
-public class TelaUsuario extends javax.swing.JFrame {
+public class TelaPrincipalComum extends javax.swing.JFrame {
 
-	public TelaUsuario() {
+	public TelaPrincipalComum() {
 		initComponents();
 	}
 
@@ -21,7 +21,7 @@ public class TelaUsuario extends javax.swing.JFrame {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-		jLabel1.setText("Seja bem-vindo! " + TelaLoggin.naofazer);
+		jLabel1.setText("Seja bem-vindo! " + Login.naofazer);
 
 		bjConsulrta.setText("Consultar seus arquivos");
 		bjConsulrta.addActionListener(new java.awt.event.ActionListener() {
@@ -129,22 +129,22 @@ public class TelaUsuario extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaPrincipalComum.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaPrincipalComum.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaPrincipalComum.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(TelaUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaPrincipalComum.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		}
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new TelaUsuario().setVisible(true);
+				new TelaPrincipalComum().setVisible(true);
 			}
 		});
 	}

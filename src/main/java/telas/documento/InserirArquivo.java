@@ -1,7 +1,7 @@
 package telas.documento;
 
 import db.Conexao;
-import telas.TelaLoggin;
+import telas.Login;
 
 import java.awt.Color;
 import java.sql.Connection;
@@ -164,7 +164,7 @@ public class InserirArquivo extends javax.swing.JFrame {
 				String extensao = "pdf"; // Define a extensão do arquivo (deve ser ajustado)
 				String versao = "1.0"; // Define a versão do documento (deve ser ajustado)
 				String permissoes = "privado"; // Define as permissões do documento (deve ser ajustado)
-				String nomeAutor = TelaLoggin.naofazer; // Define o nome do autor do documento (deve ser ajustado)
+				String nomeAutor = Login.naofazer; // Define o nome do autor do documento (deve ser ajustado)
 
 				// Define os valores nos parâmetros do PreparedStatement
 				ps.setString(1, titulo);

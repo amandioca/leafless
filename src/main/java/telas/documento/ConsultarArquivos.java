@@ -1,7 +1,7 @@
 package telas.documento;
 
 import db.Conexao;
-import telas.TelaLoggin;
+import telas.Login;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -85,7 +85,7 @@ public class ConsultarArquivos extends javax.swing.JFrame {
 			Connection con = Conexao.fazConexao();
 			String sql = "SELECT * FROM tb_documentos where nome_autor=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, TelaLoggin.naofazer);
+			ps.setString(1, Login.naofazer);
 			ResultSet rs = ps.executeQuery();
 
 			DefaultTableModel model = (DefaultTableModel) tabelaDocumentos.getModel();
