@@ -2,23 +2,27 @@ package telas;
 
 import db.Conexao;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import telas.TelaUsuario;
 
 /**
  *
  * @author wellersonelucas
  */
 public class TelaLoggin extends javax.swing.JFrame {
+
     public static String naofazer;
     /**
      * Creates new form TelaLoggin
      */
     public TelaLoggin() {
         initComponents();
+        getContentPane().setBackground(Color.BLACK);
     }
 
 
@@ -26,7 +30,10 @@ public class TelaLoggin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
+
+
         jPanel1 = new javax.swing.JPanel();
+        jPanel1.setBackground(Color.BLACK);
         asd = new java.awt.Label();
         asd1 = new java.awt.Label();
         tfUsuario = new javax.swing.JTextField();
@@ -34,10 +41,12 @@ public class TelaLoggin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        Color verdeClaro = new Color(144, 238, 144);
         asd.setText("Senha");
+        asd.setForeground(verdeClaro);
 
         asd1.setText("Usuário");
+        asd1.setForeground(verdeClaro);
 
         jButton1.setText("loggin");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -145,12 +154,14 @@ public class TelaLoggin extends javax.swing.JFrame {
                     dispose();
                     TelaPrincipal telaPrincipal = new TelaPrincipal();
                     telaPrincipal.setVisible(true);
+                    telaPrincipal.setLocationRelativeTo(null);
                 } else {
                     // Caso não seja um gerente
 
                     dispose();
                     TelaUsuario telaUsuario = new TelaUsuario();
                     telaUsuario.setVisible(true);
+                    telaUsuario.setLocationRelativeTo(null);
                 }
             } else {
                 // Caso o usuário não exista ou as credenciais estejam incorretas
@@ -195,7 +206,9 @@ public class TelaLoggin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaLoggin().setVisible(true);
+                TelaLoggin telaLoggin = new TelaLoggin();
+                telaLoggin.setVisible(true);
+                telaLoggin.setLocationRelativeTo(null); // Centraliza a janela
             }
         });
     }
