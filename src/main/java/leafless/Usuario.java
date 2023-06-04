@@ -6,18 +6,29 @@ import java.util.List;
 public class Usuario {
 
 	private String nomeCompleto;
-	private LocalDateTime dataCadastro;
 	private String nomeApresentacao;
 	private LocalDateTime dataNasc;
 	private String cpf;
 	private String email;
-	private String empresa;
 	private String cargo;
 	private String telComercial;
 	private List<Documento> docCriadas;
 	private String username;
 	private String password;
 	private List<Grupo> grupos;
+	
+	public Usuario(String nomeCompleto, String nomeApresentacao, String cpf, String email, String cargo,
+			String telComercial, String username, String password) {
+		super();
+		this.nomeCompleto = nomeCompleto;
+		this.nomeApresentacao = nomeApresentacao;
+		this.cpf = cpf;
+		this.email = email;
+		this.cargo = cargo;
+		this.telComercial = telComercial;
+		this.username = username;
+		this.password = password;
+	}
 
 	public Usuario(String username) {
 		super();
@@ -33,11 +44,7 @@ public class Usuario {
 	}
 
 	public LocalDateTime getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
+		return LocalDateTime.now();
 	}
 
 	public String getNomeApresentacao() {
@@ -73,11 +80,7 @@ public class Usuario {
 	}
 
 	public String getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
+		return "Leafless";
 	}
 
 	public String getCargo() {

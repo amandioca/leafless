@@ -6,7 +6,6 @@ import java.util.List;
 public class Documento {
 
 	private String titulo;
-	private LocalDateTime dataInclusao;
 	private String caminho;
 	private Usuario autor;
 	private String extensao;
@@ -27,13 +26,9 @@ public class Documento {
 	}
 
 	public LocalDateTime getDataInclusao() {
-		return dataInclusao;
+                return LocalDateTime.now();
 	}
-
-	public void setDataInclusao(LocalDateTime dataInclusao) {
-		this.dataInclusao = dataInclusao;
-	}
-
+        
 	public String getCaminho() {
 		return caminho;
 	}
