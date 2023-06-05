@@ -61,11 +61,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="username" pref="191" max="32767" attributes="0"/>
-                              <Component id="telefone" pref="191" max="32767" attributes="0"/>
-                              <Component id="cargo" pref="191" max="32767" attributes="0"/>
-                              <Component id="cpf" pref="191" max="32767" attributes="0"/>
-                              <Component id="email" pref="191" max="32767" attributes="0"/>
-                              <Component id="nomeApresentacao" pref="191" max="32767" attributes="0"/>
+                              <Component id="telefone" max="32767" attributes="0"/>
+                              <Component id="cargo" max="32767" attributes="0"/>
+                              <Component id="cpf" max="32767" attributes="0"/>
+                              <Component id="email" max="32767" attributes="0"/>
+                              <Component id="nomeApresentacao" max="32767" attributes="0"/>
                               <Component id="nomeCompleto" max="32767" attributes="0"/>
                               <Component id="password" alignment="0" max="32767" attributes="0"/>
                               <Component id="confirmPass" alignment="1" max="32767" attributes="0"/>

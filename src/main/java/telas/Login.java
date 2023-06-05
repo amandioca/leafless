@@ -210,7 +210,7 @@ public class Login extends javax.swing.JFrame {
 	private java.awt.Label asd;
 	private java.awt.Label asd1;
 	private javax.swing.JButton jButton1;
-	private javax.swing.JPanel jPanel1;
+	public javax.swing.JPanel jPanel1;
 	private javax.swing.JPasswordField tfSenha;
 	public javax.swing.JTextField tfUsuario;
 	// End of variables declaration
