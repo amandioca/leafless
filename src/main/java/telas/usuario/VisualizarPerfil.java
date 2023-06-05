@@ -16,7 +16,6 @@ import leafless.Usuario;
 public class VisualizarPerfil extends javax.swing.JFrame {
 	
 	Usuario usuario;
-	List<String> testeList = new ArrayList();
    
 	/**
      * Creates new form VisualizarEditarPerfil
@@ -33,10 +32,6 @@ public class VisualizarPerfil extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-    	
-    	testeList.add("Grupo 1");
-    	testeList.add("Grupo 2");
-    	testeList.add("Grupo 3");
     	
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -62,7 +57,7 @@ public class VisualizarPerfil extends javax.swing.JFrame {
 
         listaGrupos.setForeground(new java.awt.Color(204, 204, 204));
         listaGrupos.setModel(new javax.swing.AbstractListModel<String>() {
-        	String[] strings = testeList.toArray(new String[testeList.size()]);
+        	String[] strings = usuario.getDocCriadas().toArray(new String[usuario.getDocCriadas().size()]);
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
