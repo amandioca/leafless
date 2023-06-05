@@ -48,6 +48,9 @@ public class Usuario {
 	}
 
 	public String getNomeApresentacao() {
+		if (nomeApresentacao.trim().isEmpty() || nomeApresentacao.equals("null")) {
+			return nomeCompleto;			 
+		}
 		return nomeApresentacao;
 	}
 

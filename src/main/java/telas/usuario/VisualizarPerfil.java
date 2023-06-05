@@ -4,13 +4,21 @@
  */
 package telas.usuario;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import leafless.Usuario;
+
 /**
  *
  * @author amandioca
  */
 public class VisualizarPerfil extends javax.swing.JFrame {
-
-    /**
+	
+	Usuario usuario;
+	List<String> testeList = new ArrayList();
+   
+	/**
      * Creates new form VisualizarEditarPerfil
      */
     public VisualizarPerfil() {
@@ -25,7 +33,11 @@ public class VisualizarPerfil extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	
+    	testeList.add("Grupo 1");
+    	testeList.add("Grupo 2");
+    	testeList.add("Grupo 3");
+    	
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaGrupos = new javax.swing.JList<>();
@@ -41,7 +53,7 @@ public class VisualizarPerfil extends javax.swing.JFrame {
         labelDocumentos = new javax.swing.JLabel();
         labelGrupos = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        concluirCadastro = new javax.swing.JButton();
+        buttonAlterarSenha = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,7 +62,7 @@ public class VisualizarPerfil extends javax.swing.JFrame {
 
         listaGrupos.setForeground(new java.awt.Color(204, 204, 204));
         listaGrupos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Nenhum" };
+        	String[] strings = testeList.toArray(new String[testeList.size()]);
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -62,28 +74,27 @@ public class VisualizarPerfil extends javax.swing.JFrame {
         labelPerfil.setText("Perfil");
 
         imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/do-utilizador.png"))); // NOI18N
-
         nomeCompleto.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         nomeCompleto.setForeground(new java.awt.Color(229, 229, 229));
-        nomeCompleto.setText("Wellerson Resende Monteiro");
+        nomeCompleto.setText(usuario.getNomeApresentacao());
         nomeCompleto.setToolTipText("");
 
         cargo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cargo.setForeground(new java.awt.Color(229, 229, 229));
-        cargo.setText("Analista de Sistemas");
+        cargo.setText(usuario.getCargo());
         cargo.setToolTipText("");
 
         username.setBackground(new java.awt.Color(204, 204, 204));
         username.setForeground(new java.awt.Color(204, 204, 204));
-        username.setText("monteiro");
+        username.setText(usuario.getUsername());
 
         telefone.setBackground(new java.awt.Color(204, 204, 204));
         telefone.setForeground(new java.awt.Color(204, 204, 204));
-        telefone.setText("(11) 9 9999-9999");
+        telefone.setText(usuario.getTelComercial());
 
         documentos.setBackground(new java.awt.Color(204, 204, 204));
         documentos.setForeground(new java.awt.Color(204, 204, 204));
-        documentos.setText("12 armazenados");
+        documentos.setText(usuario.getDocCriadas().size() + " armazenados");
 
         labelUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelUsername.setForeground(new java.awt.Color(229, 229, 229));
@@ -101,13 +112,13 @@ public class VisualizarPerfil extends javax.swing.JFrame {
         labelGrupos.setForeground(new java.awt.Color(229, 229, 229));
         labelGrupos.setText("Grupos:");
 
-        concluirCadastro.setBackground(new java.awt.Color(0, 102, 255));
-        concluirCadastro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        concluirCadastro.setForeground(new java.awt.Color(255, 255, 255));
-        concluirCadastro.setLabel("Alterar Senha");
-        concluirCadastro.addActionListener(new java.awt.event.ActionListener() {
+        buttonAlterarSenha.setBackground(new java.awt.Color(0, 102, 255));
+        buttonAlterarSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonAlterarSenha.setForeground(new java.awt.Color(255, 255, 255));
+        buttonAlterarSenha.setLabel("Alterar Senha");
+        buttonAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                concluirCadastroActionPerformed(evt);
+                buttonAlterarSenhaActionPerformed(evt);
             }
         });
 
@@ -146,7 +157,7 @@ public class VisualizarPerfil extends javax.swing.JFrame {
                             .addComponent(documentos)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(167, 167, 167)
-                        .addComponent(concluirCadastro)))
+                        .addComponent(buttonAlterarSenha)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -181,7 +192,7 @@ public class VisualizarPerfil extends javax.swing.JFrame {
                     .addComponent(labelGrupos)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                .addComponent(concluirCadastro)
+                .addComponent(buttonAlterarSenha)
                 .addGap(58, 58, 58))
         );
 
@@ -199,9 +210,9 @@ public class VisualizarPerfil extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void concluirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirCadastroActionPerformed
+    private void buttonAlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAlterarSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_concluirCadastroActionPerformed
+    }//GEN-LAST:event_buttonAlterarSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,8 +251,8 @@ public class VisualizarPerfil extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAlterarSenha;
     private javax.swing.JLabel cargo;
-    private javax.swing.JButton concluirCadastro;
     private javax.swing.JLabel documentos;
     private javax.swing.JLabel imagem;
     private javax.swing.JPanel jPanel1;
