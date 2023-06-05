@@ -246,45 +246,49 @@ public class AlterarSenha extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void concluirAlteracaoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_concluirAlteracaoActionPerformed
-		if (!username.getText().isEmpty() && !String.valueOf(confirmPass.getPassword()).isEmpty()
-				&& !String.valueOf(password.getPassword()).isEmpty()
-				&& !String.valueOf(newPassword.getPassword()).isEmpty()) {
-			// Verifica o usuário no banco de dados
-			if (Acesso.login(username.getText(), String.valueOf(password.getPassword()))) {
+		try {
+			if (!username.getText().isEmpty() && !String.valueOf(confirmPass.getPassword()).isEmpty()
+					&& !String.valueOf(password.getPassword()).isEmpty()
+					&& !String.valueOf(newPassword.getPassword()).isEmpty()) {
+				// Verifica o usuário no banco de dados
+				if (Acesso.login(username.getText(), String.valueOf(password.getPassword()))) {
 
-				// Verifica se as senhas estão iguais
-				if (String.valueOf(newPassword.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
+					// Verifica se as senhas estão iguais
+					if (String.valueOf(newPassword.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
 
-					// Verifica se a senha possui no mínimo 8 dígitos
-					if (password.getPassword().length >= 8) {
-						boolean result = Acesso.alterarSenha(username.getText(),
-								String.valueOf(confirmPass.getPassword()));
-						if (result) {
-							JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!", "Alteração de Senha",
-									JOptionPane.INFORMATION_MESSAGE, null);
+						// Verifica se a senha possui no mínimo 8 dígitos
+						if (password.getPassword().length >= 8) {
+							boolean result = Acesso.alterarSenha(username.getText(),
+									String.valueOf(confirmPass.getPassword()));
+							if (result) {
+								JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!", "Alteração de Senha",
+										JOptionPane.INFORMATION_MESSAGE, null);
+							} else {
+								JOptionPane.showMessageDialog(null, "Erro ao alterar senha!", "Alteração de Senha",
+										JOptionPane.ERROR_MESSAGE, null);
+							}
 						} else {
-							JOptionPane.showMessageDialog(null, "Erro ao alterar senha!", "Alteração de Senha",
-									JOptionPane.ERROR_MESSAGE, null);
+							JOptionPane.showMessageDialog(null,
+									String.format("A senha deve possuir no mínimo 8 dígitos"), "Alteração de Senha",
+									JOptionPane.WARNING_MESSAGE, null);
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, String.format("A senha deve possuir no mínimo 8 dígitos"),
+						JOptionPane.showMessageDialog(null,
+								"As senhas informadas não correspondem. Verifique e tente novamente!",
 								"Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"As senhas informadas não correspondem. Verifique e tente novamente!", "Alteração de Senha",
-							JOptionPane.WARNING_MESSAGE, null);
+					JOptionPane.showMessageDialog(null, "Usuário e/ou senha atual estão incorretos!",
+							"Alteração de Senha", JOptionPane.ERROR_MESSAGE, null);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Usuário e/ou senha atual estão incorretos!", "Alteração de Senha",
-						JOptionPane.ERROR_MESSAGE, null);
+				JOptionPane.showMessageDialog(null,
+						"Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
+						"Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
 			}
-		} else {
-			JOptionPane.showMessageDialog(null,
-					"Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
-					"Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
+		} catch (SQLException e) {
+			e.getMessage();
 		}
-
 	}// GEN-LAST:event_concluirAlteracaoActionPerformed
 
 	private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelarActionPerformed

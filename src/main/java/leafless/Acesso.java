@@ -31,13 +31,13 @@ public class Acesso {
 		Connection connection = Conexao.fazConexao();
 
 		String update = "UPDATE tb_usuarios SET password = ? WHERE username = ?;";
-		PreparedStatement ps = connection.prepareStatement(update);
+		PreparedStatement ps = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, password);
 		ps.setString(2, username);
 
-		ResultSet rs = ps.executeQuery();
+		int rowsAffected = ps.executeUpdate();
 
-		if (rs.next()) {
+		if (rowsAffected > 0) {
 			return true;
 		}
 		return false;
