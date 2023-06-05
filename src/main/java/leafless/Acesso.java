@@ -1,6 +1,5 @@
 package leafless;
 
-import db.Conexao;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -17,14 +16,32 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+import db.Conexao;
+
 public class Acesso {
 
 	private static final String ALGORITHM = "AES";
 	private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
 	private static final String KEY = "Leaƒl€sS@2O23";
 
-	public static boolean login(String string, String string2) {
-		return true;
+	static Usuario usuario;
+
+	public static boolean login(String username, String password) throws SQLException {
+		Connection con = Conexao.fazConexao();
+		String sql = "SELECT * FROM tb_usuarios WHERE username = ? AND password = ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, username);
+		ps.setString(2, password);
+
+		ResultSet rs = ps.executeQuery();
+
+		if (rs.next()) {
+			usuario = new Usuario(rs.getString("nome_completo"), rs.getString("nome_apresentacao"), rs.getString("cpf"),
+					rs.getString("email"), rs.getString("cargo"), rs.getString("telefone_comercial"),
+					rs.getString("username"), rs.getString("password"));
+			return true;
+		}
+		return false;
 	}
 
 	public static boolean alterarSenha(String username, String password) throws SQLException {
