@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package telas.documento;
+package newTelas;
 
 import db.Conexao;
 import java.sql.Connection;
@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import telas.documento.InserirArquivo;
 
 /**
  *
@@ -35,27 +36,24 @@ public class CriarGrupo extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         CampoDeTexto = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         JbCriarGrupo = new javax.swing.JToggleButton();
+        labelCadastro = new java.awt.Label();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(19, 30, 53));
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Criar Grupo");
-
+        CampoDeTexto.setForeground(new java.awt.Color(153, 153, 153));
+        CampoDeTexto.setText("Exemplo: ADMIN01");
         CampoDeTexto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoDeTextoActionPerformed(evt);
             }
         });
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Digite o nome do grupo ");
-
+        JbCriarGrupo.setBackground(new java.awt.Color(58, 93, 174));
         JbCriarGrupo.setText("Criar grupo");
         JbCriarGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,55 +61,55 @@ public class CriarGrupo extends javax.swing.JFrame {
             }
         });
 
+        labelCadastro.setAlignment(java.awt.Label.CENTER);
+        labelCadastro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        labelCadastro.setForeground(new java.awt.Color(229, 229, 229));
+        labelCadastro.setText("Criar Grupo");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(229, 229, 229));
+        jLabel1.setText("Informe o nome do grupo: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JbCriarGrupo)
+                    .addComponent(labelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(109, 109, 109)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(CampoDeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(JbCriarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(330, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(CampoDeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)))
-                .addComponent(CampoDeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(JbCriarGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addComponent(labelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(CampoDeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addComponent(JbCriarGrupo)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -122,31 +120,30 @@ public class CriarGrupo extends javax.swing.JFrame {
     }//GEN-LAST:event_CampoDeTextoActionPerformed
 
     private void JbCriarGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbCriarGrupoActionPerformed
-        	try {
-				Connection con = Conexao.fazConexao();
-				String sql = "INSERT INTO `db_leafless`.`tb_grupos` (`nome`) VALUES (?);";
-				PreparedStatement ps = con.prepareStatement(sql);
+        try {
+            Connection con = Conexao.fazConexao();
+            String sql = "INSERT INTO `db_leafless`.`tb_grupos` (`nome`) VALUES (?);";
+            PreparedStatement ps = con.prepareStatement(sql);
 
-				// Obtenção dos valores dos campos
-				
-                                   String a = CampoDeTexto.getText();
-				// Define os valores nos parâmetros do PreparedStatement
-				ps.setString(1, a);
-				
+            // Obtenção dos valores dos campos
 
-				// Executa o comando SQL
-				int rowsAffected = ps.executeUpdate();
+            String a = CampoDeTexto.getText();
+            // Define os valores nos parâmetros do PreparedStatement
+            ps.setString(1, a);
 
-				if (rowsAffected > 0) {
-					JOptionPane.showMessageDialog(null, "Grupo criado com sucesso!");
-				} else {
-					JOptionPane.showMessageDialog(null, "Erro!");
-				}
+            // Executa o comando SQL
+            int rowsAffected = ps.executeUpdate();
 
-				con.close(); // Fecha a conexão com o banco de dados
-			} catch (SQLException ex) {
-				Logger.getLogger(InserirArquivo.class.getName()).log(Level.SEVERE, null, ex);
-			}
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Grupo criado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro!");
+            }
+
+            con.close(); // Fecha a conexão com o banco de dados
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirArquivo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_JbCriarGrupoActionPerformed
 
     /**
@@ -189,7 +186,7 @@ public class CriarGrupo extends javax.swing.JFrame {
     private javax.swing.JTextField CampoDeTexto;
     private javax.swing.JToggleButton JbCriarGrupo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private java.awt.Label labelCadastro;
     // End of variables declaration//GEN-END:variables
 }
