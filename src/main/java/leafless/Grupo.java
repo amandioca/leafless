@@ -1,14 +1,14 @@
 package leafless;
 
 public class Grupo {
-	private String idGrupo;
+	private int idGrupo;
 	private String nomeGrupo;
 
-	public String getIdGrupo() {
+	public int getIdGrupo() {
 		return idGrupo;
 	}
 
-	public void setIdGrupo(String idGrupo) {
+	public void setIdGrupo(int idGrupo) {
 		this.idGrupo = idGrupo;
 	}
 

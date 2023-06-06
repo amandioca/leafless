@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Usuario {
 
+	private int id;
 	private String nomeCompleto;
 	private String nomeApresentacao;
 	private LocalDateTime dataNasc;
@@ -16,7 +17,38 @@ public class Usuario {
 	private String username;
 	private String password;
 	private List<Grupo> grupos;
-	
+
+	public Usuario() {
+		if (UsuarioHolder.getUsuario() != null) {
+			this.id = UsuarioHolder.getUsuario().getId();
+			this.nomeCompleto = UsuarioHolder.getUsuario().getNomeCompleto();
+			this.nomeApresentacao = UsuarioHolder.getUsuario().getNomeApresentacao();
+			this.dataNasc = UsuarioHolder.getUsuario().getDataNasc();
+			this.cpf = UsuarioHolder.getUsuario().getCpf();
+			this.email = UsuarioHolder.getUsuario().getEmail();
+			this.cargo = UsuarioHolder.getUsuario().getCargo();
+			this.telComercial = UsuarioHolder.getUsuario().getTelComercial();
+			this.docCriadas = UsuarioHolder.getUsuario().getDocCriadas();
+			this.username = UsuarioHolder.getUsuario().getUsername();
+			this.password = UsuarioHolder.getUsuario().getPassword();
+			this.grupos = UsuarioHolder.getUsuario().getGrupos();
+		}
+	}
+
+	public Usuario(int id, String nomeCompleto, String nomeApresentacao, String cpf, String email, String cargo,
+			String telComercial, String username, String password) {
+		super();
+		this.id = id;
+		this.nomeCompleto = nomeCompleto;
+		this.nomeApresentacao = nomeApresentacao;
+		this.cpf = cpf;
+		this.email = email;
+		this.cargo = cargo;
+		this.telComercial = telComercial;
+		this.username = username;
+		this.password = password;
+	}
+
 	public Usuario(String nomeCompleto, String nomeApresentacao, String cpf, String email, String cargo,
 			String telComercial, String username, String password) {
 		super();
@@ -35,6 +67,14 @@ public class Usuario {
 		this.username = username;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
@@ -49,7 +89,7 @@ public class Usuario {
 
 	public String getNomeApresentacao() {
 		if (nomeApresentacao.trim().isEmpty() || nomeApresentacao.equals("null")) {
-			return nomeCompleto;			 
+			return nomeCompleto;
 		}
 		return nomeApresentacao;
 	}
@@ -132,6 +172,11 @@ public class Usuario {
 
 	public void setGrupos(List<Grupo> grupos) {
 		this.grupos = grupos;
+	}
+
+	public String getTelefoneComMascara() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

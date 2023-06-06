@@ -9,12 +9,30 @@ public class Documento {
 	private String caminho;
 	private Usuario autor;
 	private String extensao;
+	private LocalDateTime dataVencimento;
 	private int versao;
 	private int temporalidade;
 	private List<Grupo> permissoes;
+	
+	public Documento() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Documento(String titulo, String caminho, Usuario autor, String extensao, int versao, int temporalidade,
+			List<Grupo> permissoes) {
+		super();
+		this.titulo = titulo;
+		this.caminho = caminho;
+		this.autor = autor;
+		this.extensao = extensao;
+		this.versao = versao;
+		this.temporalidade = temporalidade;
+		this.permissoes = permissoes;
+	}
 
-	public LocalDateTime  getDataVencimento(LocalDateTime dataInclusao, int temporalidade) {
-		return dataInclusao.plusYears(temporalidade);
+	public LocalDateTime getDataVencimento(LocalDateTime dataInclusao, int temporalidade) {
+		this.dataVencimento = dataInclusao.plusYears(temporalidade);
+		return dataVencimento;
 	}
 
 	public String getTitulo() {
