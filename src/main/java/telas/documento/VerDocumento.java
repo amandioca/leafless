@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package telas;
+package telas.documento;
 
 import db.Conexao;
+import telas.Login;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -142,7 +144,7 @@ public class VerDocumento extends javax.swing.JFrame {
             Connection con = Conexao.fazConexao();
             String sql = "SELECT * FROM tb_documentos WHERE nome_autor = ? AND titulo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, TelaLoggin.naofazer);
+            ps.setString(1, Login.naofazer);
             ps.setString(2, jTextParaPesquisar.getText());
 
             ResultSet rs = ps.executeQuery();
@@ -153,7 +155,7 @@ public class VerDocumento extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "deu certo");
                 sql = "SELECT caminho FROM tb_documentos WHERE nome_autor =? AND titulo = ?";
                 ps = con.prepareStatement(sql);
-                ps.setString(1, TelaLoggin.naofazer);
+                ps.setString(1, Login.naofazer);
                 ps.setString(2, jTextParaPesquisar.getText());
 
 
@@ -210,7 +212,7 @@ public class VerDocumento extends javax.swing.JFrame {
                 try{Connection con = Conexao.fazConexao();
                     String sql = "DELETE FROM tb_documentos WHERE nome_autor = ? and titulo =? ";
                     PreparedStatement ps = con.prepareStatement(sql);
-                    ps.setString(1, TelaLoggin.naofazer);
+                    ps.setString(1, Login.naofazer);
                     ps.setString(2, jTextParaPesquisar.getText());
 
                     ps.executeUpdate();
@@ -234,7 +236,7 @@ public class VerDocumento extends javax.swing.JFrame {
             try{Connection con = Conexao.fazConexao();
                 String sql = "DELETE FROM tb_documentos WHERE nome_autor = ? and titulo =? ";
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, TelaLoggin.naofazer);
+                ps.setString(1, Login.naofazer);
                 ps.setString(2, jTextParaPesquisar.getText());
 
                 ps.executeUpdate();
