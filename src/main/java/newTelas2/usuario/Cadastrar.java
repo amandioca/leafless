@@ -272,6 +272,7 @@ public class Cadastrar extends javax.swing.JFrame {
         jLabel9.setText("*Usuário/Matrícula:");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Credenciais");
 
         username.setBackground(new java.awt.Color(255, 255, 255));
@@ -418,6 +419,7 @@ public class Cadastrar extends javax.swing.JFrame {
         jLabel8.setText("*Cargo:");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Dados Pessoais");
 
         jSeparator2.setBackground(new java.awt.Color(41, 105, 230));
@@ -547,7 +549,7 @@ public class Cadastrar extends javax.swing.JFrame {
             jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane5Layout.createSequentialGroup()
                 .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelarAcao)
                     .addComponent(concluirCadastro))
@@ -701,7 +703,7 @@ public class Cadastrar extends javax.swing.JFrame {
             if (!nomeCompleto.getText().isEmpty() && !email.getText().isEmpty() && !cargo.getText().isEmpty()
                     && !telefone.getText().isEmpty() && !username.getText().isEmpty()
                     && !String.valueOf(confirmPass.getPassword()).isEmpty()
-                    && !String.valueOf(password.getPassword()).isEmpty() && cpf.getText().isEmpty()) {
+                    && !String.valueOf(password.getPassword()).isEmpty() && !cpf.getText().isEmpty()) {
 
                 // Verifica se senhas estão iguais
                 if (String.valueOf(password.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
@@ -721,9 +723,10 @@ public class Cadastrar extends javax.swing.JFrame {
                                             String.format("O usuário \"%s\" foi cadastrado com sucesso!",
                                                     usuario.getUsername()),
                                             "Cadastro", JOptionPane.INFORMATION_MESSAGE, null);
+                            TelasUtil.trocarTela(Cadastrar.this, new Usuarios());
                         } else {
                             JOptionPane.showMessageDialog(null,
-                                    String.format("Erro ao criar usuário \"%s\"", usuario.getUsername()), "Cadastro",
+                                    String.format("Erro ao criar usuário \"%s\". Tente novamente!", usuario.getUsername()), "Cadastro",
                                     JOptionPane.ERROR_MESSAGE, null);
                         }
                     } else {
