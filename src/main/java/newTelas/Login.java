@@ -34,7 +34,7 @@ public class Login extends javax.swing.JPanel {
 
 	private void buttonEntrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buttonEntrarActionPerformed
 		try {
-			boolean result = Acesso.login(username.getText(), String.valueOf(password.getPassword()));
+			boolean result = Usuario.login(username.getText(), String.valueOf(password.getPassword()));
 			if (result) {
 				usuario = new Usuario();
 				boolean isAdmin = usuario.getGrupos().stream().anyMatch(p -> p.getNomeGrupo().contains(ADMIN));

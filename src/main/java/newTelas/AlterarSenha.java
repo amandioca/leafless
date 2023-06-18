@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 
 import leafless.Acesso;
 import leafless.Usuario;
+import newTelas2.TelasUtil;
+import newTelas2.usuario.Perfil;
 
 /**
  *
@@ -13,15 +15,15 @@ import leafless.Usuario;
  */
 public class AlterarSenha extends javax.swing.JFrame {
 
-        Usuario usuario = new Usuario();
-	
-        public AlterarSenha() {
-		initComponents();
-	}
+    Usuario usuario = new Usuario();
 
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed" desc="Generated
-	// <editor-fold defaultstate="collapsed" desc="Generated
+    public AlterarSenha() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -235,110 +237,111 @@ public class AlterarSenha extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	private void concluirAlteracaoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_concluirAlteracaoActionPerformed
-		try {
-			if (!String.valueOf(confirmPass.getPassword()).isEmpty()
-					&& !String.valueOf(password.getPassword()).isEmpty()
-					&& !String.valueOf(newPassword.getPassword()).isEmpty()) {
-				// Verifica o usuário no banco de dados
-				if (Acesso.login(usuario.getUsername(), String.valueOf(password.getPassword()))) {
+    private void concluirAlteracaoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_concluirAlteracaoActionPerformed
+        try {
+            if (!String.valueOf(confirmPass.getPassword()).isEmpty()
+                    && !String.valueOf(password.getPassword()).isEmpty()
+                    && !String.valueOf(newPassword.getPassword()).isEmpty()) {
+                // Verifica o usuário no banco de dados
+                if (Usuario.login(usuario.getUsername(), String.valueOf(password.getPassword()))) {
 
-					// Verifica se as senhas estão iguais
-					if (String.valueOf(newPassword.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
+                    // Verifica se as senhas estão iguais
+                    if (String.valueOf(newPassword.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
 
-						// Verifica se a senha possui no mínimo 8 dígitos
-						if (password.getPassword().length >= 8) {
-							boolean result = Acesso.alterarSenha(usuario.getUsername(),
-									String.valueOf(confirmPass.getPassword()));
-							if (result) {
-								JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!", "Alteração de Senha",
-										JOptionPane.INFORMATION_MESSAGE, null);
-							} else {
-								JOptionPane.showMessageDialog(null, "Erro ao alterar senha!", "Alteração de Senha",
-										JOptionPane.ERROR_MESSAGE, null);
-							}
-						} else {
-							JOptionPane.showMessageDialog(null,
-									String.format("A senha deve possuir no mínimo 8 dígitos"), "Alteração de Senha",
-									JOptionPane.WARNING_MESSAGE, null);
-						}
-					} else {
-						JOptionPane.showMessageDialog(null,
-								"As senhas informadas não correspondem. Verifique e tente novamente!",
-								"Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Usuário e/ou senha atual estão incorretos!",
-							"Alteração de Senha", JOptionPane.ERROR_MESSAGE, null);
-				}
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
-						"Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
-			}
-		} catch (SQLException e) {
-			e.getMessage();
-		}
-	}// GEN-LAST:event_concluirAlteracaoActionPerformed
+                        // Verifica se a senha possui no mínimo 8 dígitos
+                        if (password.getPassword().length >= 8) {
+                            boolean result = Usuario.alterarSenha(usuario.getUsername(),
+                                    String.valueOf(confirmPass.getPassword()));
+                            if (result) {
+                                JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!", "Alteração de Senha",
+                                        JOptionPane.INFORMATION_MESSAGE, null);
+                                TelasUtil.trocarTela(AlterarSenha.this, new Perfil());
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Erro ao alterar senha! Tente novamente mais tarde", "Alteração de Senha",
+                                        JOptionPane.ERROR_MESSAGE, null);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    String.format("A senha deve possuir no mínimo 8 dígitos"), "Alteração de Senha",
+                                    JOptionPane.WARNING_MESSAGE, null);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "As senhas informadas não correspondem. Verifique e tente novamente!",
+                                "Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário e/ou senha atual estão incorretos!",
+                            "Alteração de Senha", JOptionPane.ERROR_MESSAGE, null);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
+                        "Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }// GEN-LAST:event_concluirAlteracaoActionPerformed
 
-	private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelarActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_cancelarActionPerformed
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelarActionPerformed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_cancelarActionPerformed
 
-	private void passwordActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_passwordActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_passwordActionPerformed
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_passwordActionPerformed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_passwordActionPerformed
 
-	private void confirmPassActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_confirmPassActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_confirmPassActionPerformed
+    private void confirmPassActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_confirmPassActionPerformed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_confirmPassActionPerformed
 
-	private void newPasswordActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_newPasswordActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_newPasswordActionPerformed
+    private void newPasswordActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_newPasswordActionPerformed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_newPasswordActionPerformed
 
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[]) {
-		/* Set the Nimbus look and feel */
-		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-		// (optional) ">
-		/*
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
 		 * If Nimbus (introduced in Java SE 6) is not available, stay with the default
 		 * look and feel. For details see
 		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
-		}
-		// </editor-fold>
-		// </editor-fold>
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
+        }
+        // </editor-fold>
+        // </editor-fold>
 
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new AlterarSenha().setVisible(true);
-			}
-		});
-	}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AlterarSenha().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;

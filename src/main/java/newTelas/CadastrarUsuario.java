@@ -300,61 +300,61 @@ public class CadastrarUsuario extends javax.swing.JPanel {
 
     private void concluirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirCadastroActionPerformed
         try {
-			// Verifica campos obrigatórios
-			if (!nomeCompleto.getText().isEmpty() && !email.getText().isEmpty() && !cargo.getText().isEmpty()
-					&& !telefone.getText().isEmpty() && !username.getText().isEmpty()
-					&& !String.valueOf(confirmPass.getPassword()).isEmpty()
-					&& !String.valueOf(password.getPassword()).isEmpty() && cpf.getText().isEmpty()) {
+            // Verifica campos obrigatórios
+            if (!nomeCompleto.getText().isEmpty() && !email.getText().isEmpty() && !cargo.getText().isEmpty()
+                    && !telefone.getText().isEmpty() && !username.getText().isEmpty()
+                    && !String.valueOf(confirmPass.getPassword()).isEmpty()
+                    && !String.valueOf(password.getPassword()).isEmpty() && cpf.getText().isEmpty()) {
 
-				// Verifica se senhas estão iguais
-				if (String.valueOf(password.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
+                // Verifica se senhas estão iguais
+                if (String.valueOf(password.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
 
-					// Verifica se a senha possui no mínimo 8 dígitos
-					if (password.getPassword().length >= 8) {
-						Usuario usuario = new Usuario(nomeCompleto.getText(), nomeApresentacao.getText(), cpf.getText(),
-								email.getText(), cargo.getText(), telefone.getText(), username.getText(),
-								String.valueOf(password.getPassword()));
-						boolean result;
-						result = Acesso.cadastrarUsuario(usuario);
+                    // Verifica se a senha possui no mínimo 8 dígitos
+                    if (password.getPassword().length >= 8) {
+                        Usuario usuario = new Usuario(nomeCompleto.getText(), nomeApresentacao.getText(), cpf.getText(),
+                                email.getText(), cargo.getText(), telefone.getText(), username.getText(),
+                                String.valueOf(password.getPassword()));
+                        boolean result;
+                        result = Usuario.cadastrarUsuario(usuario);
 
-						// Verifica se o usuario foi criado ou nao
-						if (result) {
-							JOptionPane
-									.showMessageDialog(null,
-											String.format("O usuário \"%s\" foi cadastrado com sucesso!",
-													usuario.getUsername()),
-											"Cadastro", JOptionPane.INFORMATION_MESSAGE, null);
-						} else {
-							JOptionPane.showMessageDialog(null,
-									String.format("Erro ao criar usuário \"%s\"", usuario.getUsername()), "Cadastro",
-									JOptionPane.ERROR_MESSAGE, null);
-						}
-					} else {
-						JOptionPane.showMessageDialog(null, String.format("A senha deve possuir no mínimo 8 dígitos"),
-								"Cadastro", JOptionPane.WARNING_MESSAGE, null);
-					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"As senhas informadas não correspondem. Verifique e tente novamente!", "Cadastro",
-							JOptionPane.WARNING_MESSAGE, null);
-				}
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
-						"Cadastro", JOptionPane.WARNING_MESSAGE, null);
-			}
-		} catch (SQLException e) {
-			if (e.getMessage().contains("username_UNIQUE")) {
-				JOptionPane.showMessageDialog(null,
-						String.format("Já existe um usuário para \"%s\"", username.getText()), "Cadastro",
-						JOptionPane.WARNING_MESSAGE, null);
-			} else if (e.getMessage().contains("cpf_UNIQUE")) {
-				JOptionPane.showMessageDialog(null,
-						String.format("Já existe um usuário com o CPF \"%s\"", cpf.getText()), "Cadastro",
-						JOptionPane.WARNING_MESSAGE, null);
-			}
+                        // Verifica se o usuario foi criado ou nao
+                        if (result) {
+                            JOptionPane
+                                    .showMessageDialog(null,
+                                            String.format("O usuário \"%s\" foi cadastrado com sucesso!",
+                                                    usuario.getUsername()),
+                                            "Cadastro", JOptionPane.INFORMATION_MESSAGE, null);
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    String.format("Erro ao criar usuário \"%s\"", usuario.getUsername()), "Cadastro",
+                                    JOptionPane.ERROR_MESSAGE, null);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, String.format("A senha deve possuir no mínimo 8 dígitos"),
+                                "Cadastro", JOptionPane.WARNING_MESSAGE, null);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "As senhas informadas não correspondem. Verifique e tente novamente!", "Cadastro",
+                            JOptionPane.WARNING_MESSAGE, null);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
+                        "Cadastro", JOptionPane.WARNING_MESSAGE, null);
+            }
+        } catch (SQLException e) {
+            if (e.getMessage().contains("username_UNIQUE")) {
+                JOptionPane.showMessageDialog(null,
+                        String.format("Já existe um usuário para \"%s\"", username.getText()), "Cadastro",
+                        JOptionPane.WARNING_MESSAGE, null);
+            } else if (e.getMessage().contains("cpf_UNIQUE")) {
+                JOptionPane.showMessageDialog(null,
+                        String.format("Já existe um usuário com o CPF \"%s\"", cpf.getText()), "Cadastro",
+                        JOptionPane.WARNING_MESSAGE, null);
+            }
 
-		}
+        }
     }//GEN-LAST:event_concluirCadastroActionPerformed
 
 

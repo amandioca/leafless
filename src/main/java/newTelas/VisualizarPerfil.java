@@ -46,13 +46,10 @@ public class VisualizarPerfil extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(19, 30, 53));
 
-        jLayeredPane3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         labelCadastro.setAlignment(java.awt.Label.CENTER);
         labelCadastro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         labelCadastro.setForeground(new java.awt.Color(229, 229, 229));
         labelCadastro.setText("Perfil");
-        jLayeredPane3.add(labelCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         buttonAlterarSenha.setBackground(new java.awt.Color(58, 93, 174));
         buttonAlterarSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -63,7 +60,6 @@ public class VisualizarPerfil extends javax.swing.JPanel {
                 buttonAlterarSenhaActionPerformed(evt);
             }
         });
-        jLayeredPane3.add(buttonAlterarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 526, -1, -1));
 
         imagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/do-utilizador.png"))); // NOI18N
 
@@ -113,8 +109,6 @@ public class VisualizarPerfil extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jLayeredPane3.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 83, -1, -1));
 
         username1.setBackground(new java.awt.Color(204, 204, 204));
         username1.setForeground(new java.awt.Color(204, 204, 204));
@@ -212,7 +206,34 @@ public class VisualizarPerfil extends javax.swing.JPanel {
                 .addGap(49, 49, 49))
         );
 
-        jLayeredPane3.add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 225, -1, 160));
+        jLayeredPane3.setLayer(labelCadastro, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(buttonAlterarSenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(jLayeredPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane3Layout = new javax.swing.GroupLayout(jLayeredPane3);
+        jLayeredPane3.setLayout(jLayeredPane3Layout);
+        jLayeredPane3Layout.setHorizontalGroup(
+            jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAlterarSenha)))
+        );
+        jLayeredPane3Layout.setVerticalGroup(
+            jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                .addComponent(labelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141)
+                .addComponent(buttonAlterarSenha))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

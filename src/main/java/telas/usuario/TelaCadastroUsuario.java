@@ -318,7 +318,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
 								email.getText(), cargo.getText(), telefone.getText(), username.getText(),
 								String.valueOf(password.getPassword()));
 						boolean result;
-						result = Acesso.cadastrarUsuario(usuario);
+						result = Usuario.cadastrarUsuario(usuario);
 
 						// Verifica se o usuario foi criado ou nao
 						if (result) {
