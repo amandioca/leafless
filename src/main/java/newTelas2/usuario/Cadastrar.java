@@ -38,7 +38,7 @@ public class Cadastrar extends javax.swing.JFrame {
         jLayeredPane4 = new javax.swing.JLayeredPane();
         tituloPagina = new javax.swing.JLabel();
         jLayeredPane5 = new javax.swing.JLayeredPane();
-        jButton1 = new javax.swing.JButton();
+        cancelarAcao = new javax.swing.JButton();
         concluirCadastro = new javax.swing.JButton();
         jLayeredPane6 = new javax.swing.JLayeredPane();
         credenciais = new javax.swing.JLayeredPane();
@@ -239,13 +239,13 @@ public class Cadastrar extends javax.swing.JFrame {
         tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
         tituloPagina.setText("Cadastrar Usuário");
 
-        jButton1.setBackground(new java.awt.Color(185, 8, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(229, 229, 229));
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cancelarAcao.setBackground(new java.awt.Color(185, 8, 0));
+        cancelarAcao.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        cancelarAcao.setForeground(new java.awt.Color(229, 229, 229));
+        cancelarAcao.setText("Cancelar");
+        cancelarAcao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cancelarAcaoActionPerformed(evt);
             }
         });
 
@@ -524,7 +524,7 @@ public class Cadastrar extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLayeredPane5.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(cancelarAcao, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane5.setLayer(concluirCadastro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane5.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -538,7 +538,7 @@ public class Cadastrar extends javax.swing.JFrame {
                     .addGroup(jLayeredPane5Layout.createSequentialGroup()
                         .addComponent(concluirCadastro)
                         .addGap(40, 40, 40)
-                        .addComponent(jButton1)
+                        .addComponent(cancelarAcao)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLayeredPane6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
@@ -547,9 +547,9 @@ public class Cadastrar extends javax.swing.JFrame {
             jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane5Layout.createSequentialGroup()
                 .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(cancelarAcao)
                     .addComponent(concluirCadastro))
                 .addContainerGap())
         );
@@ -676,7 +676,11 @@ public class Cadastrar extends javax.swing.JFrame {
     }//GEN-LAST:event_itemGrupos1MouseClicked
 
     private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemSair1MouseClicked
-        Usuario.logout(Cadastrar.this);
+        Object[] options = {"Sair", "Cancelar"};
+        int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (resposta == JOptionPane.YES_OPTION) {
+            Usuario.logout(Cadastrar.this);
+        }
     }//GEN-LAST:event_itemSair1MouseClicked
 
     private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemUsuarios1MouseClicked
@@ -687,17 +691,17 @@ public class Cadastrar extends javax.swing.JFrame {
         TelasUtil.trocarTela(Cadastrar.this, new Perfil());
     }//GEN-LAST:event_itemEditarPerfilMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void cancelarAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarAcaoActionPerformed
+        TelasUtil.trocarTela(Cadastrar.this, new Usuarios());
+    }//GEN-LAST:event_cancelarAcaoActionPerformed
 
     private void concluirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirCadastroActionPerformed
         try {
             // Verifica campos obrigatórios
             if (!nomeCompleto.getText().isEmpty() && !email.getText().isEmpty() && !cargo.getText().isEmpty()
-                && !telefone.getText().isEmpty() && !username.getText().isEmpty()
-                && !String.valueOf(confirmPass.getPassword()).isEmpty()
-                && !String.valueOf(password.getPassword()).isEmpty() && cpf.getText().isEmpty()) {
+                    && !telefone.getText().isEmpty() && !username.getText().isEmpty()
+                    && !String.valueOf(confirmPass.getPassword()).isEmpty()
+                    && !String.valueOf(password.getPassword()).isEmpty() && cpf.getText().isEmpty()) {
 
                 // Verifica se senhas estão iguais
                 if (String.valueOf(password.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
@@ -705,46 +709,46 @@ public class Cadastrar extends javax.swing.JFrame {
                     // Verifica se a senha possui no mínimo 8 dígitos
                     if (password.getPassword().length >= 8) {
                         Usuario usuario = new Usuario(nomeCompleto.getText(), nomeApresentacao.getText(), cpf.getText(),
-                            email.getText(), cargo.getText(), telefone.getText(), username.getText(),
-                            String.valueOf(password.getPassword()));
+                                email.getText(), cargo.getText(), telefone.getText(), username.getText(),
+                                String.valueOf(password.getPassword()));
                         boolean result;
                         result = Usuario.cadastrarUsuario(usuario);
 
                         // Verifica se o usuario foi criado ou nao
                         if (result) {
                             JOptionPane
-                            .showMessageDialog(null,
-                                String.format("O usuário \"%s\" foi cadastrado com sucesso!",
-                                    usuario.getUsername()),
-                                "Cadastro", JOptionPane.INFORMATION_MESSAGE, null);
+                                    .showMessageDialog(null,
+                                            String.format("O usuário \"%s\" foi cadastrado com sucesso!",
+                                                    usuario.getUsername()),
+                                            "Cadastro", JOptionPane.INFORMATION_MESSAGE, null);
                         } else {
                             JOptionPane.showMessageDialog(null,
-                                String.format("Erro ao criar usuário \"%s\"", usuario.getUsername()), "Cadastro",
-                                JOptionPane.ERROR_MESSAGE, null);
+                                    String.format("Erro ao criar usuário \"%s\"", usuario.getUsername()), "Cadastro",
+                                    JOptionPane.ERROR_MESSAGE, null);
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, String.format("A senha deve possuir no mínimo 8 dígitos"),
-                            "Cadastro", JOptionPane.WARNING_MESSAGE, null);
+                                "Cadastro", JOptionPane.WARNING_MESSAGE, null);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null,
-                        "As senhas informadas não correspondem. \nVerifique e tente novamente!", "Cadastro",
-                        JOptionPane.WARNING_MESSAGE, null);
+                            "As senhas informadas não correspondem. \nVerifique e tente novamente!", "Cadastro",
+                            JOptionPane.WARNING_MESSAGE, null);
                 }
             } else {
                 JOptionPane.showMessageDialog(null,
-                    "Um ou mais campos obrigatórios não foram preenchidos. \nVerifique e tente novamente!",
-                    "Cadastro", JOptionPane.WARNING_MESSAGE, null);
+                        "Um ou mais campos obrigatórios não foram preenchidos. \nVerifique e tente novamente!",
+                        "Cadastro", JOptionPane.WARNING_MESSAGE, null);
             }
         } catch (SQLException e) {
             if (e.getMessage().contains("username_UNIQUE")) {
                 JOptionPane.showMessageDialog(null,
-                    String.format("Já existe um usuário para \"%s\"", username.getText()), "Cadastro",
-                    JOptionPane.WARNING_MESSAGE, null);
+                        String.format("Já existe um usuário para \"%s\"", username.getText()), "Cadastro",
+                        JOptionPane.WARNING_MESSAGE, null);
             } else if (e.getMessage().contains("cpf_UNIQUE")) {
                 JOptionPane.showMessageDialog(null,
-                    String.format("Já existe um usuário com o CPF \"%s\"", cpf.getText()), "Cadastro",
-                    JOptionPane.WARNING_MESSAGE, null);
+                        String.format("Já existe um usuário com o CPF \"%s\"", cpf.getText()), "Cadastro",
+                        JOptionPane.WARNING_MESSAGE, null);
             }
 
         }
@@ -813,6 +817,7 @@ public class Cadastrar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelarAcao;
     private javax.swing.JTextField cargo;
     private javax.swing.JButton concluirCadastro;
     private javax.swing.JPasswordField confirmPass;
@@ -828,7 +833,6 @@ public class Cadastrar extends javax.swing.JFrame {
     private javax.swing.JLabel itemSair1;
     private javax.swing.JLabel itemUsuarios1;
     private javax.swing.JLayeredPane itens1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

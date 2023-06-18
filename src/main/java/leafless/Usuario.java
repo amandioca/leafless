@@ -25,8 +25,8 @@ public class Usuario {
     private String password;
     private List<Grupo> grupos;
 
-    public static void logout(JFrame aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public static void logout(JFrame telaAtual) {
+       telaAtual.dispose();
     }
 
     public static boolean cadastrarUsuario(Usuario usuario) throws SQLException {

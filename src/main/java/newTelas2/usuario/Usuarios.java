@@ -350,7 +350,11 @@ public class Usuarios extends javax.swing.JFrame {
     }// GEN-LAST:event_itemGrupos1MouseClicked
 
     private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemSair1MouseClicked
-        Usuario.logout(Usuarios.this);
+        Object[] options = {"Sair", "Cancelar"};
+        int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (resposta == JOptionPane.YES_OPTION) {
+            Usuario.logout(Usuarios.this);
+        }
     }// GEN-LAST:event_itemSair1MouseClicked
 
     private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemUsuarios1MouseClicked

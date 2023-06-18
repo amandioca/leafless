@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import leafless.Acesso;
 import leafless.Usuario;
 import newTelas2.TelasUtil;
+import newTelas2.grupo.CriarGrupo;
 import newTelas2.grupo.Grupos;
 
 public class AlterarSenha extends javax.swing.JFrame {
@@ -510,7 +511,11 @@ public class AlterarSenha extends javax.swing.JFrame {
     }//GEN-LAST:event_itemGrupos1MouseClicked
 
     private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemSair1MouseClicked
-        Usuario.logout(AlterarSenha.this);
+        Object[] options = {"Sair", "Cancelar"};
+        int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (resposta == JOptionPane.YES_OPTION) {
+            Usuario.logout(AlterarSenha.this);
+        }
     }//GEN-LAST:event_itemSair1MouseClicked
 
     private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemUsuarios1MouseClicked
