@@ -337,7 +337,7 @@ public class Usuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastrarUsuarioMouseClicked
 
     private void deletarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletarUsuarioMouseClicked
-        //TelasUtil.trocarTela(Usuarios.this, new ExcluirGrupo());
+        TelasUtil.trocarTela(Usuarios.this, new DeletarUsuario());
     }//GEN-LAST:event_deletarUsuarioMouseClicked
     // GEN-LAST:event_alterarSenhaActionPerformed
 

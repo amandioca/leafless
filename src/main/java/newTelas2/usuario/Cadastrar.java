@@ -666,7 +666,7 @@ public class Cadastrar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
-        TelasUtil.trocarTela(Cadastrar.this, new Perfil());
+        TelasUtil.trocarTela(Cadastrar.this, new Usuarios());
     }//GEN-LAST:event_voltarMouseClicked
 
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked

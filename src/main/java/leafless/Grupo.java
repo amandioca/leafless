@@ -217,7 +217,7 @@ public class Grupo {
             String sql = "INSERT INTO `db_leafless`.`tb_grupos_mtm_usuarios` (`tb_grupos_id`, `tb_usuarios_id`) VALUES";
 
             for (String usuario : listaUsuarios) {
-                int idUsuario = Usuario.obterIdUsuarioPorUsername(usuario);
+                int idUsuario = Usuario.obterParamUsuarioPorUsername(usuario, "id");
                 sql = sql.concat(String.format(" ('%d', '%d')", idGrupo, idUsuario));
             }
 

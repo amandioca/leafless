@@ -26,7 +26,7 @@ public class Usuario {
     private List<Grupo> grupos;
 
     public static void logout(JFrame telaAtual) {
-       telaAtual.dispose();
+        telaAtual.dispose();
     }
 
     public static boolean cadastrarUsuario(Usuario usuario) throws SQLException {
@@ -86,6 +86,54 @@ public class Usuario {
         }
     }
 
+    public static boolean deletarUsuario(String username, String cpf) throws SQLException {
+        int idUsuario = obterParamUsuarioPorUsername(username, "id");
+        Connection connection = Conexao.fazConexao();
+        try {
+            if (idUsuario == -1) {
+                return false;
+            }
+
+            // Excluir associação
+            String sqlDeleteRelacionados = "DELETE FROM tb_grupos_mtm_usuarios WHERE tb_usuarios_id = ?";
+            PreparedStatement psDeleteRelacionados = connection.prepareStatement(sqlDeleteRelacionados);
+            psDeleteRelacionados.setInt(1, idUsuario);
+            psDeleteRelacionados.executeUpdate();
+
+            // Excluir grupos
+            String sqlDeleteGrupo = "DELETE FROM tb_usuarios WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sqlDeleteGrupo);
+            ps.setInt(1, idUsuario);
+
+            int rowsDeleted = ps.executeUpdate();
+            if (rowsDeleted > 0) {
+                return true;
+            }
+            return false;
+        } finally {
+            connection.close();
+        }
+    }
+
+    public static boolean confirmarUsuario(String username, String cpf) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            String sql = "SELECT * FROM tb_usuarios WHERE username = ? AND cpf = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, cpf);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } finally {
+            connection.close();
+        }
+    }
+
     public static boolean alterarSenha(String username, String password) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {
@@ -105,7 +153,7 @@ public class Usuario {
         }
     }
 
-    public static int obterIdUsuarioPorUsername(String username) throws SQLException {
+    public static int obterParamUsuarioPorUsername(String username, String param) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {
             String sql = "SELECT * FROM tb_usuarios WHERE username = ?";
@@ -115,7 +163,7 @@ public class Usuario {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return rs.getInt("id");
+                return rs.getInt(param);
             }
             return 0;
         } finally {
