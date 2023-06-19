@@ -1,6 +1,8 @@
 package newTelas2;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 
 /**
@@ -19,7 +21,7 @@ public class TelasUtil {
         tela.setExtendedState(JFrame.MAXIMIZED_BOTH);
         tela.getContentPane().setBackground(Color.decode(BG_AZUL_ESCURO));
     }
-
+    
     public static void voltar() {
         telaAtualVoltar.setVisible(false);
         telaAnterior.setVisible(true);

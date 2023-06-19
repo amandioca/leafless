@@ -415,6 +415,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Associar Usu&#xe1;rio"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="associarUsuarioMouseClicked"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="excluirGrupo">
                       <Properties>

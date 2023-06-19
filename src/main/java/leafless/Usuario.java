@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 
@@ -87,8 +88,8 @@ public class Usuario {
     }
 
     public static boolean deletarUsuario(String username, String cpf) throws SQLException {
-        int idUsuario = obterParamUsuarioPorUsername(username, "id");
         Connection connection = Conexao.fazConexao();
+        int idUsuario = obterIdUsuarioPorUsername(username);
         try {
             if (idUsuario == -1) {
                 return false;
@@ -153,19 +154,19 @@ public class Usuario {
         }
     }
 
-    public static int obterParamUsuarioPorUsername(String username, String param) throws SQLException {
+    public static int obterIdUsuarioPorUsername(String username) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {
             String sql = "SELECT * FROM tb_usuarios WHERE username = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
+            ps.setString(1, username.trim());
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return rs.getInt(param);
+                return rs.getInt("id");
             }
-            return 0;
+            return -1;
         } finally {
             connection.close();
         }

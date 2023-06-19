@@ -80,12 +80,12 @@ public class Grupo {
         }
     }
 
-    private static int obterIdGrupoPorNome(String nomeGrupo) throws SQLException {
+    public static int obterIdGrupoPorNome(String nomeGrupo) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {
             String sql = "SELECT id FROM tb_grupos WHERE nome = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, nomeGrupo);
+            ps.setString(1, nomeGrupo.trim());
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -211,21 +211,20 @@ public class Grupo {
         }
     }
 
-    public static boolean adicionarUsuarioAoGrupo(List<String> listaUsuarios, int idGrupo) throws SQLException {
+    public static boolean adicionarUsuarioAoGrupo(List<Integer> listaIdsUsuarios, int idGrupo) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {
-            String sql = "INSERT INTO `db_leafless`.`tb_grupos_mtm_usuarios` (`tb_grupos_id`, `tb_usuarios_id`) VALUES";
+            String sql = ("INSERT INTO `db_leafless`.`tb_grupos_mtm_usuarios` (`tb_grupos_id`, `tb_usuarios_id`) VALUES");
 
-            for (String usuario : listaUsuarios) {
-                int idUsuario = Usuario.obterParamUsuarioPorUsername(usuario, "id");
-                sql = sql.concat(String.format(" ('%d', '%d')", idGrupo, idUsuario));
+            for (Integer idUsuario : listaIdsUsuarios) {
+                sql = sql.concat((String.format(" ('%d', '%d'),", idGrupo, idUsuario)));
             }
-
+            sql = sql.substring(0, sql.length() - 1);
             PreparedStatement ps = connection.prepareStatement(sql);
 
             int rowsAffect = ps.executeUpdate();
 
-            // Se usuário for associado
+            // Se usuário(s for associado
             if (rowsAffect > 0) {
                 return true;
             }

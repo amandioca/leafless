@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import leafless.Documento;
 import leafless.Grupo;
 import leafless.Usuario;
+import newTelas2.AssociarGrupoUsuario;
 import newTelas2.TelasUtil;
 import newTelas2.grupo.CriarGrupo;
 import newTelas2.grupo.ExcluirGrupo;
@@ -215,6 +216,11 @@ public class Usuarios extends javax.swing.JFrame {
         associarGrupo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         associarGrupo.setForeground(new java.awt.Color(255, 255, 255));
         associarGrupo.setText("Associar a um Grupo");
+        associarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                associarGrupoMouseClicked(evt);
+            }
+        });
 
         deletarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         deletarUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -339,6 +345,10 @@ public class Usuarios extends javax.swing.JFrame {
     private void deletarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletarUsuarioMouseClicked
         TelasUtil.trocarTela(Usuarios.this, new DeletarUsuario());
     }//GEN-LAST:event_deletarUsuarioMouseClicked
+
+    private void associarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associarGrupoMouseClicked
+        TelasUtil.trocarTela(this, new AssociarGrupoUsuario(this));
+    }//GEN-LAST:event_associarGrupoMouseClicked
     // GEN-LAST:event_alterarSenhaActionPerformed
 
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemInicio1MouseClicked
