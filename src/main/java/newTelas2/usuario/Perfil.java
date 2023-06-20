@@ -1,5 +1,6 @@
 package newTelas2.usuario;
 
+import newTelas2.HomeAdmin;
 import newTelas2.grupo.Grupos;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

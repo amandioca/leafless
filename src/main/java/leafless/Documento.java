@@ -11,11 +11,13 @@ import java.util.List;
 
 public class Documento {
 
+    private int id;
     private String titulo;
     private String caminho;
-    private Usuario autor;
+    private String autor;
     private String extensao;
     private LocalDateTime dataVencimento;
+    private LocalDateTime dataInclusao;
     private int versao;
     private int temporalidade;
     private List<Grupo> permissoes;
@@ -33,13 +35,47 @@ public class Documento {
             List<Documento> documentos = new ArrayList<>();
             while (rs.next()) {
                 Documento documento = new Documento();
-                documento.setAutor(usuario);
-                documento.setCaminho(rs.getString("caminho"));
-                documento.setExtensao(rs.getString("extensao"));
                 documento.setTitulo(rs.getString("titulo"));
-                documento.setPermissoes(Grupo.obterListaGrupoPorIdDocumento(rs.getInt("id")));
-                documento.setVersao(rs.getInt("versao"));;
+                documento.setCaminho(rs.getString("caminho"));
+                documento.setAutor(rs.getString("nome_autor"));
+                documento.setExtensao(rs.getString("extensao"));
                 documento.setTemporalidade(rs.getInt("temporalidade"));
+                documento.setDataInclusao(rs.getTimestamp("data_inclusao").toLocalDateTime());
+                documento.setVersao(rs.getInt("versao"));
+                documento.setPermissoes(Grupo.obterListaGrupoPorIdDocumento(rs.getInt("id")));
+
+                documentos.add(documento);
+            }
+            return documentos;
+        } finally {
+            connection.close();
+        }
+    }
+
+    public static List<Documento> obterListaDocumentos(int idUsuario) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            String sql = "SELECT d.* "
+                    + "FROM tb_documentos d "
+                    + "JOIN tb_grupos_mtm_documentos gd ON d.id = gd.tb_documentos_id "
+                    + "JOIN tb_grupos_mtm_usuarios gu ON gd.tb_grupos_id = gu.tb_grupos_id "
+                    + "WHERE gu.tb_usuarios_id = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Documento> documentos = new ArrayList<>();
+            while (rs.next()) {
+                Documento documento = new Documento();
+                documento.setTitulo(rs.getString("titulo"));
+                documento.setCaminho(rs.getString("caminho"));
+                documento.setAutor(rs.getString("nome_autor"));
+                documento.setExtensao(rs.getString("extensao"));
+                documento.setTemporalidade(rs.getInt("temporalidade"));
+                documento.setDataInclusao(rs.getTimestamp("data_inclusao").toLocalDateTime());
+                documento.setVersao(rs.getInt("versao"));;
+                documento.setPermissoes(Grupo.obterListaGrupoPorIdDocumento(rs.getInt("id")));
 
                 documentos.add(documento);
             }
@@ -53,7 +89,7 @@ public class Documento {
         // TODO Auto-generated constructor stub
     }
 
-    public Documento(String titulo, String caminho, Usuario autor, String extensao, int versao, int temporalidade,
+    public Documento(String titulo, String caminho, String autor, String extensao, int versao, int temporalidade,
             List<Grupo> permissoes) {
         super();
         this.titulo = titulo;
@@ -63,9 +99,10 @@ public class Documento {
         this.versao = versao;
         this.temporalidade = temporalidade;
         this.permissoes = permissoes;
+        this.dataInclusao = LocalDateTime.now();
     }
 
-    public LocalDateTime getDataVencimento(LocalDateTime dataInclusao, int temporalidade) {
+    public LocalDateTime getDataVencimento() {
         this.dataVencimento = dataInclusao.plusYears(temporalidade);
         return dataVencimento;
     }
@@ -79,7 +116,11 @@ public class Documento {
     }
 
     public LocalDateTime getDataInclusao() {
-        return LocalDateTime.now();
+        return dataInclusao;
+    }
+
+    public void setDataInclusao(LocalDateTime dataInclusao) {
+        this.dataInclusao = dataInclusao;
     }
 
     public String getCaminho() {
@@ -90,11 +131,11 @@ public class Documento {
         this.caminho = caminho;
     }
 
-    public Usuario getAutor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(Usuario autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 

@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import leafless.Grupo;
 import leafless.Usuario;
 import newTelas2.TelasUtil;
-import newTelas2.usuario.HomeAdmin;
+import newTelas2.HomeAdmin;
 import newTelas2.usuario.Perfil;
 import newTelas2.usuario.Usuarios;
 

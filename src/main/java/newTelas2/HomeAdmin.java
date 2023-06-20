@@ -1,11 +1,24 @@
-package newTelas2.usuario;
+package newTelas2;
 
+import java.awt.Font;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import leafless.Documento;
 import leafless.Usuario;
 import newTelas2.Menu;
 import newTelas2.TelasUtil;
 import newTelas2.grupo.CriarGrupo;
 import newTelas2.grupo.Grupos;
+import newTelas2.usuario.Perfil;
+import newTelas2.usuario.Usuarios;
 
 /**
  *
@@ -14,8 +27,11 @@ import newTelas2.grupo.Grupos;
 public class HomeAdmin extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
+    private DefaultTableModel modeloTabela;
+    private DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
 
     public HomeAdmin() {
+        getTodosDocumentosUsuario();
         initComponents();
         TelasUtil.init(this);
     }
@@ -24,6 +40,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        filtroMeusDocumentos = new javax.swing.JToggleButton();
         menu = new javax.swing.JPanel();
         fotoPerfil = new javax.swing.JLabel();
         saudacaoUsuario = new javax.swing.JLabel();
@@ -35,6 +52,27 @@ public class HomeAdmin extends javax.swing.JFrame {
         itemUsuarios1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         itemEditarPerfil = new javax.swing.JLabel();
+        conteudo = new javax.swing.JPanel();
+        jLayeredPane2 = new javax.swing.JLayeredPane();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        tituloPagina = new javax.swing.JLabel();
+        jLayeredPane6 = new javax.swing.JLayeredPane();
+        dadosPessoais2 = new javax.swing.JLayeredPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        filtroTodosDocumentos = new javax.swing.JToggleButton();
+
+        filtroMeusDocumentos.setBackground(new java.awt.Color(41, 105, 230));
+        filtroMeusDocumentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        filtroMeusDocumentos.setForeground(new java.awt.Color(255, 255, 255));
+        filtroMeusDocumentos.setText("Meus");
+        filtroMeusDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        filtroMeusDocumentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroMeusDocumentosActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 8, 80));
@@ -179,28 +217,206 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addContainerGap(336, Short.MAX_VALUE))
         );
 
+        conteudo.setBackground(new java.awt.Color(0, 8, 80));
+        conteudo.setForeground(new java.awt.Color(21, 56, 202));
+
+        tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
+        tituloPagina.setText("Documentos");
+
+        jLayeredPane1.setLayer(tituloPagina, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tituloPagina)
+                .addGap(229, 229, 229))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tituloPagina)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jScrollPane1.setBackground(new java.awt.Color(0, 0, 255));
+
+        jTable1.setAutoCreateRowSorter(true);
+        jTable1.setBackground(new java.awt.Color(0, 8, 80));
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(modeloTabela);
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
+        jTable1.setRowHeight(24);
+        jTable1.setSelectionBackground(new java.awt.Color(41, 105, 230));
+        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        for(int i = 0; i < jTable1.getColumnCount(); i++){
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Filtrar por:");
+
+        filtroTodosDocumentos.setBackground(new java.awt.Color(41, 105, 230));
+        filtroTodosDocumentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        filtroTodosDocumentos.setForeground(new java.awt.Color(255, 255, 255));
+        filtroTodosDocumentos.setText("Todos");
+        filtroTodosDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        filtroTodosDocumentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroTodosDocumentosActionPerformed(evt);
+            }
+        });
+
+        dadosPessoais2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(filtroTodosDocumentos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout dadosPessoais2Layout = new javax.swing.GroupLayout(dadosPessoais2);
+        dadosPessoais2.setLayout(dadosPessoais2Layout);
+        dadosPessoais2Layout.setHorizontalGroup(
+            dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosPessoais2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 968, Short.MAX_VALUE)
+                    .addGroup(dadosPessoais2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(filtroTodosDocumentos)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        dadosPessoais2Layout.setVerticalGroup(
+            dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dadosPessoais2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(filtroTodosDocumentos))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
+        jLayeredPane6.setLayer(dadosPessoais2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane6Layout = new javax.swing.GroupLayout(jLayeredPane6);
+        jLayeredPane6.setLayout(jLayeredPane6Layout);
+        jLayeredPane6Layout.setHorizontalGroup(
+            jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dadosPessoais2))
+        );
+        jLayeredPane6Layout.setVerticalGroup(
+            jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dadosPessoais2)
+        );
+
+        jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
+        jLayeredPane2.setLayout(jLayeredPane2Layout);
+        jLayeredPane2Layout.setHorizontalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jLayeredPane2Layout.setVerticalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(137, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout conteudoLayout = new javax.swing.GroupLayout(conteudo);
+        conteudo.setLayout(conteudoLayout);
+        conteudoLayout.setHorizontalGroup(
+            conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conteudoLayout.createSequentialGroup()
+                .addGap(152, 152, 152)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(526, Short.MAX_VALUE))
+        );
+        conteudoLayout.setVerticalGroup(
+            conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(conteudoLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 223, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(conteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 12, Short.MAX_VALUE))
+            .addComponent(conteudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private DefaultTableModel montarModel(List<Documento> listaDocumentos) {
+        if (listaDocumentos.isEmpty() || listaDocumentos == null) {
+            montarModelVazia();
+        }
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Título");
+        model.addColumn("Data de Inclusão");
+        model.addColumn("Data de Vencimento");
+        model.addColumn("Versão");
+        model.addColumn("Autor");
+
+        for (Documento documento : listaDocumentos) {
+            model.addRow(new Object[]{documento.getTitulo(), documento.getDataInclusao(), documento.getDataVencimento(), documento.getVersao(), documento.getAutor()});
+        }
+        return model;
+    }
+
+    private void montarModelVazia() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn(" ");
+        model.addRow(new Object[]{"Não há documentos para apresentar"});
+    }
+
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked
         JOptionPane.showMessageDialog(null, "Você já está nessa opção do menu!", "Início",
                 JOptionPane.INFORMATION_MESSAGE, null);
-
     }//GEN-LAST:event_itemInicio1MouseClicked
 
     private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemGrupos1MouseClicked
@@ -222,6 +438,37 @@ public class HomeAdmin extends javax.swing.JFrame {
     private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemEditarPerfilMouseClicked
         TelasUtil.trocarTela(HomeAdmin.this, new Perfil());
     }//GEN-LAST:event_itemEditarPerfilMouseClicked
+
+    private void filtroMeusDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroMeusDocumentosActionPerformed
+        System.out.println("Não implementado");
+    }//GEN-LAST:event_filtroMeusDocumentosActionPerformed
+
+    private void filtroTodosDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroTodosDocumentosActionPerformed
+        getTodosDocumentosUsuario();
+    }//GEN-LAST:event_filtroTodosDocumentosActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        JTable table = (JTable) evt.getSource();
+        int selectedRow = table.getSelectedRow();
+
+        if (selectedRow != -1) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Documento documento = (Documento) model.getValueAt(selectedRow, 0);
+
+            if (rootPaneCheckingEnabled) {
+
+            }
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void getTodosDocumentosUsuario() {
+        try {
+            List<Documento> listaDocumentos = Documento.obterListaDocumentos(usuario.getId());
+            modeloTabela = montarModel(listaDocumentos);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -259,6 +506,10 @@ public class HomeAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel conteudo;
+    private javax.swing.JLayeredPane dadosPessoais2;
+    private javax.swing.JToggleButton filtroMeusDocumentos;
+    private javax.swing.JToggleButton filtroTodosDocumentos;
     private javax.swing.JLabel fotoPerfil;
     private javax.swing.JLabel itemEditarPerfil;
     private javax.swing.JLabel itemGrupos1;
@@ -266,9 +517,17 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel itemSair1;
     private javax.swing.JLabel itemUsuarios1;
     private javax.swing.JLayeredPane itens1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JLayeredPane jLayeredPane6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JSeparator linhaSeparadora;
     private javax.swing.JPanel menu;
     private javax.swing.JLabel saudacaoUsuario;
+    private javax.swing.JLabel tituloPagina;
     // End of variables declaration//GEN-END:variables
+
 }

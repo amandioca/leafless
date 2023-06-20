@@ -1,5 +1,6 @@
 package newTelas2.usuario;
 
+import newTelas2.HomeAdmin;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import leafless.Acesso;

@@ -16,7 +16,7 @@ import newTelas2.grupo.CriarGrupo;
 import newTelas2.grupo.ExcluirGrupo;
 import newTelas2.grupo.Grupos;
 import newTelas2.usuario.AlterarSenha;
-import newTelas2.usuario.HomeAdmin;
+import newTelas2.HomeAdmin;
 import newTelas2.usuario.Perfil;
 import newTelas2.usuario.Usuarios;
 

@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import leafless.Usuario;
 import newTelas2.grupo.Grupos;
-import newTelas2.usuario.HomeAdmin;
 import newTelas2.usuario.Perfil;
 
 /**
