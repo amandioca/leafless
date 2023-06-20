@@ -1,6 +1,9 @@
 package leafless;
 
 import db.Conexao;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class Documento {
 
@@ -21,6 +25,22 @@ public class Documento {
     private int versao;
     private int temporalidade;
     private List<Grupo> permissoes;
+
+    public static void abrirDocumento(int id) throws SQLException {
+        String caminho = obterCaminhoDocumentoPorId(id);
+
+        File arquivo = new File(caminho);
+        if (arquivo.exists()) {
+            try {
+                Desktop.getDesktop().open(arquivo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "O documento solicitado não foi encontrado.", "Visualizador",
+                    JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
 
     public static List<Documento> obterListaDocumentosPorUsername(String username, Usuario usuario) throws SQLException {
         Connection connection = Conexao.fazConexao();
@@ -52,6 +72,24 @@ public class Documento {
         }
     }
 
+    public static String obterCaminhoDocumentoPorId(int idDocumento) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            String sql = "SELECT * FROM db_leafless.tb_documentos WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, idDocumento);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("caminho");
+            }
+            return null;
+        } finally {
+            connection.close();
+        }
+    }
+
     public static List<Documento> obterListaDocumentos(int idUsuario) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {
@@ -68,6 +106,7 @@ public class Documento {
             List<Documento> documentos = new ArrayList<>();
             while (rs.next()) {
                 Documento documento = new Documento();
+                documento.setId(rs.getInt("id"));
                 documento.setTitulo(rs.getString("titulo"));
                 documento.setCaminho(rs.getString("caminho"));
                 documento.setAutor(rs.getString("nome_autor"));
@@ -100,6 +139,14 @@ public class Documento {
         this.temporalidade = temporalidade;
         this.permissoes = permissoes;
         this.dataInclusao = LocalDateTime.now();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDateTime getDataVencimento() {

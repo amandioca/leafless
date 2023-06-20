@@ -251,6 +251,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(modeloTabela);
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         jTable1.setRowHeight(24);
         jTable1.setSelectionBackground(new java.awt.Color(41, 105, 230));
@@ -309,8 +310,8 @@ public class HomeAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(filtroTodosDocumentos))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         jLayeredPane6.setLayer(dadosPessoais2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -401,9 +402,11 @@ public class HomeAdmin extends javax.swing.JFrame {
         model.addColumn("Data de Vencimento");
         model.addColumn("Versão");
         model.addColumn("Autor");
+        model.addColumn("ID");
 
         for (Documento documento : listaDocumentos) {
-            model.addRow(new Object[]{documento.getTitulo(), documento.getDataInclusao(), documento.getDataVencimento(), documento.getVersao(), documento.getAutor()});
+            model.addRow(new Object[]{documento.getTitulo(), TelasUtil.formatarData(documento.getDataInclusao()),
+                TelasUtil.formatarData(documento.getDataVencimento()), documento.getVersao(), documento.getAutor(), documento.getId()});
         }
         return model;
     }
@@ -453,10 +456,16 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         if (selectedRow != -1) {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Documento documento = (Documento) model.getValueAt(selectedRow, 0);
+            int idDocumento = (int) model.getValueAt(selectedRow, 5);
 
-            if (rootPaneCheckingEnabled) {
-
+            Object[] options = {"Sim", "Cancelar"};
+            int resposta = JOptionPane.showOptionDialog(null, "Deseja visualizar este documento?", "Visualizador", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    Documento.abrirDocumento(idDocumento);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked

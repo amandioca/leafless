@@ -1,8 +1,8 @@
 package newTelas2;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 
 /**
@@ -17,11 +17,16 @@ public class TelasUtil {
     private static JFrame telaAnterior;
     private static JFrame telaAtualVoltar;
 
+    public static String formatarData(LocalDateTime data) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return data.format(formatter);
+    }
+
     public static void init(JFrame tela) {
         tela.setExtendedState(JFrame.MAXIMIZED_BOTH);
         tela.getContentPane().setBackground(Color.decode(BG_AZUL_ESCURO));
     }
-    
+
     public static void voltar() {
         telaAtualVoltar.setVisible(false);
         telaAnterior.setVisible(true);
