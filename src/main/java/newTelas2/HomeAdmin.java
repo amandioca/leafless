@@ -15,6 +15,7 @@ import leafless.Documento;
 import leafless.Usuario;
 import newTelas2.Menu;
 import newTelas2.TelasUtil;
+import newTelas2.documento.AdicionarDocumento;
 import newTelas2.grupo.CriarGrupo;
 import newTelas2.grupo.Grupos;
 import newTelas2.usuario.Perfil;
@@ -41,7 +42,6 @@ public class HomeAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        filtroMeusDocumentos = new javax.swing.JToggleButton();
         menu = new javax.swing.JPanel();
         fotoPerfil = new javax.swing.JLabel();
         saudacaoUsuario = new javax.swing.JLabel();
@@ -63,21 +63,14 @@ public class HomeAdmin extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         filtroTodosDocumentos = new javax.swing.JToggleButton();
-        botaoAdicionar = new javax.swing.JLabel();
+        filtroMeusDocumentos = new javax.swing.JToggleButton();
+        botaoRecarregar = new javax.swing.JLabel();
         botaoVisualizar = new javax.swing.JLabel();
         botaoExcluir = new javax.swing.JLabel();
-        botaoRecarregar = new javax.swing.JLabel();
-
-        filtroMeusDocumentos.setBackground(new java.awt.Color(41, 105, 230));
-        filtroMeusDocumentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        filtroMeusDocumentos.setForeground(new java.awt.Color(255, 255, 255));
-        filtroMeusDocumentos.setText("Meus");
-        filtroMeusDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        filtroMeusDocumentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filtroMeusDocumentosActionPerformed(evt);
-            }
-        });
+        botaoAdicionar = new javax.swing.JLabel();
+        busca = new javax.swing.JTextField();
+        procurarArquivo = new javax.swing.JButton();
+        lupa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 8, 80));
@@ -282,12 +275,15 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Filtrar por:");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\filtro.png")); // NOI18N
+        jLabel1.setText("  Exibir:");
 
         filtroTodosDocumentos.setBackground(new java.awt.Color(41, 105, 230));
         filtroTodosDocumentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         filtroTodosDocumentos.setForeground(new java.awt.Color(255, 255, 255));
         filtroTodosDocumentos.setText("Todos");
+        filtroTodosDocumentos.setToolTipText("Exibir todos os documentos");
         filtroTodosDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         filtroTodosDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,9 +291,58 @@ public class HomeAdmin extends javax.swing.JFrame {
             }
         });
 
+        filtroMeusDocumentos.setBackground(new java.awt.Color(41, 105, 230));
+        filtroMeusDocumentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        filtroMeusDocumentos.setForeground(new java.awt.Color(255, 255, 255));
+        filtroMeusDocumentos.setText("Meus");
+        filtroMeusDocumentos.setToolTipText("Exibir todos os documentos que você é o autor");
+        filtroMeusDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        filtroMeusDocumentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroMeusDocumentosActionPerformed(evt);
+            }
+        });
+
+        botaoRecarregar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botaoRecarregar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoRecarregar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\recarregar.png")); // NOI18N
+        botaoRecarregar.setToolTipText("Recarregar tabela");
+        botaoRecarregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRecarregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoRecarregarMouseClicked(evt);
+            }
+        });
+
+        botaoVisualizar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botaoVisualizar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoVisualizar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\visualizar.png")); // NOI18N
+        botaoVisualizar.setToolTipText("Visualizar documento");
+        botaoVisualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVisualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVisualizarMouseClicked(evt);
+            }
+        });
+
+        botaoExcluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botaoExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        botaoExcluir.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\excluir.png")); // NOI18N
+        botaoExcluir.setToolTipText("Excluir documento");
+        botaoExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoExcluirMouseClicked(evt);
+            }
+        });
+
         dadosPessoais2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dadosPessoais2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dadosPessoais2.setLayer(filtroTodosDocumentos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(filtroMeusDocumentos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(botaoRecarregar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(botaoVisualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(botaoExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dadosPessoais2Layout = new javax.swing.GroupLayout(dadosPessoais2);
         dadosPessoais2.setLayout(dadosPessoais2Layout);
@@ -311,17 +356,30 @@ public class HomeAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(filtroTodosDocumentos)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(filtroMeusDocumentos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoRecarregar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoVisualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoExcluir)))
                 .addContainerGap())
         );
         dadosPessoais2Layout.setVerticalGroup(
             dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dadosPessoais2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(filtroTodosDocumentos))
-                .addGap(18, 18, 18)
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(botaoRecarregar, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(botaoVisualizar, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(botaoExcluir, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(filtroTodosDocumentos)
+                        .addComponent(filtroMeusDocumentos)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -341,33 +399,9 @@ public class HomeAdmin extends javax.swing.JFrame {
             .addComponent(dadosPessoais2)
         );
 
-        jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
-        jLayeredPane2.setLayout(jLayeredPane2Layout);
-        jLayeredPane2Layout.setHorizontalGroup(
-            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jLayeredPane2Layout.setVerticalGroup(
-            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
-                .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
-        );
-
-        botaoAdicionar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        botaoAdicionar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         botaoAdicionar.setForeground(new java.awt.Color(255, 255, 255));
-        botaoAdicionar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\adicionar.png")); // NOI18N
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\adicionar (2).png")); // NOI18N
         botaoAdicionar.setText("  Adicionar");
         botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -376,38 +410,80 @@ public class HomeAdmin extends javax.swing.JFrame {
             }
         });
 
-        botaoVisualizar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        botaoVisualizar.setForeground(new java.awt.Color(255, 255, 255));
-        botaoVisualizar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\visualizar.png")); // NOI18N
-        botaoVisualizar.setText("  Visualizar");
-        botaoVisualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoVisualizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botaoVisualizarMouseClicked(evt);
+        busca.setBackground(new java.awt.Color(255, 255, 255));
+        busca.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        busca.setForeground(new java.awt.Color(102, 102, 102));
+        busca.setText("Buscar por título");
+
+        procurarArquivo.setBackground(new java.awt.Color(41, 105, 230));
+        procurarArquivo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        procurarArquivo.setForeground(new java.awt.Color(229, 229, 229));
+        procurarArquivo.setText("Pesquisar");
+        procurarArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                procurarArquivoActionPerformed(evt);
             }
         });
 
-        botaoExcluir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        botaoExcluir.setForeground(new java.awt.Color(255, 255, 255));
-        botaoExcluir.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\excluir.png")); // NOI18N
-        botaoExcluir.setText("  Excluir");
-        botaoExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+        lupa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lupa.setForeground(new java.awt.Color(255, 255, 255));
+        lupa.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\lupa.png")); // NOI18N
+        lupa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lupa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botaoExcluirMouseClicked(evt);
+                lupaMouseClicked(evt);
             }
         });
 
-        botaoRecarregar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        botaoRecarregar.setForeground(new java.awt.Color(255, 255, 255));
-        botaoRecarregar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\recarregar.png")); // NOI18N
-        botaoRecarregar.setText("  Recarregar");
-        botaoRecarregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoRecarregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botaoRecarregarMouseClicked(evt);
-            }
-        });
+        jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(botaoAdicionar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(busca, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(procurarArquivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(lupa, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
+        jLayeredPane2.setLayout(jLayeredPane2Layout);
+        jLayeredPane2Layout.setHorizontalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoAdicionar)
+                        .addContainerGap(380, Short.MAX_VALUE))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lupa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(busca, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(procurarArquivo)
+                        .addGap(302, 302, 302))))
+        );
+        jLayeredPane2Layout.setVerticalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(busca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(procurarArquivo))
+                    .addComponent(lupa))
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(137, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoAdicionar)
+                        .addGap(154, 154, 154))))
+        );
 
         javax.swing.GroupLayout conteudoLayout = new javax.swing.GroupLayout(conteudo);
         conteudo.setLayout(conteudoLayout);
@@ -416,30 +492,13 @@ public class HomeAdmin extends javax.swing.JFrame {
             .addGroup(conteudoLayout.createSequentialGroup()
                 .addGap(152, 152, 152)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoAdicionar)
-                    .addComponent(botaoVisualizar)
-                    .addComponent(botaoExcluir)
-                    .addComponent(botaoRecarregar))
-                .addContainerGap(467, Short.MAX_VALUE))
+                .addContainerGap(879, Short.MAX_VALUE))
         );
         conteudoLayout.setVerticalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
-                .addGroup(conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(conteudoLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(conteudoLayout.createSequentialGroup()
-                        .addGap(241, 241, 241)
-                        .addComponent(botaoAdicionar)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoVisualizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoExcluir)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoRecarregar)))
+                .addGap(60, 60, 60)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -449,7 +508,7 @@ public class HomeAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(conteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -516,11 +575,17 @@ public class HomeAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_itemEditarPerfilMouseClicked
 
     private void filtroMeusDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroMeusDocumentosActionPerformed
-        System.out.println("Não implementado");
+        try {
+            List<Documento> listaNovosDocumentos = Documento.obterListaDocumentosAutor(usuario.getId());
+            DefaultTableModel novoModelo = montarModel(listaNovosDocumentos);
+            jTable1.setModel(novoModelo);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_filtroMeusDocumentosActionPerformed
 
     private void filtroTodosDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroTodosDocumentosActionPerformed
-        getTodosDocumentosUsuario();
+        reloadTable();
     }//GEN-LAST:event_filtroTodosDocumentosActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -539,9 +604,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
-        
-    }//GEN-LAST:event_botaoAdicionarMouseClicked
+    private void lupaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lupaMouseClicked
+
+    }//GEN-LAST:event_lupaMouseClicked
 
     private void botaoVisualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVisualizarMouseClicked
         if (documentoSelecionado.getId() != 0) {
@@ -593,6 +658,20 @@ public class HomeAdmin extends javax.swing.JFrame {
         reloadTable();
     }//GEN-LAST:event_botaoRecarregarMouseClicked
 
+    private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
+        TelasUtil.trocarTela(HomeAdmin.this, new AdicionarDocumento());
+    }//GEN-LAST:event_botaoAdicionarMouseClicked
+
+    private void procurarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarArquivoActionPerformed
+        try {
+            List<Documento> listaNovosDocumentos = Documento.pesquisarDocumentoPorTitulo(busca.getText());
+            DefaultTableModel novoModelo = montarModel(listaNovosDocumentos);
+            jTable1.setModel(novoModelo);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_procurarArquivoActionPerformed
+
     private void reloadTable() {
         DefaultTableModel novoModelo = montarModel(getTodosDocumentosUsuario());
         jTable1.setModel(novoModelo);
@@ -602,7 +681,6 @@ public class HomeAdmin extends javax.swing.JFrame {
         try {
             List<Documento> listaDocumentos = Documento.obterListaDocumentos(usuario.getId());
             return listaDocumentos;
-//            modeloTabela = montarModel(listaDocumentos);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -649,6 +727,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel botaoExcluir;
     private javax.swing.JLabel botaoRecarregar;
     private javax.swing.JLabel botaoVisualizar;
+    private javax.swing.JTextField busca;
     private javax.swing.JPanel conteudo;
     private javax.swing.JLayeredPane dadosPessoais2;
     private javax.swing.JToggleButton filtroMeusDocumentos;
@@ -668,7 +747,9 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JSeparator linhaSeparadora;
+    private javax.swing.JLabel lupa;
     private javax.swing.JPanel menu;
+    private javax.swing.JButton procurarArquivo;
     private javax.swing.JLabel saudacaoUsuario;
     private javax.swing.JLabel tituloPagina;
     // End of variables declaration//GEN-END:variables

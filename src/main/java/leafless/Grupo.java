@@ -211,6 +211,27 @@ public class Grupo {
         }
     }
 
+    public static boolean adicionarDocumentoAoGrupo(int idDocumento, int idGrupo) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            String sql = ("INSERT INTO `db_leafless`.`tb_grupos_mtm_documentos` (`tb_grupos_id`, `tb_documentos_id`) VALUES (? , ?)");
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, idGrupo);
+            ps.setInt(2, idDocumento);
+
+            int rowsAffect = ps.executeUpdate();
+
+            // Se o documento for associado
+            if (rowsAffect > 0) {
+                return true;
+            }
+            // Se der falha
+            return false;
+        } finally {
+            connection.close();
+        }
+    }
+
     public static boolean adicionarUsuarioAoGrupo(List<Integer> listaIdsUsuarios, int idGrupo) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {

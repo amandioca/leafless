@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,40 @@ public class Documento {
     private int versao;
     private int temporalidade;
     private List<Grupo> permissoes;
+    private int idAutor;
+
+    public static int adicionarDocumento(Documento documento) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            // Excluir associação
+            String sql = "INSERT INTO `db_leafless`.`tb_documentos` (`titulo`, `data_inclusao`, `caminho`, `extensao`, `versao`, "
+                    + "`temporalidade`, `nome_autor`, `tb_usuarios_id_autor`) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, documento.getTitulo());
+            ps.setTimestamp(2, Timestamp.valueOf(documento.getDataInclusao()));
+            ps.setString(3, documento.getCaminho());
+            ps.setString(4, documento.getExtensao());
+            ps.setInt(5, documento.getVersao());
+            ps.setInt(6, documento.getTemporalidade());
+            ps.setString(7, documento.getAutor());
+            ps.setInt(8, documento.getIdAutor());
+
+            ps.executeUpdate();
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+            return -1;
+        } finally {
+            connection.close();
+        }
+    }
 
     public static boolean excluirDocumentoPorId(int idDocumento) throws SQLException {
         Connection connection = Conexao.fazConexao();
@@ -74,6 +110,36 @@ public class Documento {
                 return documento;
             }
             return null;
+        } finally {
+            connection.close();
+        }
+    }
+
+    public static List<Documento> pesquisarDocumentoPorTitulo(String titulo) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            String sql = "SELECT * FROM tb_documentos WHERE LOWER(titulo) LIKE LOWER(?);";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + titulo + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Documento> documentos = new ArrayList<>();
+            while (rs.next()) {
+                Documento documento = new Documento();
+                documento.setId(rs.getInt("id"));
+                documento.setTitulo(rs.getString("titulo"));
+                documento.setCaminho(rs.getString("caminho"));
+                documento.setAutor(rs.getString("nome_autor"));
+                documento.setExtensao(rs.getString("extensao"));
+                documento.setTemporalidade(rs.getInt("temporalidade"));
+                documento.setDataInclusao(rs.getTimestamp("data_inclusao").toLocalDateTime());
+                documento.setVersao(rs.getInt("versao"));
+                documento.setPermissoes(Grupo.obterListaGrupoPorIdDocumento(rs.getInt("id")));
+
+                documentos.add(documento);
+            }
+            return documentos;
         } finally {
             connection.close();
         }
@@ -142,16 +208,46 @@ public class Documento {
         }
     }
 
+    public static List<Documento> obterListaDocumentosAutor(int idUsuario) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            String sql = "SELECT * FROM tb_documentos WHERE tb_usuarios_id_autor = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Documento> documentos = new ArrayList<>();
+            while (rs.next()) {
+                Documento documento = new Documento();
+                documento.setId(rs.getInt("id"));
+                documento.setTitulo(rs.getString("titulo"));
+                documento.setCaminho(rs.getString("caminho"));
+                documento.setAutor(rs.getString("nome_autor"));
+                documento.setExtensao(rs.getString("extensao"));
+                documento.setTemporalidade(rs.getInt("temporalidade"));
+                documento.setDataInclusao(rs.getTimestamp("data_inclusao").toLocalDateTime());
+                documento.setVersao(rs.getInt("versao"));;
+                documento.setPermissoes(Grupo.obterListaGrupoPorIdDocumento(rs.getInt("id")));
+
+                documentos.add(documento);
+            }
+            return documentos;
+        } finally {
+            connection.close();
+        }
+    }
+
     public static List<Documento> obterListaDocumentos(int idUsuario) throws SQLException {
         Connection connection = Conexao.fazConexao();
         try {
-            String sql = "SELECT d.* "
-                    + "FROM tb_documentos d "
-                    + "JOIN tb_grupos_mtm_documentos gd ON d.id = gd.tb_documentos_id "
-                    + "JOIN tb_grupos_mtm_usuarios gu ON gd.tb_grupos_id = gu.tb_grupos_id "
-                    + "WHERE gu.tb_usuarios_id = ?;";
+            String sql = "SELECT DISTINCT d.* FROM tb_documentos d "
+                    + "LEFT JOIN tb_grupos_mtm_documentos gd ON d.id = gd.tb_documentos_id "
+                    + "LEFT JOIN tb_grupos_mtm_usuarios gu ON gd.tb_grupos_id = gu.tb_grupos_id "
+                    + "WHERE gu.tb_usuarios_id = ? OR d.tb_usuarios_id_autor = ?;";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, idUsuario);
+            ps.setInt(2, idUsuario);
 
             ResultSet rs = ps.executeQuery();
 
@@ -181,7 +277,7 @@ public class Documento {
     }
 
     public Documento(String titulo, String caminho, String autor, String extensao, int versao, int temporalidade,
-            List<Grupo> permissoes) {
+            List<Grupo> permissoes, int idAutor) {
         super();
         this.titulo = titulo;
         this.caminho = caminho;
@@ -191,6 +287,7 @@ public class Documento {
         this.temporalidade = temporalidade;
         this.permissoes = permissoes;
         this.dataInclusao = LocalDateTime.now();
+        this.idAutor = idAutor;
     }
 
     public int getId() {
@@ -270,4 +367,11 @@ public class Documento {
         this.permissoes = permissoes;
     }
 
+    public int getIdAutor() {
+        return idAutor;
+    }
+
+    public void setIdAutor(int idAutor) {
+        this.idAutor = idAutor;
+    }
 }

@@ -1,17 +1,31 @@
 package newTelas2.documento;
 
-import newTelas2.usuario.*;
+import java.awt.Color;
+import java.io.File;
 import newTelas2.HomeAdmin;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 import leafless.Acesso;
+import leafless.Documento;
+import leafless.Grupo;
 import leafless.Usuario;
 import newTelas2.TelasUtil;
 import newTelas2.grupo.Grupos;
+import newTelas2.usuario.Perfil;
+import newTelas2.usuario.Usuarios;
 
 public class AdicionarDocumento extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
+    private File arquivoSelecionado;
+    private String caminhoArquivo;
 
     public AdicionarDocumento() {
         initComponents();
@@ -41,32 +55,17 @@ public class AdicionarDocumento extends javax.swing.JFrame {
         tituloPagina = new javax.swing.JLabel();
         jLayeredPane5 = new javax.swing.JLayeredPane();
         cancelarAcao = new javax.swing.JButton();
-        concluirCadastro = new javax.swing.JButton();
+        concluirAdicao = new javax.swing.JButton();
         jLayeredPane6 = new javax.swing.JLayeredPane();
-        credenciais = new javax.swing.JLayeredPane();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
-        password = new javax.swing.JPasswordField();
-        confirmPass = new javax.swing.JPasswordField();
-        jSeparator1 = new javax.swing.JSeparator();
         dadosPessoais = new javax.swing.JLayeredPane();
-        cpf = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        nomeCompleto = new javax.swing.JTextField();
-        nomeApresentacao = new javax.swing.JTextField();
+        tituloDocumento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
-        cargo = new javax.swing.JTextField();
-        telefone = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        temporalidade = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
+        procurarArquivo = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        listaGrupo = new javax.swing.JTextField();
         voltar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -239,7 +238,7 @@ public class AdicionarDocumento extends javax.swing.JFrame {
 
         tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        tituloPagina.setText("Cadastrar Usuário");
+        tituloPagina.setText("Adicionar Documento");
 
         cancelarAcao.setBackground(new java.awt.Color(185, 8, 0));
         cancelarAcao.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -251,196 +250,84 @@ public class AdicionarDocumento extends javax.swing.JFrame {
             }
         });
 
-        concluirCadastro.setBackground(new java.awt.Color(41, 105, 230));
-        concluirCadastro.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        concluirCadastro.setForeground(new java.awt.Color(229, 229, 229));
-        concluirCadastro.setText("Concluir");
-        concluirCadastro.addActionListener(new java.awt.event.ActionListener() {
+        concluirAdicao.setBackground(new java.awt.Color(41, 105, 230));
+        concluirAdicao.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        concluirAdicao.setForeground(new java.awt.Color(229, 229, 229));
+        concluirAdicao.setText("Concluir");
+        concluirAdicao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                concluirCadastroActionPerformed(evt);
+                concluirAdicaoActionPerformed(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel6.setText("*Confirme a Senha:");
+        jLayeredPane6.setToolTipText("");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel5.setText("*Senha:");
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel9.setText("*Usuário/Matrícula:");
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Credenciais");
-
-        username.setBackground(new java.awt.Color(255, 255, 255));
-        username.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        username.setForeground(new java.awt.Color(102, 102, 102));
-
-        password.setBackground(new java.awt.Color(255, 255, 255));
-        password.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        password.setForeground(new java.awt.Color(102, 102, 102));
-        password.addActionListener(new java.awt.event.ActionListener() {
+        tituloDocumento.setBackground(new java.awt.Color(255, 255, 255));
+        tituloDocumento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tituloDocumento.setForeground(new java.awt.Color(102, 102, 102));
+        tituloDocumento.setText("Exemplo: Titulo Documento");
+        tituloDocumento.putClientProperty("JTextField.placeholderText", "Exemplo: Titulo Documento");
+        tituloDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordActionPerformed(evt);
-            }
-        });
-
-        confirmPass.setBackground(new java.awt.Color(255, 255, 255));
-        confirmPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        confirmPass.setForeground(new java.awt.Color(102, 102, 102));
-        confirmPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmPassActionPerformed(evt);
-            }
-        });
-
-        jSeparator1.setBackground(new java.awt.Color(41, 105, 230));
-        jSeparator1.setForeground(new java.awt.Color(41, 105, 230));
-
-        credenciais.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        credenciais.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        credenciais.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        credenciais.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        credenciais.setLayer(username, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        credenciais.setLayer(password, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        credenciais.setLayer(confirmPass, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        credenciais.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout credenciaisLayout = new javax.swing.GroupLayout(credenciais);
-        credenciais.setLayout(credenciaisLayout);
-        credenciaisLayout.setHorizontalGroup(
-            credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(credenciaisLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(credenciaisLayout.createSequentialGroup()
-                        .addGroup(credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                        .addGroup(credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(password)
-                            .addComponent(confirmPass, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(username, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(credenciaisLayout.createSequentialGroup()
-                        .addGroup(credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        credenciaisLayout.setVerticalGroup(
-            credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(credenciaisLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel12)
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(12, 12, 12)
-                .addGroup(credenciaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addContainerGap())
-        );
-
-        cpf.setBackground(new java.awt.Color(255, 255, 255));
-        cpf.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cpf.setForeground(new java.awt.Color(102, 102, 102));
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel10.setText("*Tel. Comercial:");
-
-        nomeCompleto.setBackground(new java.awt.Color(255, 255, 255));
-        nomeCompleto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        nomeCompleto.setForeground(new java.awt.Color(102, 102, 102));
-        nomeCompleto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeCompletoActionPerformed(evt);
-            }
-        });
-
-        nomeApresentacao.setBackground(new java.awt.Color(255, 255, 255));
-        nomeApresentacao.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        nomeApresentacao.setForeground(new java.awt.Color(102, 102, 102));
-        nomeApresentacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeApresentacaoActionPerformed(evt);
+                tituloDocumentoActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel3.setText("Nome Preferencial:");
+        jLabel3.setText("*Título:");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel1.setText("*Nome Completo:");
+        jLabel1.setText("*Selecione um arquivo:");
 
-        email.setBackground(new java.awt.Color(255, 255, 255));
-        email.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        email.setForeground(new java.awt.Color(102, 102, 102));
-
-        cargo.setBackground(new java.awt.Color(255, 255, 255));
-        cargo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cargo.setForeground(new java.awt.Color(102, 102, 102));
-
-        telefone.setBackground(new java.awt.Color(255, 255, 255));
-        telefone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        telefone.setForeground(new java.awt.Color(102, 102, 102));
-        telefone.addActionListener(new java.awt.event.ActionListener() {
+        temporalidade.setBackground(new java.awt.Color(255, 255, 255));
+        temporalidade.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        temporalidade.setForeground(new java.awt.Color(102, 102, 102));
+        temporalidade.setText("Exemplo: 15");
+        temporalidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                telefoneActionPerformed(evt);
+                temporalidadeActionPerformed(evt);
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel7.setText("*CPF:");
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel4.setText("*E-mail:");
+        jLabel4.setText("Temporalidade:");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel8.setText("*Cargo:");
+        procurarArquivo.setBackground(new java.awt.Color(41, 105, 230));
+        procurarArquivo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        procurarArquivo.setForeground(new java.awt.Color(229, 229, 229));
+        procurarArquivo.setText("Procurar");
+        procurarArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                procurarArquivoActionPerformed(evt);
+            }
+        });
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Dados Pessoais");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(229, 229, 229));
+        jLabel5.setText("Permissões:");
 
-        jSeparator2.setBackground(new java.awt.Color(41, 105, 230));
-        jSeparator2.setForeground(new java.awt.Color(41, 105, 230));
+        listaGrupo.setBackground(new java.awt.Color(255, 255, 255));
+        listaGrupo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        listaGrupo.setForeground(new java.awt.Color(102, 102, 102));
+        listaGrupo.setText("Exemplo: GRUPO1");
+        listaGrupo.setToolTipText("");
+        listaGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaGrupoActionPerformed(evt);
+            }
+        });
 
-        dadosPessoais.setLayer(cpf, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(nomeCompleto, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(nomeApresentacao, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(tituloDocumento, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dadosPessoais.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dadosPessoais.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(email, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(cargo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(telefone, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(temporalidade, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dadosPessoais.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(jSeparator2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(procurarArquivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(listaGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dadosPessoaisLayout = new javax.swing.GroupLayout(dadosPessoais);
         dadosPessoais.setLayout(dadosPessoaisLayout);
@@ -449,64 +336,43 @@ public class AdicionarDocumento extends javax.swing.JFrame {
             .addGroup(dadosPessoaisLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dadosPessoaisLayout.createSequentialGroup()
-                        .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(telefone)
-                            .addComponent(cargo)
-                            .addComponent(cpf)
-                            .addComponent(email)
-                            .addComponent(nomeApresentacao)
-                            .addComponent(nomeCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(dadosPessoaisLayout.createSequentialGroup()
-                        .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(listaGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                    .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(temporalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                        .addComponent(tituloDocumento))
+                    .addComponent(procurarArquivo))
                 .addContainerGap())
         );
         dadosPessoaisLayout.setVerticalGroup(
             dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dadosPessoaisLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel11)
-                .addGap(2, 2, 2)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(3, 3, 3)
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel1)
+                    .addComponent(procurarArquivo))
+                .addGap(20, 20, 20)
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeApresentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tituloDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(temporalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addContainerGap())
+                    .addComponent(listaGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
-        jLayeredPane6.setLayer(credenciais, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel4.getAccessibleContext().setAccessibleDescription("Validade do documento em anos");
+
         jLayeredPane6.setLayer(dadosPessoais, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane6Layout = new javax.swing.GroupLayout(jLayeredPane6);
@@ -515,21 +381,17 @@ public class AdicionarDocumento extends javax.swing.JFrame {
             jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(credenciais)
-                    .addComponent(dadosPessoais)))
+                .addComponent(dadosPessoais))
         );
         jLayeredPane6Layout.setVerticalGroup(
             jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane6Layout.createSequentialGroup()
                 .addComponent(dadosPessoais)
-                .addGap(71, 71, 71)
-                .addComponent(credenciais)
-                .addContainerGap())
+                .addGap(274, 274, 274))
         );
 
         jLayeredPane5.setLayer(cancelarAcao, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane5.setLayer(concluirCadastro, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(concluirAdicao, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane5.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane5Layout = new javax.swing.GroupLayout(jLayeredPane5);
@@ -540,10 +402,10 @@ public class AdicionarDocumento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane5Layout.createSequentialGroup()
-                        .addComponent(concluirCadastro)
+                        .addComponent(concluirAdicao)
                         .addGap(40, 40, 40)
                         .addComponent(cancelarAcao)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 249, Short.MAX_VALUE))
                     .addComponent(jLayeredPane6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -551,10 +413,10 @@ public class AdicionarDocumento extends javax.swing.JFrame {
             jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane5Layout.createSequentialGroup()
                 .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelarAcao)
-                    .addComponent(concluirCadastro))
+                    .addComponent(concluirAdicao))
                 .addContainerGap())
         );
 
@@ -668,7 +530,7 @@ public class AdicionarDocumento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
-        TelasUtil.trocarTela(AdicionarDocumento.this, new Usuarios());
+        TelasUtil.voltar();
     }//GEN-LAST:event_voltarMouseClicked
 
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked
@@ -699,85 +561,112 @@ public class AdicionarDocumento extends javax.swing.JFrame {
         TelasUtil.trocarTela(AdicionarDocumento.this, new Usuarios());
     }//GEN-LAST:event_cancelarAcaoActionPerformed
 
-    private void concluirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirCadastroActionPerformed
+    private void concluirAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirAdicaoActionPerformed
         try {
-            // Verifica campos obrigatórios
-            if (!nomeCompleto.getText().isEmpty() && !email.getText().isEmpty() && !cargo.getText().isEmpty()
-                    && !telefone.getText().isEmpty() && !username.getText().isEmpty()
-                    && !String.valueOf(confirmPass.getPassword()).isEmpty()
-                    && !String.valueOf(password.getPassword()).isEmpty() && !cpf.getText().isEmpty()) {
+            // Verifica se um arquivo foi selecionado
+            if (arquivoSelecionado.exists()) {
 
-                // Verifica se senhas estão iguais
-                if (String.valueOf(password.getPassword()).equals(String.valueOf(confirmPass.getPassword()))) {
+                // Verifica se há um título para o documento
+                if (!tituloDocumento.getText().isEmpty() || tituloDocumento.getText() != null) {
 
-                    // Verifica se a senha possui no mínimo 8 dígitos
-                    if (password.getPassword().length >= 8) {
-                        Usuario usuario = new Usuario(nomeCompleto.getText(), nomeApresentacao.getText(), cpf.getText(),
-                                email.getText(), cargo.getText(), telefone.getText(), username.getText(),
-                                String.valueOf(password.getPassword()));
-                        boolean result;
-                        result = Usuario.cadastrarUsuario(usuario);
+                    Documento documentoAdicionar = new Documento(tituloDocumento.getText(), arquivoSelecionado.getAbsolutePath(), usuario.getUsername(),
+                            getExtensaoArquivo(), 1, Integer.valueOf(temporalidade.getText()), null, usuario.getId());
+                    int idGerado = Documento.adicionarDocumento(documentoAdicionar);
 
-                        // Verifica se o usuario foi criado ou nao
-                        if (result) {
+                    //   List<String> listaGrupos = new ArrayList<>();
+                    if (idGerado != -1) {
+                        if (!listaGrupo.getText().contains("Exemplo:") || listaGrupo.getText().trim().isEmpty()) {
+                            List<String> listaGrupos = Arrays.asList(listaGrupo.getText().trim().split(","));
+                            List<Integer> listaIdsGrupos = new ArrayList<>();
+
+                            for (String grupo : listaGrupos) {
+                                listaIdsGrupos.add(Grupo.obterIdGrupoPorNome(grupo));
+                            }
+
+                            boolean resultAssociacao = false;
+                            // Adiciona documento ao grupo(s)
+                            for (Integer idGrupo : listaIdsGrupos) {
+                                resultAssociacao = Grupo.adicionarDocumentoAoGrupo(idGerado, idGrupo);
+                            }
+
+                            if (resultAssociacao) {
+                                JOptionPane
+                                        .showMessageDialog(null,
+                                                String.format("Documento criado e grupo(s) associado(s) com sucesso!",
+                                                        usuario.getUsername()),
+                                                "Adição de Documento", JOptionPane.INFORMATION_MESSAGE, null);
+                                TelasUtil.trocarTela(AdicionarDocumento.this, new HomeAdmin());
+                            }
+                        } else {
                             JOptionPane
                                     .showMessageDialog(null,
-                                            String.format("O usuário \"%s\" foi cadastrado com sucesso!",
+                                            String.format("Documento criado com sucesso!",
                                                     usuario.getUsername()),
-                                            "Cadastro", JOptionPane.INFORMATION_MESSAGE, null);
-                            TelasUtil.trocarTela(AdicionarDocumento.this, new Usuarios());
-                        } else {
-                            JOptionPane.showMessageDialog(null,
-                                    String.format("Erro ao criar usuário \"%s\". Tente novamente!", usuario.getUsername()), "Cadastro",
-                                    JOptionPane.ERROR_MESSAGE, null);
+                                            "Adição de Documento", JOptionPane.INFORMATION_MESSAGE, null);
+                            TelasUtil.trocarTela(AdicionarDocumento.this, new HomeAdmin());
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, String.format("A senha deve possuir no mínimo 8 dígitos"),
-                                "Cadastro", JOptionPane.WARNING_MESSAGE, null);
+                        JOptionPane.showMessageDialog(null,
+                                String.format("Erro ao adicionar documento. Tente novamente!", usuario.getUsername()), "Adição de Documento",
+                                JOptionPane.ERROR_MESSAGE, null);
                     }
+
                 } else {
                     JOptionPane.showMessageDialog(null,
-                            "As senhas informadas não correspondem. \nVerifique e tente novamente!", "Cadastro",
-                            JOptionPane.WARNING_MESSAGE, null);
+                            "Informe um título para o documento",
+                            "Adição de Documento", JOptionPane.WARNING_MESSAGE, null);
                 }
             } else {
                 JOptionPane.showMessageDialog(null,
-                        "Um ou mais campos obrigatórios não foram preenchidos. \nVerifique e tente novamente!",
-                        "Cadastro", JOptionPane.WARNING_MESSAGE, null);
+                        "Nenhum arquivo selecionado para adicionar.",
+                        "Adição de Documento", JOptionPane.WARNING_MESSAGE, null);
             }
-        } catch (SQLException e) {
-            if (e.getMessage().contains("username_UNIQUE")) {
-                JOptionPane.showMessageDialog(null,
-                        String.format("Já existe um usuário para \"%s\"", username.getText()), "Cadastro",
-                        JOptionPane.WARNING_MESSAGE, null);
-            } else if (e.getMessage().contains("cpf_UNIQUE")) {
-                JOptionPane.showMessageDialog(null,
-                        String.format("Já existe um usuário com o CPF \"%s\"", cpf.getText()), "Cadastro",
-                        JOptionPane.WARNING_MESSAGE, null);
-            }
-
+        } catch (SQLException ex) {
+            Logger.getLogger(AdicionarDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_concluirCadastroActionPerformed
+    }//GEN-LAST:event_concluirAdicaoActionPerformed
 
-    private void nomeCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeCompletoActionPerformed
+    private void tituloDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloDocumentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nomeCompletoActionPerformed
+    }//GEN-LAST:event_tituloDocumentoActionPerformed
 
-    private void nomeApresentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeApresentacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomeApresentacaoActionPerformed
+    private void procurarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarArquivoActionPerformed
+        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-    private void telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_telefoneActionPerformed
+        int returnValue = fileChooser.showOpenDialog(null);
 
-    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordActionPerformed
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            arquivoSelecionado = fileChooser.getSelectedFile();
+            tituloDocumento.setBackground(new java.awt.Color(255, 255, 255));
+            tituloDocumento.setText(getNomeArquivo());
+        }
+    }//GEN-LAST:event_procurarArquivoActionPerformed
 
-    private void confirmPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPassActionPerformed
+    private void temporalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temporalidadeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_confirmPassActionPerformed
+    }//GEN-LAST:event_temporalidadeActionPerformed
+
+    private void listaGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaGrupoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaGrupoActionPerformed
+
+    private String getNomeArquivo() {
+        int i = arquivoSelecionado.getName().lastIndexOf(".");
+        if (i > 0) {
+            return arquivoSelecionado.getName().substring(0, i);
+        } else {
+            return arquivoSelecionado.getName();
+        }
+    }
+
+    private String getExtensaoArquivo() {
+        int i = arquivoSelecionado.getName().lastIndexOf(".");
+        if (i > 0 && i < arquivoSelecionado.getName().length() - 1) {
+            return arquivoSelecionado.getName().substring(i + 1);
+        } else {
+            return "";
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -831,14 +720,9 @@ public class AdicionarDocumento extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelarAcao;
-    private javax.swing.JTextField cargo;
-    private javax.swing.JButton concluirCadastro;
-    private javax.swing.JPasswordField confirmPass;
+    private javax.swing.JButton concluirAdicao;
     private javax.swing.JPanel conteudo;
-    private javax.swing.JTextField cpf;
-    private javax.swing.JLayeredPane credenciais;
     private javax.swing.JLayeredPane dadosPessoais;
-    private javax.swing.JTextField email;
     private javax.swing.JLabel fotoPerfil;
     private javax.swing.JLabel itemEditarPerfil;
     private javax.swing.JLabel itemGrupos1;
@@ -847,34 +731,25 @@ public class AdicionarDocumento extends javax.swing.JFrame {
     private javax.swing.JLabel itemUsuarios1;
     private javax.swing.JLayeredPane itens1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JLayeredPane jLayeredPane4;
     private javax.swing.JLayeredPane jLayeredPane5;
     private javax.swing.JLayeredPane jLayeredPane6;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator linhaSeparadora;
+    private javax.swing.JTextField listaGrupo;
     private javax.swing.JPanel menu;
-    private javax.swing.JTextField nomeApresentacao;
-    private javax.swing.JTextField nomeCompleto;
-    private javax.swing.JPasswordField password;
+    private javax.swing.JButton procurarArquivo;
     private javax.swing.JLabel saudacaoUsuario;
-    private javax.swing.JTextField telefone;
+    private javax.swing.JTextField temporalidade;
+    private javax.swing.JTextField tituloDocumento;
     private javax.swing.JLabel tituloPagina;
-    private javax.swing.JTextField username;
     private javax.swing.JLabel voltar;
     // End of variables declaration//GEN-END:variables
+
 }

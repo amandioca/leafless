@@ -505,7 +505,6 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
                 List<String> listaGrupos = Arrays.asList(grupos.getText().trim().split(","));
                 List<String> listaUsuarios = Arrays.asList(usuarios.getText().trim().split(","));
 
-                // Adiciona usuário(s) ao grupo(s)
                 List<String> listaErros = new ArrayList<>();
                 List<Integer> listaIdsUsuarios = new ArrayList<>();
                 for (String usuario : listaUsuarios) {
@@ -517,6 +516,7 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
                     listaIdsGrupos.add(Grupo.obterIdGrupoPorNome(grupo));
                 }
 
+                // Adiciona usuário(s) ao grupo(s)
                 for (Integer idGrupo : listaIdsGrupos) {
                     boolean resultAssociacao = Grupo.adicionarUsuarioAoGrupo(listaIdsUsuarios, idGrupo);
                     if (!resultAssociacao) {
