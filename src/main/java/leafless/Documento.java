@@ -26,9 +26,60 @@ public class Documento {
     private int temporalidade;
     private List<Grupo> permissoes;
 
-    public static void abrirDocumento(int id) throws SQLException {
-        String caminho = obterCaminhoDocumentoPorId(id);
+    public static boolean excluirDocumentoPorId(int idDocumento) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            // Excluir associação
+            String sqlDeleteRelacionados = "DELETE FROM tb_grupos_mtm_documentos WHERE tb_documentos_id = ?";
+            PreparedStatement psDeleteRelacionados = connection.prepareStatement(sqlDeleteRelacionados);
+            psDeleteRelacionados.setInt(1, idDocumento);
+            psDeleteRelacionados.executeUpdate();
 
+            // Excluir grupos
+            String sqlDeleteGrupo = "DELETE FROM tb_documentos WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sqlDeleteGrupo);
+            ps.setInt(1, idDocumento);
+
+            int rowsDeleted = ps.executeUpdate();
+            if (rowsDeleted > 0) {
+                return true;
+            }
+            return false;
+        } finally {
+            connection.close();
+        }
+    }
+
+    public static Documento obterDocumentoPorId(int idDocumento) throws SQLException {
+        Connection connection = Conexao.fazConexao();
+        try {
+            String sql = "SELECT * FROM db_leafless.tb_documentos WHERE id = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, idDocumento);
+
+            ResultSet rs = ps.executeQuery();
+
+            Documento documento = new Documento();
+            if (rs.next()) {
+                documento.setId(rs.getInt("id"));
+                documento.setTitulo(rs.getString("titulo"));
+                documento.setCaminho(rs.getString("caminho"));
+                documento.setAutor(rs.getString("nome_autor"));
+                documento.setExtensao(rs.getString("extensao"));
+                documento.setTemporalidade(rs.getInt("temporalidade"));
+                documento.setDataInclusao(rs.getTimestamp("data_inclusao").toLocalDateTime());
+                documento.setVersao(rs.getInt("versao"));;
+                documento.setPermissoes(Grupo.obterListaGrupoPorIdDocumento(rs.getInt("id")));
+
+                return documento;
+            }
+            return null;
+        } finally {
+            connection.close();
+        }
+    }
+
+    public static void abrirDocumento(String caminho) throws SQLException {
         File arquivo = new File(caminho);
         if (arquivo.exists()) {
             try {
@@ -37,7 +88,7 @@ public class Documento {
                 e.printStackTrace();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "O documento solicitado não foi encontrado.", "Visualizador",
+            JOptionPane.showMessageDialog(null, "O documento solicitado não foi encontrado.", "Visualização de Documento",
                     JOptionPane.ERROR_MESSAGE, null);
         }
     }
@@ -55,6 +106,7 @@ public class Documento {
             List<Documento> documentos = new ArrayList<>();
             while (rs.next()) {
                 Documento documento = new Documento();
+                documento.setId(rs.getInt("id"));
                 documento.setTitulo(rs.getString("titulo"));
                 documento.setCaminho(rs.getString("caminho"));
                 documento.setAutor(rs.getString("nome_autor"));

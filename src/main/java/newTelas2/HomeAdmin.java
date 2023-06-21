@@ -29,9 +29,10 @@ public class HomeAdmin extends javax.swing.JFrame {
     Usuario usuario = new Usuario();
     private DefaultTableModel modeloTabela;
     private DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+    private Documento documentoSelecionado = new Documento();
 
     public HomeAdmin() {
-        getTodosDocumentosUsuario();
+        modeloTabela = montarModel(getTodosDocumentosUsuario());
         initComponents();
         TelasUtil.init(this);
     }
@@ -62,6 +63,10 @@ public class HomeAdmin extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         filtroTodosDocumentos = new javax.swing.JToggleButton();
+        botaoAdicionar = new javax.swing.JLabel();
+        botaoVisualizar = new javax.swing.JLabel();
+        botaoExcluir = new javax.swing.JLabel();
+        botaoRecarregar = new javax.swing.JLabel();
 
         filtroMeusDocumentos.setBackground(new java.awt.Color(41, 105, 230));
         filtroMeusDocumentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -93,6 +98,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         itemInicio1.setForeground(new java.awt.Color(255, 255, 255));
         itemInicio1.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\itens-menu\\inicio.png")); // NOI18N
         itemInicio1.setText("  Início");
+        itemInicio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemInicio1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 itemInicio1MouseClicked(evt);
@@ -103,6 +109,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         itemGrupos1.setForeground(new java.awt.Color(255, 255, 255));
         itemGrupos1.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\itens-menu\\grupo.png")); // NOI18N
         itemGrupos1.setText("  Grupos");
+        itemGrupos1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemGrupos1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 itemGrupos1MouseClicked(evt);
@@ -113,6 +120,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         itemSair1.setForeground(new java.awt.Color(255, 255, 255));
         itemSair1.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\itens-menu\\sair.png")); // NOI18N
         itemSair1.setText("  Sair");
+        itemSair1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemSair1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 itemSair1MouseClicked(evt);
@@ -123,6 +131,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         itemUsuarios1.setForeground(new java.awt.Color(255, 255, 255));
         itemUsuarios1.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\itens-menu\\usuarios.png")); // NOI18N
         itemUsuarios1.setText("  Usuários");
+        itemUsuarios1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemUsuarios1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 itemUsuarios1MouseClicked(evt);
@@ -175,6 +184,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         itemEditarPerfil.setForeground(new java.awt.Color(255, 255, 255));
         itemEditarPerfil.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\itens-menu\\editar.png")); // NOI18N
         itemEditarPerfil.setText(" Editar perfil");
+        itemEditarPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         itemEditarPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 itemEditarPerfilMouseClicked(evt);
@@ -250,9 +260,11 @@ public class HomeAdmin extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(modeloTabela);
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
+        jTable1.setName(""); // NOI18N
         jTable1.setRowHeight(24);
         jTable1.setSelectionBackground(new java.awt.Color(41, 105, 230));
         jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
@@ -353,6 +365,50 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addContainerGap(137, Short.MAX_VALUE))
         );
 
+        botaoAdicionar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        botaoAdicionar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\adicionar.png")); // NOI18N
+        botaoAdicionar.setText("  Adicionar");
+        botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAdicionarMouseClicked(evt);
+            }
+        });
+
+        botaoVisualizar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        botaoVisualizar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoVisualizar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\visualizar.png")); // NOI18N
+        botaoVisualizar.setText("  Visualizar");
+        botaoVisualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVisualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoVisualizarMouseClicked(evt);
+            }
+        });
+
+        botaoExcluir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        botaoExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        botaoExcluir.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\excluir.png")); // NOI18N
+        botaoExcluir.setText("  Excluir");
+        botaoExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoExcluirMouseClicked(evt);
+            }
+        });
+
+        botaoRecarregar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        botaoRecarregar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoRecarregar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\documento\\recarregar.png")); // NOI18N
+        botaoRecarregar.setText("  Recarregar");
+        botaoRecarregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRecarregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoRecarregarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout conteudoLayout = new javax.swing.GroupLayout(conteudo);
         conteudo.setLayout(conteudoLayout);
         conteudoLayout.setHorizontalGroup(
@@ -360,13 +416,30 @@ public class HomeAdmin extends javax.swing.JFrame {
             .addGroup(conteudoLayout.createSequentialGroup()
                 .addGap(152, 152, 152)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(526, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoAdicionar)
+                    .addComponent(botaoVisualizar)
+                    .addComponent(botaoExcluir)
+                    .addComponent(botaoRecarregar))
+                .addContainerGap(467, Short.MAX_VALUE))
         );
         conteudoLayout.setVerticalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(conteudoLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(conteudoLayout.createSequentialGroup()
+                        .addGap(241, 241, 241)
+                        .addComponent(botaoAdicionar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoVisualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoRecarregar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -457,26 +530,83 @@ public class HomeAdmin extends javax.swing.JFrame {
         if (selectedRow != -1) {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             int idDocumento = (int) model.getValueAt(selectedRow, 5);
-
-            Object[] options = {"Sim", "Cancelar"};
-            int resposta = JOptionPane.showOptionDialog(null, "Deseja visualizar este documento?", "Visualizador", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            if (resposta == JOptionPane.YES_OPTION) {
-                try {
-                    Documento.abrirDocumento(idDocumento);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                // Obtém documento através do id selecionado na tabela
+                documentoSelecionado = Documento.obterDocumentoPorId(idDocumento);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void getTodosDocumentosUsuario() {
+    private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
+        
+    }//GEN-LAST:event_botaoAdicionarMouseClicked
+
+    private void botaoVisualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoVisualizarMouseClicked
+        if (documentoSelecionado.getId() != 0) {
+            try {
+                Documento.abrirDocumento(documentoSelecionado.getCaminho());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um documento na tabela para visualizá-lo.", "Visualização de Documento",
+                    JOptionPane.INFORMATION_MESSAGE, null);
+        }
+    }//GEN-LAST:event_botaoVisualizarMouseClicked
+
+    private void botaoExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoExcluirMouseClicked
+        if (documentoSelecionado.getId() != 0) {
+            try {
+                Object[] options = {"Excluir", "Cancelar"};
+                int resposta = JOptionPane.showOptionDialog(null, String.format("Tem certeza que deseja excluir o documento \"%s\"?",
+                        documentoSelecionado.getTitulo()), "Exclusão de Documento", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                // Confirma a exclusão
+                if (resposta == JOptionPane.YES_OPTION) {
+                    // Executa query de exclusão
+                    boolean resultado = Documento.excluirDocumentoPorId(documentoSelecionado.getId());
+                    // Verifica o resultado
+                    if (resultado) {
+                        JOptionPane
+                                .showMessageDialog(null,
+                                        String.format("O documento \"%s\" foi excluído com sucesso!",
+                                                documentoSelecionado.getTitulo()),
+                                        "Exclusão de Documento", JOptionPane.INFORMATION_MESSAGE, null);
+                        reloadTable();
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                String.format("Erro ao excluir documento \"%s\". Tente novamente!", documentoSelecionado.getTitulo()), "Exclusão de Documento",
+                                JOptionPane.ERROR_MESSAGE, null);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um documento na tabela para excluí-lo.", "Exclusão de Documento",
+                    JOptionPane.INFORMATION_MESSAGE, null);
+        }
+    }//GEN-LAST:event_botaoExcluirMouseClicked
+
+    private void botaoRecarregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRecarregarMouseClicked
+        reloadTable();
+    }//GEN-LAST:event_botaoRecarregarMouseClicked
+
+    private void reloadTable() {
+        DefaultTableModel novoModelo = montarModel(getTodosDocumentosUsuario());
+        jTable1.setModel(novoModelo);
+    }
+
+    private List<Documento> getTodosDocumentosUsuario() {
         try {
             List<Documento> listaDocumentos = Documento.obterListaDocumentos(usuario.getId());
-            modeloTabela = montarModel(listaDocumentos);
+            return listaDocumentos;
+//            modeloTabela = montarModel(listaDocumentos);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
@@ -515,6 +645,10 @@ public class HomeAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel botaoAdicionar;
+    private javax.swing.JLabel botaoExcluir;
+    private javax.swing.JLabel botaoRecarregar;
+    private javax.swing.JLabel botaoVisualizar;
     private javax.swing.JPanel conteudo;
     private javax.swing.JLayeredPane dadosPessoais2;
     private javax.swing.JToggleButton filtroMeusDocumentos;
