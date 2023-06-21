@@ -1,30 +1,27 @@
-package newTelas2.usuario;
+package telas.grupo;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import newTelas2.usuario.Usuarios;
+import telas.grupo.Grupos;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import leafless.Documento;
 import leafless.Grupo;
 import leafless.Usuario;
-import newTelas2.AssociarGrupoUsuario;
-import newTelas2.TelasUtil;
-import newTelas2.grupo.CriarGrupo;
-import newTelas2.grupo.ExcluirGrupo;
-import newTelas2.grupo.Grupos;
-import newTelas2.usuario.AlterarSenha;
-import newTelas2.HomeAdmin;
-import newTelas2.usuario.Perfil;
-import newTelas2.usuario.Usuarios;
+import telas.AssociarGrupoUsuario;
+import telas.TelasUtil;
+import telas.usuario.AlterarSenha;
+import telas.HomeAdmin;
+import telas.usuario.Perfil;
+import telas.usuario.Usuarios;
 
-public class Usuarios extends javax.swing.JFrame {
+public class Grupos extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
 
-    public Usuarios() {
+    public Grupos() {
         initComponents();
         TelasUtil.init(this);
     }
@@ -50,9 +47,9 @@ public class Usuarios extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         tituloPagina = new javax.swing.JLabel();
         grupoTabelaDocumentos = new javax.swing.JLayeredPane();
-        cadastrarUsuario = new javax.swing.JLabel();
-        associarGrupo = new javax.swing.JLabel();
-        deletarUsuario = new javax.swing.JLabel();
+        criarGrupo = new javax.swing.JLabel();
+        associarUsuario = new javax.swing.JLabel();
+        excluirGrupo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 8, 80));
@@ -202,38 +199,38 @@ public class Usuarios extends javax.swing.JFrame {
 
         tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        tituloPagina.setText("Administrar Usuários");
+        tituloPagina.setText("Administrar Grupos");
 
-        cadastrarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        cadastrarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        cadastrarUsuario.setText("Cadastrar Usuário");
-        cadastrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        criarGrupo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        criarGrupo.setForeground(new java.awt.Color(255, 255, 255));
+        criarGrupo.setText("Criar Grupo");
+        criarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cadastrarUsuarioMouseClicked(evt);
+                criarGrupoMouseClicked(evt);
             }
         });
 
-        associarGrupo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        associarGrupo.setForeground(new java.awt.Color(255, 255, 255));
-        associarGrupo.setText("Associar a um Grupo");
-        associarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+        associarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        associarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        associarUsuario.setText("Associar Usuário");
+        associarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                associarGrupoMouseClicked(evt);
+                associarUsuarioMouseClicked(evt);
             }
         });
 
-        deletarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        deletarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        deletarUsuario.setText("Deletar Usuário");
-        deletarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        excluirGrupo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        excluirGrupo.setForeground(new java.awt.Color(255, 255, 255));
+        excluirGrupo.setText("Excluir Grupo");
+        excluirGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                deletarUsuarioMouseClicked(evt);
+                excluirGrupoMouseClicked(evt);
             }
         });
 
-        grupoTabelaDocumentos.setLayer(cadastrarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTabelaDocumentos.setLayer(associarGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTabelaDocumentos.setLayer(deletarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTabelaDocumentos.setLayer(criarGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTabelaDocumentos.setLayer(associarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTabelaDocumentos.setLayer(excluirGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout grupoTabelaDocumentosLayout = new javax.swing.GroupLayout(grupoTabelaDocumentos);
         grupoTabelaDocumentos.setLayout(grupoTabelaDocumentosLayout);
@@ -241,19 +238,19 @@ public class Usuarios extends javax.swing.JFrame {
             grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(grupoTabelaDocumentosLayout.createSequentialGroup()
                 .addGroup(grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cadastrarUsuario)
-                    .addComponent(associarGrupo)
-                    .addComponent(deletarUsuario))
+                    .addComponent(criarGrupo)
+                    .addComponent(associarUsuario)
+                    .addComponent(excluirGrupo))
                 .addGap(0, 612, Short.MAX_VALUE))
         );
         grupoTabelaDocumentosLayout.setVerticalGroup(
             grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(grupoTabelaDocumentosLayout.createSequentialGroup()
-                .addComponent(cadastrarUsuario)
+                .addComponent(criarGrupo)
                 .addGap(18, 18, 18)
-                .addComponent(deletarUsuario)
+                .addComponent(excluirGrupo)
                 .addGap(18, 18, 18)
-                .addComponent(associarGrupo)
+                .addComponent(associarUsuario)
                 .addGap(0, 298, Short.MAX_VALUE))
         );
 
@@ -338,42 +335,45 @@ public class Usuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cadastrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarUsuarioMouseClicked
-        TelasUtil.trocarTela(Usuarios.this, new Cadastrar());
-    }//GEN-LAST:event_cadastrarUsuarioMouseClicked
+    private void criarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarGrupoMouseClicked
+        TelasUtil.trocarTela(Grupos.this, new CriarGrupo());
+    }//GEN-LAST:event_criarGrupoMouseClicked
 
-    private void deletarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletarUsuarioMouseClicked
-        TelasUtil.trocarTela(Usuarios.this, new DeletarUsuario());
-    }//GEN-LAST:event_deletarUsuarioMouseClicked
+    private void excluirGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_excluirGrupoMouseClicked
+        TelasUtil.trocarTela(Grupos.this, new ExcluirGrupo());
+    }//GEN-LAST:event_excluirGrupoMouseClicked
 
-    private void associarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associarGrupoMouseClicked
-        TelasUtil.trocarTela(this, new AssociarGrupoUsuario(this));
-    }//GEN-LAST:event_associarGrupoMouseClicked
-    // GEN-LAST:event_alterarSenhaActionPerformed
+    private void associarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associarUsuarioMouseClicked
+        TelasUtil.trocarTela(Grupos.this, new AssociarGrupoUsuario(this));
+    }//GEN-LAST:event_associarUsuarioMouseClicked
+
+    private void alterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_alterarSenhaActionPerformed
+        TelasUtil.trocarTela(Grupos.this, new AlterarSenha());
+    }// GEN-LAST:event_alterarSenhaActionPerformed
 
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemInicio1MouseClicked
-        TelasUtil.trocarTela(Usuarios.this, new HomeAdmin());
+        TelasUtil.trocarTela(Grupos.this, new HomeAdmin());
     }// GEN-LAST:event_itemInicio1MouseClicked
 
     private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemGrupos1MouseClicked
-        TelasUtil.trocarTela(Usuarios.this, new Grupos());
+        JOptionPane.showMessageDialog(null, "Você já está nessa opção do menu!", "Administrar Grupos",
+                JOptionPane.INFORMATION_MESSAGE, null);
     }// GEN-LAST:event_itemGrupos1MouseClicked
 
     private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemSair1MouseClicked
         Object[] options = {"Sair", "Cancelar"};
         int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (resposta == JOptionPane.YES_OPTION) {
-            Usuario.logout(Usuarios.this);
+            Usuario.logout(Grupos.this);
         }
     }// GEN-LAST:event_itemSair1MouseClicked
 
     private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemUsuarios1MouseClicked
-        JOptionPane.showMessageDialog(null, "Você já está nessa opção do menu!", "Administrar Usuários",
-                JOptionPane.INFORMATION_MESSAGE, null);
+        TelasUtil.trocarTela(Grupos.this, new Usuarios());
     }// GEN-LAST:event_itemUsuarios1MouseClicked
 
     private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemEditarPerfilMouseClicked
-        TelasUtil.trocarTela(Usuarios.this, new Perfil());
+        TelasUtil.trocarTela(Grupos.this, new Perfil());
     }// GEN-LAST:event_itemEditarPerfilMouseClicked
 
     private DefaultTableModel modeloTabela() {
@@ -417,18 +417,14 @@ public class Usuarios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Grupos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Grupos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Grupos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Grupos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
         // </editor-fold>
         // </editor-fold>
         // </editor-fold>
@@ -437,16 +433,16 @@ public class Usuarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Usuarios().setVisible(true);
+                new Grupos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel associarGrupo;
-    private javax.swing.JLabel cadastrarUsuario;
+    private javax.swing.JLabel associarUsuario;
     private javax.swing.JPanel conteudo;
-    private javax.swing.JLabel deletarUsuario;
+    private javax.swing.JLabel criarGrupo;
+    private javax.swing.JLabel excluirGrupo;
     private javax.swing.JLabel fotoPerfil;
     private javax.swing.JLayeredPane grupoTabelaDocumentos;
     private javax.swing.JLabel itemEditarPerfil;

@@ -1,12 +1,12 @@
-package newTelas2.usuario;
+package telas.usuario;
 
-import newTelas2.HomeAdmin;
+import telas.HomeAdmin;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import leafless.Acesso;
 import leafless.Usuario;
-import newTelas2.TelasUtil;
-import newTelas2.grupo.Grupos;
+import telas.TelasUtil;
+import telas.grupo.Grupos;
 
 public class Cadastrar extends javax.swing.JFrame {
 

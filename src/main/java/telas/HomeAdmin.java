@@ -1,4 +1,4 @@
-package newTelas2;
+package telas;
 
 import java.awt.Font;
 import java.sql.SQLException;
@@ -13,13 +13,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import leafless.Documento;
 import leafless.Usuario;
-import newTelas2.Menu;
-import newTelas2.TelasUtil;
-import newTelas2.documento.AdicionarDocumento;
-import newTelas2.grupo.CriarGrupo;
-import newTelas2.grupo.Grupos;
-import newTelas2.usuario.Perfil;
-import newTelas2.usuario.Usuarios;
+import telas.Menu;
+import telas.TelasUtil;
+import telas.documento.AdicionarDocumento;
+import telas.grupo.CriarGrupo;
+import telas.grupo.Grupos;
+import telas.usuario.Perfil;
+import telas.usuario.Usuarios;
 
 /**
  *

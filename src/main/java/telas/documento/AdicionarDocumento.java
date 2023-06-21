@@ -1,28 +1,35 @@
-package newTelas2;
+package telas.documento;
 
+import java.awt.Color;
+import java.io.File;
+import telas.HomeAdmin;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 import leafless.Acesso;
+import leafless.Documento;
 import leafless.Grupo;
 import leafless.Usuario;
-import newTelas2.TelasUtil;
-import newTelas2.grupo.Grupos;
-import newTelas2.usuario.Perfil;
-import newTelas2.usuario.Usuarios;
+import telas.TelasUtil;
+import telas.grupo.Grupos;
+import telas.usuario.Perfil;
+import telas.usuario.Usuarios;
 
-public class AssociarGrupoUsuario extends javax.swing.JFrame {
+public class AdicionarDocumento extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
-    private static JFrame telaAnterior;
+    private File arquivoSelecionado;
+    private String caminhoArquivo;
 
-    public AssociarGrupoUsuario(JFrame tela) {
+    public AdicionarDocumento() {
         initComponents();
         TelasUtil.init(this);
-        this.telaAnterior = tela;
     }
 
     @SuppressWarnings("unchecked")
@@ -48,13 +55,17 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
         tituloPagina = new javax.swing.JLabel();
         jLayeredPane5 = new javax.swing.JLayeredPane();
         cancelarAcao = new javax.swing.JButton();
-        concluirCadastro = new javax.swing.JButton();
+        concluirAdicao = new javax.swing.JButton();
         jLayeredPane6 = new javax.swing.JLayeredPane();
         dadosPessoais = new javax.swing.JLayeredPane();
-        grupos = new javax.swing.JTextField();
-        usuarios = new javax.swing.JTextField();
+        tituloDocumento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        temporalidade = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        procurarArquivo = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        listaGrupo = new javax.swing.JTextField();
         voltar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -227,7 +238,7 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
 
         tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        tituloPagina.setText("Associar Grupo x Usuário");
+        tituloPagina.setText("Adicionar Documento");
 
         cancelarAcao.setBackground(new java.awt.Color(185, 8, 0));
         cancelarAcao.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -239,48 +250,84 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
             }
         });
 
-        concluirCadastro.setBackground(new java.awt.Color(41, 105, 230));
-        concluirCadastro.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        concluirCadastro.setForeground(new java.awt.Color(229, 229, 229));
-        concluirCadastro.setText("Concluir");
-        concluirCadastro.addActionListener(new java.awt.event.ActionListener() {
+        concluirAdicao.setBackground(new java.awt.Color(41, 105, 230));
+        concluirAdicao.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        concluirAdicao.setForeground(new java.awt.Color(229, 229, 229));
+        concluirAdicao.setText("Concluir");
+        concluirAdicao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                concluirCadastroActionPerformed(evt);
+                concluirAdicaoActionPerformed(evt);
             }
         });
 
-        grupos.setBackground(new java.awt.Color(255, 255, 255));
-        grupos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        grupos.setForeground(new java.awt.Color(102, 102, 102));
-        grupos.setText("Exemplo: GRUPO01, GRUPO02");
-        grupos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gruposActionPerformed(evt);
-            }
-        });
+        jLayeredPane6.setToolTipText("");
 
-        usuarios.setBackground(new java.awt.Color(255, 255, 255));
-        usuarios.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        usuarios.setForeground(new java.awt.Color(102, 102, 102));
-        usuarios.setText("Exemplo: usuario1, usuario2");
-        usuarios.addActionListener(new java.awt.event.ActionListener() {
+        tituloDocumento.setBackground(new java.awt.Color(255, 255, 255));
+        tituloDocumento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tituloDocumento.setForeground(new java.awt.Color(102, 102, 102));
+        tituloDocumento.setText("Exemplo: Titulo Documento");
+        tituloDocumento.putClientProperty("JTextField.placeholderText", "Exemplo: Titulo Documento");
+        tituloDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usuariosActionPerformed(evt);
+                tituloDocumentoActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel3.setText("Usuário(s):");
+        jLabel3.setText("*Título:");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(229, 229, 229));
-        jLabel1.setText("Grupo(s):");
+        jLabel1.setText("*Selecione um arquivo:");
 
-        dadosPessoais.setLayer(grupos, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        dadosPessoais.setLayer(usuarios, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        temporalidade.setBackground(new java.awt.Color(255, 255, 255));
+        temporalidade.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        temporalidade.setForeground(new java.awt.Color(102, 102, 102));
+        temporalidade.setText("Exemplo: 15");
+        temporalidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                temporalidadeActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(229, 229, 229));
+        jLabel4.setText("Temporalidade:");
+
+        procurarArquivo.setBackground(new java.awt.Color(41, 105, 230));
+        procurarArquivo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        procurarArquivo.setForeground(new java.awt.Color(229, 229, 229));
+        procurarArquivo.setText("Procurar");
+        procurarArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                procurarArquivoActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(229, 229, 229));
+        jLabel5.setText("Permissões:");
+
+        listaGrupo.setBackground(new java.awt.Color(255, 255, 255));
+        listaGrupo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        listaGrupo.setForeground(new java.awt.Color(102, 102, 102));
+        listaGrupo.setText("Exemplo: GRUPO1");
+        listaGrupo.setToolTipText("");
+        listaGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaGrupoActionPerformed(evt);
+            }
+        });
+
+        dadosPessoais.setLayer(tituloDocumento, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dadosPessoais.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dadosPessoais.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(temporalidade, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(procurarArquivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais.setLayer(listaGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dadosPessoaisLayout = new javax.swing.GroupLayout(dadosPessoais);
         dadosPessoais.setLayout(dadosPessoaisLayout);
@@ -290,26 +337,41 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(grupos, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(usuarios))
+                    .addComponent(listaGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                    .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(temporalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                        .addComponent(tituloDocumento))
+                    .addComponent(procurarArquivo))
                 .addContainerGap())
         );
         dadosPessoaisLayout.setVerticalGroup(
             dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dadosPessoaisLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(3, 3, 3)
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(grupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(procurarArquivo))
+                .addGap(20, 20, 20)
+                .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tituloDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(194, 194, 194))
+                    .addComponent(temporalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listaGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
+
+        jLabel4.getAccessibleContext().setAccessibleDescription("Validade do documento em anos");
 
         jLayeredPane6.setLayer(dadosPessoais, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -325,11 +387,11 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
             jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane6Layout.createSequentialGroup()
                 .addComponent(dadosPessoais)
-                .addGap(335, 335, 335))
+                .addGap(274, 274, 274))
         );
 
         jLayeredPane5.setLayer(cancelarAcao, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane5.setLayer(concluirCadastro, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(concluirAdicao, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane5.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane5Layout = new javax.swing.GroupLayout(jLayeredPane5);
@@ -340,10 +402,10 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane5Layout.createSequentialGroup()
-                        .addComponent(concluirCadastro)
+                        .addComponent(concluirAdicao)
                         .addGap(40, 40, 40)
                         .addComponent(cancelarAcao)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 249, Short.MAX_VALUE))
                     .addComponent(jLayeredPane6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -351,10 +413,10 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
             jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane5Layout.createSequentialGroup()
                 .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelarAcao)
-                    .addComponent(concluirCadastro))
+                    .addComponent(concluirAdicao))
                 .addContainerGap())
         );
 
@@ -390,8 +452,10 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
                         .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
                         .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addComponent(jLayeredPane5)))
+                        .addGap(118, 118, 118))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(jLayeredPane5)
+                        .addContainerGap())))
         );
 
         jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -456,10 +520,9 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(conteudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(conteudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -467,112 +530,200 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
-        TelasUtil.trocarTela(AssociarGrupoUsuario.this, telaAnterior);
+        TelasUtil.voltar();
     }//GEN-LAST:event_voltarMouseClicked
 
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked
-        TelasUtil.trocarTela(AssociarGrupoUsuario.this, new HomeAdmin());
+        TelasUtil.trocarTela(AdicionarDocumento.this, new HomeAdmin());
     }//GEN-LAST:event_itemInicio1MouseClicked
 
     private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemGrupos1MouseClicked
-        TelasUtil.trocarTela(AssociarGrupoUsuario.this, new Grupos());
+        TelasUtil.trocarTela(AdicionarDocumento.this, new Grupos());
     }//GEN-LAST:event_itemGrupos1MouseClicked
 
     private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemSair1MouseClicked
         Object[] options = {"Sair", "Cancelar"};
         int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (resposta == JOptionPane.YES_OPTION) {
-            Usuario.logout(AssociarGrupoUsuario.this);
+            Usuario.logout(AdicionarDocumento.this);
         }
     }//GEN-LAST:event_itemSair1MouseClicked
 
     private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemUsuarios1MouseClicked
-        TelasUtil.trocarTela(AssociarGrupoUsuario.this, new Usuarios());
+        TelasUtil.trocarTela(AdicionarDocumento.this, new Usuarios());
     }//GEN-LAST:event_itemUsuarios1MouseClicked
 
     private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemEditarPerfilMouseClicked
-        TelasUtil.trocarTela(AssociarGrupoUsuario.this, new Perfil());
+        TelasUtil.trocarTela(AdicionarDocumento.this, new Perfil());
     }//GEN-LAST:event_itemEditarPerfilMouseClicked
 
     private void cancelarAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarAcaoActionPerformed
-        TelasUtil.trocarTela(AssociarGrupoUsuario.this, new Usuarios());
+        TelasUtil.trocarTela(AdicionarDocumento.this, new Usuarios());
     }//GEN-LAST:event_cancelarAcaoActionPerformed
 
-    private void concluirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirCadastroActionPerformed
+    private void concluirAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirAdicaoActionPerformed
         try {
-            // Verifica campos obrigatórios
-            if (!grupos.getText().trim().isEmpty() || !usuarios.getText().trim().isEmpty()) {
-                List<String> listaGrupos = Arrays.asList(grupos.getText().trim().split(","));
-                List<String> listaUsuarios = Arrays.asList(usuarios.getText().trim().split(","));
+            // Verifica se um arquivo foi selecionado
+            if (arquivoSelecionado.exists()) {
 
-                List<String> listaErros = new ArrayList<>();
-                List<Integer> listaIdsUsuarios = new ArrayList<>();
-                for (String usuario : listaUsuarios) {
-                    listaIdsUsuarios.add(Usuario.obterIdUsuarioPorUsername(usuario));
-                }
+                // Verifica se há um título para o documento
+                if (!tituloDocumento.getText().isEmpty() || tituloDocumento.getText() != null) {
 
-                List<Integer> listaIdsGrupos = new ArrayList<>();
-                for (String grupo : listaGrupos) {
-                    listaIdsGrupos.add(Grupo.obterIdGrupoPorNome(grupo));
-                }
+                    Documento documentoAdicionar = new Documento(tituloDocumento.getText(), arquivoSelecionado.getAbsolutePath(), usuario.getUsername(),
+                            getExtensaoArquivo(), 1, Integer.valueOf(temporalidade.getText()), null, usuario.getId());
+                    int idGerado = Documento.adicionarDocumento(documentoAdicionar);
 
-                // Adiciona usuário(s) ao grupo(s)
-                for (Integer idGrupo : listaIdsGrupos) {
-                    boolean resultAssociacao = Grupo.adicionarUsuarioAoGrupo(listaIdsUsuarios, idGrupo);
-                    if (!resultAssociacao) {
-                        listaErros.add(idGrupo.toString());
+                    //   List<String> listaGrupos = new ArrayList<>();
+                    if (idGerado != -1) {
+                        if (!listaGrupo.getText().contains("Exemplo:") || listaGrupo.getText().trim().isEmpty()) {
+                            List<String> listaGrupos = Arrays.asList(listaGrupo.getText().trim().split(","));
+                            List<Integer> listaIdsGrupos = new ArrayList<>();
+
+                            for (String grupo : listaGrupos) {
+                                listaIdsGrupos.add(Grupo.obterIdGrupoPorNome(grupo));
+                            }
+
+                            boolean resultAssociacao = false;
+                            // Adiciona documento ao grupo(s)
+                            for (Integer idGrupo : listaIdsGrupos) {
+                                resultAssociacao = Grupo.adicionarDocumentoAoGrupo(idGerado, idGrupo);
+                            }
+
+                            if (resultAssociacao) {
+                                JOptionPane
+                                        .showMessageDialog(null,
+                                                String.format("Documento criado e grupo(s) associado(s) com sucesso!",
+                                                        usuario.getUsername()),
+                                                "Adição de Documento", JOptionPane.INFORMATION_MESSAGE, null);
+                                TelasUtil.trocarTela(AdicionarDocumento.this, new HomeAdmin());
+                            }
+                        } else {
+                            JOptionPane
+                                    .showMessageDialog(null,
+                                            String.format("Documento criado com sucesso!",
+                                                    usuario.getUsername()),
+                                            "Adição de Documento", JOptionPane.INFORMATION_MESSAGE, null);
+                            TelasUtil.trocarTela(AdicionarDocumento.this, new HomeAdmin());
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                String.format("Erro ao adicionar documento. Tente novamente!", usuario.getUsername()), "Adição de Documento",
+                                JOptionPane.ERROR_MESSAGE, null);
                     }
-                }
 
-                if (listaErros.isEmpty() || listaErros == null) {
-                    JOptionPane
-                            .showMessageDialog(null,
-                                    String.format("Usuários e grupos associados com sucesso!",
-                                            usuario.getUsername()),
-                                    "Associação de Grupos e Usuários", JOptionPane.INFORMATION_MESSAGE, null);
-                    TelasUtil.trocarTela(AssociarGrupoUsuario.this, new Usuarios());
                 } else {
                     JOptionPane.showMessageDialog(null,
-                            String.format("Erro ao fazer associação ao(s) grupo(s): %s", String.join(", ", listaErros)), "Associação de Grupos e Usuários",
-                            JOptionPane.ERROR_MESSAGE, null);
+                            "Informe um título para o documento",
+                            "Adição de Documento", JOptionPane.WARNING_MESSAGE, null);
                 }
             } else {
                 JOptionPane.showMessageDialog(null,
-                        "Um ou mais campos obrigatórios não foram preenchidos. \nVerifique e tente novamente!",
-                        "Associação de Grupos e Usuários", JOptionPane.WARNING_MESSAGE, null);
+                        "Nenhum arquivo selecionado para adicionar.",
+                        "Adição de Documento", JOptionPane.WARNING_MESSAGE, null);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdicionarDocumento.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_concluirCadastroActionPerformed
+    }//GEN-LAST:event_concluirAdicaoActionPerformed
 
-    private void gruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gruposActionPerformed
+    private void tituloDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloDocumentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_gruposActionPerformed
+    }//GEN-LAST:event_tituloDocumentoActionPerformed
 
-    private void usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuariosActionPerformed
+    private void procurarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarArquivoActionPerformed
+        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+        int returnValue = fileChooser.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            arquivoSelecionado = fileChooser.getSelectedFile();
+            tituloDocumento.setBackground(new java.awt.Color(255, 255, 255));
+            tituloDocumento.setText(getNomeArquivo());
+        }
+    }//GEN-LAST:event_procurarArquivoActionPerformed
+
+    private void temporalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_temporalidadeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usuariosActionPerformed
+    }//GEN-LAST:event_temporalidadeActionPerformed
+
+    private void listaGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaGrupoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaGrupoActionPerformed
+
+    private String getNomeArquivo() {
+        int i = arquivoSelecionado.getName().lastIndexOf(".");
+        if (i > 0) {
+            return arquivoSelecionado.getName().substring(0, i);
+        } else {
+            return arquivoSelecionado.getName();
+        }
+    }
+
+    private String getExtensaoArquivo() {
+        int i = arquivoSelecionado.getName().lastIndexOf(".");
+        if (i > 0 && i < arquivoSelecionado.getName().length() - 1) {
+            return arquivoSelecionado.getName().substring(i + 1);
+        } else {
+            return "";
+        }
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AdicionarDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AdicionarDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AdicionarDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AdicionarDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AssociarGrupoUsuario(telaAnterior).setVisible(true);
+                new AdicionarDocumento().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelarAcao;
-    private javax.swing.JButton concluirCadastro;
+    private javax.swing.JButton concluirAdicao;
     private javax.swing.JPanel conteudo;
     private javax.swing.JLayeredPane dadosPessoais;
     private javax.swing.JLabel fotoPerfil;
-    private javax.swing.JTextField grupos;
     private javax.swing.JLabel itemEditarPerfil;
     private javax.swing.JLabel itemGrupos1;
     private javax.swing.JLabel itemInicio1;
@@ -582,6 +733,8 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
@@ -589,10 +742,14 @@ public class AssociarGrupoUsuario extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane5;
     private javax.swing.JLayeredPane jLayeredPane6;
     private javax.swing.JSeparator linhaSeparadora;
+    private javax.swing.JTextField listaGrupo;
     private javax.swing.JPanel menu;
+    private javax.swing.JButton procurarArquivo;
     private javax.swing.JLabel saudacaoUsuario;
+    private javax.swing.JTextField temporalidade;
+    private javax.swing.JTextField tituloDocumento;
     private javax.swing.JLabel tituloPagina;
-    private javax.swing.JTextField usuarios;
     private javax.swing.JLabel voltar;
     // End of variables declaration//GEN-END:variables
+
 }

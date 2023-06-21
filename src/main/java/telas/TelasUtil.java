@@ -1,4 +1,4 @@
-package newTelas2;
+package telas;
 
 import java.awt.Color;
 import java.time.LocalDateTime;

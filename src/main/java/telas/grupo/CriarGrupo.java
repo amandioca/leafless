@@ -1,24 +1,30 @@
-package newTelas2.usuario;
+package telas.grupo;
 
-import newTelas2.HomeAdmin;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JOptionPane;
-import leafless.Acesso;
+import leafless.Grupo;
 import leafless.Usuario;
-import newTelas2.TelasUtil;
-import newTelas2.grupo.CriarGrupo;
-import newTelas2.grupo.Grupos;
+import telas.TelasUtil;
+import telas.usuario.Cadastrar;
+import telas.HomeAdmin;
+import telas.usuario.Perfil;
+import telas.usuario.Usuarios;
 
-public class AlterarSenha extends javax.swing.JFrame {
+public class CriarGrupo extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
 
-    public AlterarSenha() {
+    public CriarGrupo() {
         initComponents();
         TelasUtil.init(this);
     }
 
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -36,20 +42,14 @@ public class AlterarSenha extends javax.swing.JFrame {
         conteudo = new javax.swing.JPanel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jLayeredPane3 = new javax.swing.JLayeredPane();
-        fotoUsuario = new javax.swing.JLabel();
-        nomeCompleto = new javax.swing.JLabel();
-        cargo = new javax.swing.JLabel();
-        jLayeredPane4 = new javax.swing.JLayeredPane();
-        labelSenhaNova = new javax.swing.JLabel();
-        labelSenhaConfirmacao = new javax.swing.JLabel();
-        labelSenhaAtual = new javax.swing.JLabel();
-        senhaAtual = new javax.swing.JPasswordField();
-        senhaNova = new javax.swing.JPasswordField();
-        senhaConfirmacao = new javax.swing.JPasswordField();
-        jSeparator1 = new javax.swing.JSeparator();
         tituloPagina = new javax.swing.JLabel();
-        alterarSenha = new javax.swing.JButton();
+        grupoTopico = new javax.swing.JLayeredPane();
+        labelCriarGrupo = new javax.swing.JLabel();
+        labelNomeGrupo = new javax.swing.JLabel();
+        labelAddUsuario = new javax.swing.JLabel();
+        nomeGrupo = new javax.swing.JTextField();
+        listaAddUsuarios = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         voltar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -198,154 +198,108 @@ public class AlterarSenha extends javax.swing.JFrame {
         conteudo.setBackground(new java.awt.Color(0, 8, 80));
         conteudo.setForeground(new java.awt.Color(21, 56, 202));
 
-        fotoUsuario.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\do-utilizador.png")); // NOI18N
-
-        nomeCompleto.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        nomeCompleto.setForeground(new java.awt.Color(255, 255, 255));
-        nomeCompleto.setText("Nome Completo do Usuario");
-
-        cargo.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        cargo.setForeground(new java.awt.Color(255, 255, 255));
-        cargo.setText("Cargo do Usuário");
-
-        jLayeredPane3.setLayer(fotoUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(nomeCompleto, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(cargo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout jLayeredPane3Layout = new javax.swing.GroupLayout(jLayeredPane3);
-        jLayeredPane3.setLayout(jLayeredPane3Layout);
-        jLayeredPane3Layout.setHorizontalGroup(
-            jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fotoUsuario)
-                .addGap(30, 30, 30)
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cargo)
-                    .addComponent(nomeCompleto))
-                .addContainerGap())
-        );
-        jLayeredPane3Layout.setVerticalGroup(
-            jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                        .addComponent(nomeCompleto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cargo))
-                    .addComponent(fotoUsuario))
-                .addGap(35, 35, 35))
-        );
-
-        labelSenhaNova.setBackground(new java.awt.Color(19, 30, 53));
-        labelSenhaNova.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelSenhaNova.setForeground(new java.awt.Color(229, 229, 229));
-        labelSenhaNova.setText("Nova senha:");
-        labelSenhaNova.setName(""); // NOI18N
-
-        labelSenhaConfirmacao.setBackground(new java.awt.Color(19, 30, 53));
-        labelSenhaConfirmacao.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelSenhaConfirmacao.setForeground(new java.awt.Color(229, 229, 229));
-        labelSenhaConfirmacao.setText("Confirme a nova senha:");
-
-        labelSenhaAtual.setBackground(new java.awt.Color(19, 30, 53));
-        labelSenhaAtual.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelSenhaAtual.setForeground(new java.awt.Color(229, 229, 229));
-        labelSenhaAtual.setText("Senha atual:");
-        labelSenhaAtual.setName(""); // NOI18N
-
-        senhaAtual.setBackground(new java.awt.Color(255, 255, 255));
-        senhaAtual.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        senhaAtual.setForeground(new java.awt.Color(102, 102, 102));
-        senhaAtual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                senhaAtualActionPerformed(evt);
-            }
-        });
-
-        senhaNova.setBackground(new java.awt.Color(255, 255, 255));
-        senhaNova.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        senhaNova.setForeground(new java.awt.Color(102, 102, 102));
-
-        senhaConfirmacao.setBackground(new java.awt.Color(255, 255, 255));
-        senhaConfirmacao.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        senhaConfirmacao.setForeground(new java.awt.Color(102, 102, 102));
-        senhaConfirmacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                senhaConfirmacaoActionPerformed(evt);
-            }
-        });
-
-        jLayeredPane4.setLayer(labelSenhaNova, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(labelSenhaConfirmacao, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(labelSenhaAtual, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(senhaAtual, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(senhaNova, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(senhaConfirmacao, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout jLayeredPane4Layout = new javax.swing.GroupLayout(jLayeredPane4);
-        jLayeredPane4.setLayout(jLayeredPane4Layout);
-        jLayeredPane4Layout.setHorizontalGroup(
-            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelSenhaNova)
-                    .addComponent(labelSenhaConfirmacao)
-                    .addComponent(labelSenhaAtual))
-                .addGap(35, 35, 35)
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(senhaAtual, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                    .addComponent(senhaNova)
-                    .addComponent(senhaConfirmacao))
-                .addGap(28, 28, 28))
-        );
-        jLayeredPane4Layout.setVerticalGroup(
-            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSenhaAtual)
-                    .addComponent(senhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSenhaNova)
-                    .addComponent(senhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSenhaConfirmacao)
-                    .addComponent(senhaConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jSeparator1.setBackground(new java.awt.Color(41, 105, 230));
-        jSeparator1.setForeground(new java.awt.Color(41, 105, 230));
-
         tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        tituloPagina.setText("Alteração de Senha");
+        tituloPagina.setText("Administrar Grupos");
 
-        alterarSenha.setBackground(new java.awt.Color(41, 105, 230));
-        alterarSenha.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        alterarSenha.setForeground(new java.awt.Color(229, 229, 229));
-        alterarSenha.setText("Concluir");
-        alterarSenha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                alterarSenhaMouseClicked(evt);
-            }
-        });
-        alterarSenha.addActionListener(new java.awt.event.ActionListener() {
+        labelCriarGrupo.setBackground(new java.awt.Color(19, 30, 53));
+        labelCriarGrupo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelCriarGrupo.setForeground(new java.awt.Color(229, 229, 229));
+        labelCriarGrupo.setText("Criar Grupo");
+        labelCriarGrupo.setName(""); // NOI18N
+
+        labelNomeGrupo.setBackground(new java.awt.Color(19, 30, 53));
+        labelNomeGrupo.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        labelNomeGrupo.setForeground(new java.awt.Color(229, 229, 229));
+        labelNomeGrupo.setText("*Informe o nome do grupo:");
+        labelNomeGrupo.setName(""); // NOI18N
+
+        labelAddUsuario.setBackground(new java.awt.Color(19, 30, 53));
+        labelAddUsuario.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        labelAddUsuario.setForeground(new java.awt.Color(229, 229, 229));
+        labelAddUsuario.setText("Deseja adicionar algum usuário?");
+        labelAddUsuario.setName(""); // NOI18N
+
+        nomeGrupo.setBackground(new java.awt.Color(255, 255, 255));
+        nomeGrupo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        nomeGrupo.setForeground(new java.awt.Color(102, 102, 102));
+        nomeGrupo.setText("Exemplo: ADMIN01");
+        nomeGrupo.setToolTipText("");
+        nomeGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alterarSenhaActionPerformed(evt);
+                nomeGrupoActionPerformed(evt);
             }
         });
 
-        jLayeredPane1.setLayer(jLayeredPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLayeredPane4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        listaAddUsuarios.setBackground(new java.awt.Color(255, 255, 255));
+        listaAddUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        listaAddUsuarios.setForeground(new java.awt.Color(102, 102, 102));
+        listaAddUsuarios.setText("Exemplo: usuario1, usuario2");
+        listaAddUsuarios.setToolTipText("");
+        listaAddUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaAddUsuariosActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(41, 105, 230));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(229, 229, 229));
+        jButton1.setText("Concluir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        grupoTopico.setLayer(labelCriarGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTopico.setLayer(labelNomeGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTopico.setLayer(labelAddUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTopico.setLayer(nomeGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTopico.setLayer(listaAddUsuarios, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTopico.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout grupoTopicoLayout = new javax.swing.GroupLayout(grupoTopico);
+        grupoTopico.setLayout(grupoTopicoLayout);
+        grupoTopicoLayout.setHorizontalGroup(
+            grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(grupoTopicoLayout.createSequentialGroup()
+                .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(grupoTopicoLayout.createSequentialGroup()
+                        .addComponent(labelAddUsuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addComponent(listaAddUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(grupoTopicoLayout.createSequentialGroup()
+                        .addComponent(labelNomeGrupo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(grupoTopicoLayout.createSequentialGroup()
+                        .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelCriarGrupo)
+                            .addComponent(jButton1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        grupoTopicoLayout.setVerticalGroup(
+            grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(grupoTopicoLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(labelCriarGrupo)
+                .addGap(52, 52, 52)
+                .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNomeGrupo)
+                    .addComponent(nomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAddUsuario)
+                    .addComponent(listaAddUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(0, 0, 0))
+        );
+
         jLayeredPane1.setLayer(tituloPagina, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(alterarSenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(grupoTopico, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -354,12 +308,9 @@ public class AlterarSenha extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tituloPagina)
-                    .addComponent(alterarSenha))
-                .addContainerGap())
+                    .addComponent(grupoTopico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,14 +318,8 @@ public class AlterarSenha extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tituloPagina)
                 .addGap(65, 65, 65)
-                .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(alterarSenha)
-                .addContainerGap())
+                .addComponent(grupoTopico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -386,14 +331,14 @@ public class AlterarSenha extends javax.swing.JFrame {
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(588, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(356, Short.MAX_VALUE))
         );
 
         voltar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -414,7 +359,7 @@ public class AlterarSenha extends javax.swing.JFrame {
                 .addComponent(voltar)
                 .addGap(60, 60, 60)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(535, Short.MAX_VALUE))
+                .addGap(0, 209, Short.MAX_VALUE))
         );
         conteudoLayout.setVerticalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,8 +379,9 @@ public class AlterarSenha extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(conteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(conteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,101 +394,100 @@ public class AlterarSenha extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void alterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarSenhaActionPerformed
-
-    }//GEN-LAST:event_alterarSenhaActionPerformed
-
-    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
-        TelasUtil.trocarTela(AlterarSenha.this, new Perfil());
-    }//GEN-LAST:event_voltarMouseClicked
-
-    private void alterarSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alterarSenhaMouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            if (!String.valueOf(senhaConfirmacao.getPassword()).isEmpty()
-                    && !String.valueOf(senhaAtual.getPassword()).isEmpty()
-                    && !String.valueOf(senhaNova.getPassword()).isEmpty()) {
-                // Verifica o usuário no banco de dados
-                if (Usuario.login(usuario.getUsername(), String.valueOf(senhaAtual.getPassword()))) {
+            // Verifica se o nome do grupo foi informado
+            if (nomeGrupo.getText() != null || !nomeGrupo.getText().isEmpty()) {
+                // Cria o grupo
+                int idGrupo = Grupo.criarGrupo(nomeGrupo.getText());
 
-                    // Verifica se as senhas estão iguais
-                    if (String.valueOf(senhaNova.getPassword()).equals(String.valueOf(senhaConfirmacao.getPassword()))) {
+                // Verifica a necessidade de adição de usuários ao grupo
+                boolean usuariosAdicionados = false;
+                if (listaAddUsuarios.getText() != null && !listaAddUsuarios.getText().trim().isEmpty()) {
+                    List<String> listaUsuarios = Arrays.asList(listaAddUsuarios.getText().trim().split(","));
 
-                        // Verifica se a senha possui no mínimo 8 dígitos
-                        if (senhaNova.getPassword().length >= 8) {
-                            boolean result = Usuario.alterarSenha(usuario.getUsername(),
-                                    String.valueOf(senhaConfirmacao.getPassword()));
-                            if (result) {
-                                JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!", "Alteração de Senha",
-                                        JOptionPane.INFORMATION_MESSAGE, null);
-                                TelasUtil.trocarTela(AlterarSenha.this, new Perfil());
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Erro ao alterar senha!", "Alteração de Senha",
-                                        JOptionPane.ERROR_MESSAGE, null);
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(null,
-                                    String.format("A senha deve possuir no mínimo 8 dígitos"), "Alteração de Senha",
-                                    JOptionPane.WARNING_MESSAGE, null);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null,
-                                "As senhas informadas não correspondem. Verifique e tente novamente!",
-                                "Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
+                    List<Integer> listaIdsUsuarios = new ArrayList<>();
+                    for (String usuario : listaUsuarios) {
+                        listaIdsUsuarios.add(Usuario.obterIdUsuarioPorUsername(usuario));
                     }
+
+                    // Adiciona usuários
+                    usuariosAdicionados = Grupo.adicionarUsuarioAoGrupo(listaIdsUsuarios, idGrupo);
+                }
+
+                if (usuariosAdicionados && idGrupo != 0) {
+                    JOptionPane.showMessageDialog(null,
+                            String.format("Grupo %s criado e usuários adicionados com sucesso!", nomeGrupo.getText()),
+                            "Criação de Grupo", JOptionPane.INFORMATION_MESSAGE, null);
+                } else if (idGrupo != 0) {
+                    JOptionPane.showMessageDialog(null, String.format("Grupo %s criado com sucesso!", nomeGrupo.getText()),
+                            "Criação de Grupo", JOptionPane.INFORMATION_MESSAGE, null);
                 } else {
-                    JOptionPane.showMessageDialog(null, "A senha atual está incorreta!",
-                            "Alteração de Senha", JOptionPane.ERROR_MESSAGE, null);
+                    JOptionPane.showMessageDialog(null, String.format("Erro ao criar grupo!", nomeGrupo.getText()),
+                            "Criação de Grupo", JOptionPane.ERROR_MESSAGE, null);
                 }
             } else {
-                JOptionPane.showMessageDialog(null,
-                        "Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
-                        "Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
+                JOptionPane.showMessageDialog(null, "Informe o nome do grupo para continuar.", "Criação de Grupo",
+                        JOptionPane.WARNING_MESSAGE, null);
             }
         } catch (SQLException e) {
-            e.getMessage();
+            if (e.getMessage().contains("nome_UNIQUE")) {
+                JOptionPane.showMessageDialog(null,
+                        String.format("Já existe um grupo com o nome \"%s\"", nomeGrupo.getText()), "Criação de Grupo",
+                        JOptionPane.WARNING_MESSAGE, null);
+            }
         }
-    }//GEN-LAST:event_alterarSenhaMouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked
-        TelasUtil.trocarTela(AlterarSenha.this, new HomeAdmin());
+        TelasUtil.trocarTela(CriarGrupo.this, new HomeAdmin());
     }//GEN-LAST:event_itemInicio1MouseClicked
 
     private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemGrupos1MouseClicked
-        TelasUtil.trocarTela(AlterarSenha.this, new Grupos());
+        TelasUtil.trocarTela(CriarGrupo.this, new Grupos());
     }//GEN-LAST:event_itemGrupos1MouseClicked
 
     private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemSair1MouseClicked
         Object[] options = {"Sair", "Cancelar"};
         int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (resposta == JOptionPane.YES_OPTION) {
-            Usuario.logout(AlterarSenha.this);
+            Usuario.logout(CriarGrupo.this);
         }
     }//GEN-LAST:event_itemSair1MouseClicked
 
     private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemUsuarios1MouseClicked
-        TelasUtil.trocarTela(AlterarSenha.this, new Usuarios());
+        TelasUtil.trocarTela(CriarGrupo.this, new Usuarios());
     }//GEN-LAST:event_itemUsuarios1MouseClicked
 
     private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemEditarPerfilMouseClicked
-        TelasUtil.trocarTela(AlterarSenha.this, new Perfil());
+        TelasUtil.trocarTela(CriarGrupo.this, new Perfil());
     }//GEN-LAST:event_itemEditarPerfilMouseClicked
+    // GEN-LAST:event_itemPerfilMouseClicked
 
-    private void senhaAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaAtualActionPerformed
+    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_voltarMouseClicked
+        TelasUtil.trocarTela(CriarGrupo.this, new Grupos());
+
+    }// GEN-LAST:event_voltarMouseClicked
+
+    private void nomeGrupoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_nomeGrupoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_senhaAtualActionPerformed
+    }// GEN-LAST:event_nomeGrupoActionPerformed
 
-    private void senhaConfirmacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaConfirmacaoActionPerformed
+    private void listaAddUsuariosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_listaAddUsuariosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_senhaConfirmacaoActionPerformed
+    }// GEN-LAST:event_listaAddUsuariosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void concluirActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_concluirActionPerformed
+    }// GEN-LAST:event_concluirActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+		 * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+		 * look and feel. For details see
+		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -552,55 +497,81 @@ public class AlterarSenha extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlterarSenha().setVisible(true);
+                new CriarGrupo().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton alterarSenha;
-    private javax.swing.JLabel cargo;
     private javax.swing.JPanel conteudo;
     private javax.swing.JLabel fotoPerfil;
-    private javax.swing.JLabel fotoUsuario;
+    private javax.swing.JLayeredPane grupoTopico;
     private javax.swing.JLabel itemEditarPerfil;
     private javax.swing.JLabel itemGrupos1;
     private javax.swing.JLabel itemInicio1;
     private javax.swing.JLabel itemSair1;
     private javax.swing.JLabel itemUsuarios1;
     private javax.swing.JLayeredPane itens1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JLayeredPane jLayeredPane3;
-    private javax.swing.JLayeredPane jLayeredPane4;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel labelSenhaAtual;
-    private javax.swing.JLabel labelSenhaConfirmacao;
-    private javax.swing.JLabel labelSenhaNova;
+    private javax.swing.JLabel labelAddUsuario;
+    private javax.swing.JLabel labelCriarGrupo;
+    private javax.swing.JLabel labelNomeGrupo;
     private javax.swing.JSeparator linhaSeparadora;
+    private javax.swing.JTextField listaAddUsuarios;
     private javax.swing.JPanel menu;
-    private javax.swing.JLabel nomeCompleto;
+    private javax.swing.JTextField nomeGrupo;
     private javax.swing.JLabel saudacaoUsuario;
-    private javax.swing.JPasswordField senhaAtual;
-    private javax.swing.JPasswordField senhaConfirmacao;
-    private javax.swing.JPasswordField senhaNova;
     private javax.swing.JLabel tituloPagina;
     private javax.swing.JLabel voltar;
     // End of variables declaration//GEN-END:variables

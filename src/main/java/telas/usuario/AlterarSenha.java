@@ -1,18 +1,19 @@
-package newTelas2.usuario;
+package telas.usuario;
 
-import newTelas2.HomeAdmin;
-import newTelas2.grupo.Grupos;
-import javax.swing.JFrame;
+import telas.HomeAdmin;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import leafless.Grupo;
+import leafless.Acesso;
 import leafless.Usuario;
-import newTelas2.TelasUtil;
+import telas.TelasUtil;
+import telas.grupo.CriarGrupo;
+import telas.grupo.Grupos;
 
-public class Perfil extends javax.swing.JFrame {
+public class AlterarSenha extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
 
-    public Perfil() {
+    public AlterarSenha() {
         initComponents();
         TelasUtil.init(this);
     }
@@ -35,23 +36,21 @@ public class Perfil extends javax.swing.JFrame {
         conteudo = new javax.swing.JPanel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        tituloPagina = new javax.swing.JLabel();
         jLayeredPane3 = new javax.swing.JLayeredPane();
         fotoUsuario = new javax.swing.JLabel();
         nomeCompleto = new javax.swing.JLabel();
         cargo = new javax.swing.JLabel();
         jLayeredPane4 = new javax.swing.JLayeredPane();
-        labelUsuario = new javax.swing.JLabel();
-        labelTelefone = new javax.swing.JLabel();
-        labelDocumentos = new javax.swing.JLabel();
-        labelGrupos = new javax.swing.JLabel();
-        username = new javax.swing.JLabel();
-        documents = new javax.swing.JLabel();
-        telefone = new javax.swing.JLabel();
-        grupos = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        labelSenhaNova = new javax.swing.JLabel();
+        labelSenhaConfirmacao = new javax.swing.JLabel();
+        labelSenhaAtual = new javax.swing.JLabel();
+        senhaAtual = new javax.swing.JPasswordField();
+        senhaNova = new javax.swing.JPasswordField();
+        senhaConfirmacao = new javax.swing.JPasswordField();
         jSeparator1 = new javax.swing.JSeparator();
+        tituloPagina = new javax.swing.JLabel();
         alterarSenha = new javax.swing.JButton();
+        voltar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 8, 80));
@@ -199,19 +198,15 @@ public class Perfil extends javax.swing.JFrame {
         conteudo.setBackground(new java.awt.Color(0, 8, 80));
         conteudo.setForeground(new java.awt.Color(21, 56, 202));
 
-        tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
-        tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        tituloPagina.setText("Perfil");
-
         fotoUsuario.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\do-utilizador.png")); // NOI18N
 
         nomeCompleto.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         nomeCompleto.setForeground(new java.awt.Color(255, 255, 255));
-        nomeCompleto.setText(usuario.getNomeCompleto());
+        nomeCompleto.setText("Nome Completo do Usuario");
 
         cargo.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         cargo.setForeground(new java.awt.Color(255, 255, 255));
-        cargo.setText(usuario.getCargo());
+        cargo.setText("Cargo do Usuário");
 
         jLayeredPane3.setLayer(fotoUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(nomeCompleto, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -243,73 +238,51 @@ public class Perfil extends javax.swing.JFrame {
                 .addGap(35, 35, 35))
         );
 
-        labelUsuario.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        labelUsuario.setText("Usuário/ Matrícula:");
+        labelSenhaNova.setBackground(new java.awt.Color(19, 30, 53));
+        labelSenhaNova.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        labelSenhaNova.setForeground(new java.awt.Color(229, 229, 229));
+        labelSenhaNova.setText("Nova senha:");
+        labelSenhaNova.setName(""); // NOI18N
 
-        labelTelefone.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelTelefone.setForeground(new java.awt.Color(255, 255, 255));
-        labelTelefone.setText("Tel. Comercial:");
+        labelSenhaConfirmacao.setBackground(new java.awt.Color(19, 30, 53));
+        labelSenhaConfirmacao.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        labelSenhaConfirmacao.setForeground(new java.awt.Color(229, 229, 229));
+        labelSenhaConfirmacao.setText("Confirme a nova senha:");
 
-        labelDocumentos.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelDocumentos.setForeground(new java.awt.Color(255, 255, 255));
-        labelDocumentos.setText("Total de Documentos:");
+        labelSenhaAtual.setBackground(new java.awt.Color(19, 30, 53));
+        labelSenhaAtual.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        labelSenhaAtual.setForeground(new java.awt.Color(229, 229, 229));
+        labelSenhaAtual.setText("Senha atual:");
+        labelSenhaAtual.setName(""); // NOI18N
 
-        labelGrupos.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelGrupos.setForeground(new java.awt.Color(255, 255, 255));
-        labelGrupos.setText("Grupos:");
-
-        username.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        username.setForeground(new java.awt.Color(153, 153, 153));
-        username.setText(usuario.getUsername());
-
-        documents.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        documents.setForeground(new java.awt.Color(153, 153, 153));
-        documents.setText(String.format("%d documentos", usuario.getDocCriadas().size()));
-
-        telefone.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        telefone.setForeground(new java.awt.Color(153, 153, 153));
-        telefone.setText(usuario.getTelefoneComMascara());
-
-        jList1.setBackground(new java.awt.Color(255, 255, 255));
-        jList1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jList1.setForeground(new java.awt.Color(102, 102, 102));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = getGrupos();
-
-            public int getSize() {
-                return strings.length;
-            }
-
-            private String[] getGrupos() {
-                String[] nomesGrupos;
-                if (usuario.getGrupos().size() > 0) {
-                    nomesGrupos = new String[usuario.getGrupos().size()];
-
-                    for (int i = 0; i < usuario.getGrupos().size(); i++) {
-                        Grupo grupo = usuario.getGrupos().get(i);
-                        nomesGrupos[i] = grupo.getNomeGrupo();
-                    }
-                } else {
-                    nomesGrupos = new String[] { "Nenhum" };
-                }
-                return nomesGrupos;
-            }
-
-            public String getElementAt(int i) {
-                return strings[i];
+        senhaAtual.setBackground(new java.awt.Color(255, 255, 255));
+        senhaAtual.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        senhaAtual.setForeground(new java.awt.Color(102, 102, 102));
+        senhaAtual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                senhaAtualActionPerformed(evt);
             }
         });
-        grupos.setViewportView(jList1);
 
-        jLayeredPane4.setLayer(labelUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(labelTelefone, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(labelDocumentos, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(labelGrupos, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(username, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(documents, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(telefone, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(grupos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        senhaNova.setBackground(new java.awt.Color(255, 255, 255));
+        senhaNova.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        senhaNova.setForeground(new java.awt.Color(102, 102, 102));
+
+        senhaConfirmacao.setBackground(new java.awt.Color(255, 255, 255));
+        senhaConfirmacao.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        senhaConfirmacao.setForeground(new java.awt.Color(102, 102, 102));
+        senhaConfirmacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                senhaConfirmacaoActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane4.setLayer(labelSenhaNova, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(labelSenhaConfirmacao, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(labelSenhaAtual, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(senhaAtual, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(senhaNova, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(senhaConfirmacao, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane4Layout = new javax.swing.GroupLayout(jLayeredPane4);
         jLayeredPane4.setLayout(jLayeredPane4Layout);
@@ -318,48 +291,61 @@ public class Perfil extends javax.swing.JFrame {
             .addGroup(jLayeredPane4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelUsuario)
-                    .addComponent(labelTelefone)
-                    .addComponent(labelDocumentos)
-                    .addComponent(labelGrupos))
-                .addGap(127, 127, 127)
+                    .addComponent(labelSenhaNova)
+                    .addComponent(labelSenhaConfirmacao)
+                    .addComponent(labelSenhaAtual))
+                .addGap(35, 35, 35)
                 .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(documents)
-                        .addComponent(username)
-                        .addComponent(telefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(grupos, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(senhaAtual, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                    .addComponent(senhaNova)
+                    .addComponent(senhaConfirmacao))
+                .addGap(28, 28, 28))
         );
         jLayeredPane4Layout.setVerticalGroup(
             jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelUsuario)
-                    .addComponent(username))
-                .addGap(18, 18, 18)
+                    .addComponent(labelSenhaAtual)
+                    .addComponent(senhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTelefone)
-                    .addComponent(telefone))
-                .addGap(18, 18, 18)
+                    .addComponent(labelSenhaNova)
+                    .addComponent(senhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDocumentos)
-                    .addComponent(documents))
-                .addGap(18, 18, 18)
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelGrupos)
-                    .addComponent(grupos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelSenhaConfirmacao)
+                    .addComponent(senhaConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jSeparator1.setBackground(new java.awt.Color(41, 105, 230));
         jSeparator1.setForeground(new java.awt.Color(41, 105, 230));
 
-        jLayeredPane1.setLayer(tituloPagina, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
+        tituloPagina.setText("Alteração de Senha");
+
+        alterarSenha.setBackground(new java.awt.Color(41, 105, 230));
+        alterarSenha.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        alterarSenha.setForeground(new java.awt.Color(229, 229, 229));
+        alterarSenha.setText("Concluir");
+        alterarSenha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                alterarSenhaMouseClicked(evt);
+            }
+        });
+        alterarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarSenhaActionPerformed(evt);
+            }
+        });
+
         jLayeredPane1.setLayer(jLayeredPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLayeredPane4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(tituloPagina, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(alterarSenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -368,11 +354,12 @@ public class Perfil extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tituloPagina)
                     .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(103, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tituloPagina)
+                    .addComponent(alterarSenha))
+                .addContainerGap())
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,21 +372,12 @@ public class Perfil extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133))
+                .addGap(70, 70, 70)
+                .addComponent(alterarSenha)
+                .addContainerGap())
         );
 
-        alterarSenha.setBackground(new java.awt.Color(185, 8, 0));
-        alterarSenha.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        alterarSenha.setForeground(new java.awt.Color(229, 229, 229));
-        alterarSenha.setText("Alterar Senha");
-        alterarSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alterarSenhaActionPerformed(evt);
-            }
-        });
-
         jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(alterarSenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -407,9 +385,7 @@ public class Perfil extends javax.swing.JFrame {
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(alterarSenha)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jLayeredPane2Layout.setVerticalGroup(
@@ -417,25 +393,38 @@ public class Perfil extends javax.swing.JFrame {
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
-                .addComponent(alterarSenha)
-                .addContainerGap())
+                .addContainerGap(174, Short.MAX_VALUE))
         );
+
+        voltar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        voltar.setForeground(new java.awt.Color(255, 255, 255));
+        voltar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\seta-esquerda.png")); // NOI18N
+        voltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                voltarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout conteudoLayout = new javax.swing.GroupLayout(conteudo);
         conteudo.setLayout(conteudoLayout);
         conteudoLayout.setHorizontalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
+                .addGap(59, 59, 59)
+                .addComponent(voltar)
+                .addGap(60, 60, 60)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(593, Short.MAX_VALUE))
+                .addContainerGap(535, Short.MAX_VALUE))
         );
         conteudoLayout.setVerticalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(conteudoLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(voltar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -446,8 +435,7 @@ public class Perfil extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(conteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(conteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,33 +449,91 @@ public class Perfil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void alterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarSenhaActionPerformed
-        TelasUtil.trocarTela(Perfil.this, new AlterarSenha());
+
     }//GEN-LAST:event_alterarSenhaActionPerformed
 
+    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarMouseClicked
+        TelasUtil.trocarTela(AlterarSenha.this, new Perfil());
+    }//GEN-LAST:event_voltarMouseClicked
+
+    private void alterarSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alterarSenhaMouseClicked
+        try {
+            if (!String.valueOf(senhaConfirmacao.getPassword()).isEmpty()
+                    && !String.valueOf(senhaAtual.getPassword()).isEmpty()
+                    && !String.valueOf(senhaNova.getPassword()).isEmpty()) {
+                // Verifica o usuário no banco de dados
+                if (Usuario.login(usuario.getUsername(), String.valueOf(senhaAtual.getPassword()))) {
+
+                    // Verifica se as senhas estão iguais
+                    if (String.valueOf(senhaNova.getPassword()).equals(String.valueOf(senhaConfirmacao.getPassword()))) {
+
+                        // Verifica se a senha possui no mínimo 8 dígitos
+                        if (senhaNova.getPassword().length >= 8) {
+                            boolean result = Usuario.alterarSenha(usuario.getUsername(),
+                                    String.valueOf(senhaConfirmacao.getPassword()));
+                            if (result) {
+                                JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!", "Alteração de Senha",
+                                        JOptionPane.INFORMATION_MESSAGE, null);
+                                TelasUtil.trocarTela(AlterarSenha.this, new Perfil());
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Erro ao alterar senha!", "Alteração de Senha",
+                                        JOptionPane.ERROR_MESSAGE, null);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    String.format("A senha deve possuir no mínimo 8 dígitos"), "Alteração de Senha",
+                                    JOptionPane.WARNING_MESSAGE, null);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "As senhas informadas não correspondem. Verifique e tente novamente!",
+                                "Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "A senha atual está incorreta!",
+                            "Alteração de Senha", JOptionPane.ERROR_MESSAGE, null);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Um ou mais campos obrigatórios não foram preenchidos. Verifique e tente novamente!",
+                        "Alteração de Senha", JOptionPane.WARNING_MESSAGE, null);
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }//GEN-LAST:event_alterarSenhaMouseClicked
+
     private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked
-        TelasUtil.trocarTela(Perfil.this, new HomeAdmin());
+        TelasUtil.trocarTela(AlterarSenha.this, new HomeAdmin());
     }//GEN-LAST:event_itemInicio1MouseClicked
 
     private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemGrupos1MouseClicked
-        TelasUtil.trocarTela(Perfil.this, new Grupos());
+        TelasUtil.trocarTela(AlterarSenha.this, new Grupos());
     }//GEN-LAST:event_itemGrupos1MouseClicked
 
     private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemSair1MouseClicked
         Object[] options = {"Sair", "Cancelar"};
         int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (resposta == JOptionPane.YES_OPTION) {
-            Usuario.logout(Perfil.this);
+            Usuario.logout(AlterarSenha.this);
         }
     }//GEN-LAST:event_itemSair1MouseClicked
 
     private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemUsuarios1MouseClicked
-        TelasUtil.trocarTela(Perfil.this, new Usuarios());
+        TelasUtil.trocarTela(AlterarSenha.this, new Usuarios());
     }//GEN-LAST:event_itemUsuarios1MouseClicked
 
     private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemEditarPerfilMouseClicked
-        JOptionPane.showMessageDialog(null, "Você já está nessa opção do menu!", "Perfil",
-                JOptionPane.INFORMATION_MESSAGE, null);
+        TelasUtil.trocarTela(AlterarSenha.this, new Perfil());
     }//GEN-LAST:event_itemEditarPerfilMouseClicked
+
+    private void senhaAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaAtualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_senhaAtualActionPerformed
+
+    private void senhaConfirmacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaConfirmacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_senhaConfirmacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -506,21 +552,23 @@ public class Perfil extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Perfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Perfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Perfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Perfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Perfil().setVisible(true);
+                new AlterarSenha().setVisible(true);
             }
         });
     }
@@ -529,10 +577,8 @@ public class Perfil extends javax.swing.JFrame {
     private javax.swing.JButton alterarSenha;
     private javax.swing.JLabel cargo;
     private javax.swing.JPanel conteudo;
-    private javax.swing.JLabel documents;
     private javax.swing.JLabel fotoPerfil;
     private javax.swing.JLabel fotoUsuario;
-    private javax.swing.JScrollPane grupos;
     private javax.swing.JLabel itemEditarPerfil;
     private javax.swing.JLabel itemGrupos1;
     private javax.swing.JLabel itemInicio1;
@@ -544,19 +590,18 @@ public class Perfil extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JLayeredPane jLayeredPane4;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel labelDocumentos;
-    private javax.swing.JLabel labelGrupos;
-    private javax.swing.JLabel labelTelefone;
-    private javax.swing.JLabel labelUsuario;
+    private javax.swing.JLabel labelSenhaAtual;
+    private javax.swing.JLabel labelSenhaConfirmacao;
+    private javax.swing.JLabel labelSenhaNova;
     private javax.swing.JSeparator linhaSeparadora;
     private javax.swing.JPanel menu;
     private javax.swing.JLabel nomeCompleto;
     private javax.swing.JLabel saudacaoUsuario;
-    private javax.swing.JLabel telefone;
+    private javax.swing.JPasswordField senhaAtual;
+    private javax.swing.JPasswordField senhaConfirmacao;
+    private javax.swing.JPasswordField senhaNova;
     private javax.swing.JLabel tituloPagina;
-    private javax.swing.JLabel username;
+    private javax.swing.JLabel voltar;
     // End of variables declaration//GEN-END:variables
-
 }

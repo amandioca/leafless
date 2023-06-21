@@ -1,13 +1,13 @@
-package newTelas2.usuario;
+package telas.usuario;
 
-import newTelas2.HomeAdmin;
+import telas.HomeAdmin;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import leafless.Acesso;
 import leafless.Usuario;
 
-import newTelas2.Inicio;
-import newTelas2.TelasUtil;
+import telas.Inicio;
+import telas.TelasUtil;
 
 /**
  *

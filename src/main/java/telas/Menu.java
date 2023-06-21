@@ -1,10 +1,10 @@
-package newTelas2;
+package telas;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import leafless.Usuario;
-import newTelas2.grupo.Grupos;
-import newTelas2.usuario.Perfil;
+import telas.grupo.Grupos;
+import telas.usuario.Perfil;
 
 /**
  *

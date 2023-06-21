@@ -1,29 +1,35 @@
-package newTelas2.grupo;
+package telas.usuario;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import telas.usuario.Usuarios;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import leafless.Documento;
 import leafless.Grupo;
 import leafless.Usuario;
-import newTelas2.TelasUtil;
-import newTelas2.usuario.Cadastrar;
-import newTelas2.HomeAdmin;
-import newTelas2.usuario.Perfil;
-import newTelas2.usuario.Usuarios;
+import telas.AssociarGrupoUsuario;
+import telas.TelasUtil;
+import telas.grupo.CriarGrupo;
+import telas.grupo.ExcluirGrupo;
+import telas.grupo.Grupos;
+import telas.usuario.AlterarSenha;
+import telas.HomeAdmin;
+import telas.usuario.Perfil;
+import telas.usuario.Usuarios;
 
-public class CriarGrupo extends javax.swing.JFrame {
+public class Usuarios extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
 
-    public CriarGrupo() {
+    public Usuarios() {
         initComponents();
         TelasUtil.init(this);
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -43,14 +49,10 @@ public class CriarGrupo extends javax.swing.JFrame {
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         tituloPagina = new javax.swing.JLabel();
-        grupoTopico = new javax.swing.JLayeredPane();
-        labelCriarGrupo = new javax.swing.JLabel();
-        labelNomeGrupo = new javax.swing.JLabel();
-        labelAddUsuario = new javax.swing.JLabel();
-        nomeGrupo = new javax.swing.JTextField();
-        listaAddUsuarios = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        voltar = new javax.swing.JLabel();
+        grupoTabelaDocumentos = new javax.swing.JLayeredPane();
+        cadastrarUsuario = new javax.swing.JLabel();
+        associarGrupo = new javax.swing.JLabel();
+        deletarUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 8, 80));
@@ -200,106 +202,63 @@ public class CriarGrupo extends javax.swing.JFrame {
 
         tituloPagina.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        tituloPagina.setText("Administrar Grupos");
+        tituloPagina.setText("Administrar Usuários");
 
-        labelCriarGrupo.setBackground(new java.awt.Color(19, 30, 53));
-        labelCriarGrupo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelCriarGrupo.setForeground(new java.awt.Color(229, 229, 229));
-        labelCriarGrupo.setText("Criar Grupo");
-        labelCriarGrupo.setName(""); // NOI18N
-
-        labelNomeGrupo.setBackground(new java.awt.Color(19, 30, 53));
-        labelNomeGrupo.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelNomeGrupo.setForeground(new java.awt.Color(229, 229, 229));
-        labelNomeGrupo.setText("*Informe o nome do grupo:");
-        labelNomeGrupo.setName(""); // NOI18N
-
-        labelAddUsuario.setBackground(new java.awt.Color(19, 30, 53));
-        labelAddUsuario.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelAddUsuario.setForeground(new java.awt.Color(229, 229, 229));
-        labelAddUsuario.setText("Deseja adicionar algum usuário?");
-        labelAddUsuario.setName(""); // NOI18N
-
-        nomeGrupo.setBackground(new java.awt.Color(255, 255, 255));
-        nomeGrupo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        nomeGrupo.setForeground(new java.awt.Color(102, 102, 102));
-        nomeGrupo.setText("Exemplo: ADMIN01");
-        nomeGrupo.setToolTipText("");
-        nomeGrupo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeGrupoActionPerformed(evt);
+        cadastrarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cadastrarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        cadastrarUsuario.setText("Cadastrar Usuário");
+        cadastrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarUsuarioMouseClicked(evt);
             }
         });
 
-        listaAddUsuarios.setBackground(new java.awt.Color(255, 255, 255));
-        listaAddUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        listaAddUsuarios.setForeground(new java.awt.Color(102, 102, 102));
-        listaAddUsuarios.setText("Exemplo: usuario1, usuario2");
-        listaAddUsuarios.setToolTipText("");
-        listaAddUsuarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listaAddUsuariosActionPerformed(evt);
+        associarGrupo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        associarGrupo.setForeground(new java.awt.Color(255, 255, 255));
+        associarGrupo.setText("Associar a um Grupo");
+        associarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                associarGrupoMouseClicked(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(41, 105, 230));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(229, 229, 229));
-        jButton1.setText("Concluir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        deletarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        deletarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        deletarUsuario.setText("Deletar Usuário");
+        deletarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deletarUsuarioMouseClicked(evt);
             }
         });
 
-        grupoTopico.setLayer(labelCriarGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTopico.setLayer(labelNomeGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTopico.setLayer(labelAddUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTopico.setLayer(nomeGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTopico.setLayer(listaAddUsuarios, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTopico.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTabelaDocumentos.setLayer(cadastrarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTabelaDocumentos.setLayer(associarGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        grupoTabelaDocumentos.setLayer(deletarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        javax.swing.GroupLayout grupoTopicoLayout = new javax.swing.GroupLayout(grupoTopico);
-        grupoTopico.setLayout(grupoTopicoLayout);
-        grupoTopicoLayout.setHorizontalGroup(
-            grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(grupoTopicoLayout.createSequentialGroup()
-                .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(grupoTopicoLayout.createSequentialGroup()
-                        .addComponent(labelAddUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                        .addComponent(listaAddUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(grupoTopicoLayout.createSequentialGroup()
-                        .addComponent(labelNomeGrupo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(nomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(grupoTopicoLayout.createSequentialGroup()
-                        .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelCriarGrupo)
-                            .addComponent(jButton1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+        javax.swing.GroupLayout grupoTabelaDocumentosLayout = new javax.swing.GroupLayout(grupoTabelaDocumentos);
+        grupoTabelaDocumentos.setLayout(grupoTabelaDocumentosLayout);
+        grupoTabelaDocumentosLayout.setHorizontalGroup(
+            grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(grupoTabelaDocumentosLayout.createSequentialGroup()
+                .addGroup(grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cadastrarUsuario)
+                    .addComponent(associarGrupo)
+                    .addComponent(deletarUsuario))
+                .addGap(0, 612, Short.MAX_VALUE))
         );
-        grupoTopicoLayout.setVerticalGroup(
-            grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(grupoTopicoLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(labelCriarGrupo)
-                .addGap(52, 52, 52)
-                .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNomeGrupo)
-                    .addComponent(nomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        grupoTabelaDocumentosLayout.setVerticalGroup(
+            grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(grupoTabelaDocumentosLayout.createSequentialGroup()
+                .addComponent(cadastrarUsuario)
                 .addGap(18, 18, 18)
-                .addGroup(grupoTopicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelAddUsuario)
-                    .addComponent(listaAddUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(0, 0, 0))
+                .addComponent(deletarUsuario)
+                .addGap(18, 18, 18)
+                .addComponent(associarGrupo)
+                .addGap(0, 298, Short.MAX_VALUE))
         );
 
         jLayeredPane1.setLayer(tituloPagina, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(grupoTopico, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(grupoTabelaDocumentos, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -309,8 +268,8 @@ public class CriarGrupo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tituloPagina)
-                    .addComponent(grupoTopico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(grupoTabelaDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(623, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,8 +277,8 @@ public class CriarGrupo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tituloPagina)
                 .addGap(65, 65, 65)
-                .addComponent(grupoTopico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addComponent(grupoTabelaDocumentos)
+                .addContainerGap())
         );
 
         jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -331,45 +290,30 @@ public class CriarGrupo extends javax.swing.JFrame {
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(588, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(356, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
-
-        voltar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        voltar.setForeground(new java.awt.Color(255, 255, 255));
-        voltar.setIcon(new javax.swing.ImageIcon("C:\\leafless\\shared\\resources\\seta-esquerda.png")); // NOI18N
-        voltar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                voltarMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout conteudoLayout = new javax.swing.GroupLayout(conteudo);
         conteudo.setLayout(conteudoLayout);
         conteudoLayout.setHorizontalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(voltar)
-                .addGap(60, 60, 60)
+                .addGap(152, 152, 152)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 209, Short.MAX_VALUE))
+                .addContainerGap(593, Short.MAX_VALUE))
         );
         conteudoLayout.setVerticalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addGroup(conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(conteudoLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(voltar)))
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -379,9 +323,9 @@ public class CriarGrupo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(conteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,92 +338,68 @@ public class CriarGrupo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // Verifica se o nome do grupo foi informado
-            if (nomeGrupo.getText() != null || !nomeGrupo.getText().isEmpty()) {
-                // Cria o grupo
-                int idGrupo = Grupo.criarGrupo(nomeGrupo.getText());
+    private void cadastrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarUsuarioMouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new Cadastrar());
+    }//GEN-LAST:event_cadastrarUsuarioMouseClicked
 
-                // Verifica a necessidade de adição de usuários ao grupo
-                boolean usuariosAdicionados = false;
-                if (listaAddUsuarios.getText() != null && !listaAddUsuarios.getText().trim().isEmpty()) {
-                    List<String> listaUsuarios = Arrays.asList(listaAddUsuarios.getText().trim().split(","));
+    private void deletarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletarUsuarioMouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new DeletarUsuario());
+    }//GEN-LAST:event_deletarUsuarioMouseClicked
 
-                    List<Integer> listaIdsUsuarios = new ArrayList<>();
-                    for (String usuario : listaUsuarios) {
-                        listaIdsUsuarios.add(Usuario.obterIdUsuarioPorUsername(usuario));
-                    }
+    private void associarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associarGrupoMouseClicked
+        TelasUtil.trocarTela(this, new AssociarGrupoUsuario(this));
+    }//GEN-LAST:event_associarGrupoMouseClicked
+    // GEN-LAST:event_alterarSenhaActionPerformed
 
-                    // Adiciona usuários
-                    usuariosAdicionados = Grupo.adicionarUsuarioAoGrupo(listaIdsUsuarios, idGrupo);
-                }
+    private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemInicio1MouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new HomeAdmin());
+    }// GEN-LAST:event_itemInicio1MouseClicked
 
-                if (usuariosAdicionados && idGrupo != 0) {
-                    JOptionPane.showMessageDialog(null,
-                            String.format("Grupo %s criado e usuários adicionados com sucesso!", nomeGrupo.getText()),
-                            "Criação de Grupo", JOptionPane.INFORMATION_MESSAGE, null);
-                } else if (idGrupo != 0) {
-                    JOptionPane.showMessageDialog(null, String.format("Grupo %s criado com sucesso!", nomeGrupo.getText()),
-                            "Criação de Grupo", JOptionPane.INFORMATION_MESSAGE, null);
-                } else {
-                    JOptionPane.showMessageDialog(null, String.format("Erro ao criar grupo!", nomeGrupo.getText()),
-                            "Criação de Grupo", JOptionPane.ERROR_MESSAGE, null);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Informe o nome do grupo para continuar.", "Criação de Grupo",
-                        JOptionPane.WARNING_MESSAGE, null);
-            }
-        } catch (SQLException e) {
-            if (e.getMessage().contains("nome_UNIQUE")) {
-                JOptionPane.showMessageDialog(null,
-                        String.format("Já existe um grupo com o nome \"%s\"", nomeGrupo.getText()), "Criação de Grupo",
-                        JOptionPane.WARNING_MESSAGE, null);
-            }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemGrupos1MouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new Grupos());
+    }// GEN-LAST:event_itemGrupos1MouseClicked
 
-    private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked
-        TelasUtil.trocarTela(CriarGrupo.this, new HomeAdmin());
-    }//GEN-LAST:event_itemInicio1MouseClicked
-
-    private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemGrupos1MouseClicked
-        TelasUtil.trocarTela(CriarGrupo.this, new Grupos());
-    }//GEN-LAST:event_itemGrupos1MouseClicked
-
-    private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemSair1MouseClicked
+    private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemSair1MouseClicked
         Object[] options = {"Sair", "Cancelar"};
         int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (resposta == JOptionPane.YES_OPTION) {
-            Usuario.logout(CriarGrupo.this);
+            Usuario.logout(Usuarios.this);
         }
-    }//GEN-LAST:event_itemSair1MouseClicked
+    }// GEN-LAST:event_itemSair1MouseClicked
 
-    private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemUsuarios1MouseClicked
-        TelasUtil.trocarTela(CriarGrupo.this, new Usuarios());
-    }//GEN-LAST:event_itemUsuarios1MouseClicked
+    private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemUsuarios1MouseClicked
+        JOptionPane.showMessageDialog(null, "Você já está nessa opção do menu!", "Administrar Usuários",
+                JOptionPane.INFORMATION_MESSAGE, null);
+    }// GEN-LAST:event_itemUsuarios1MouseClicked
 
-    private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemEditarPerfilMouseClicked
-        TelasUtil.trocarTela(CriarGrupo.this, new Perfil());
-    }//GEN-LAST:event_itemEditarPerfilMouseClicked
-    // GEN-LAST:event_itemPerfilMouseClicked
+    private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemEditarPerfilMouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new Perfil());
+    }// GEN-LAST:event_itemEditarPerfilMouseClicked
 
-    private void voltarMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_voltarMouseClicked
-        TelasUtil.trocarTela(CriarGrupo.this, new Grupos());
+    private DefaultTableModel modeloTabela() {
+        DefaultTableModel model = new DefaultTableModel();
+        try {
+            model.addColumn("Nome");
+            model.addColumn("Usuário Associados");
+            List<Grupo> listaGrupos = Grupo.getListaGrupo();
 
-    }// GEN-LAST:event_voltarMouseClicked
+            for (Grupo grupo : listaGrupos) {
+                String usuariosAssociados = grupo.getListaUsuarios().toString();
+                usuariosAssociados = usuariosAssociados.substring(1, usuariosAssociados.length() - 1);
+                model.addRow(new Object[]{grupo.getNomeGrupo(), usuariosAssociados});
+            }
+            return model;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            e.getMessage();
+        }
+        return null;
+    }
 
-    private void nomeGrupoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_nomeGrupoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_nomeGrupoActionPerformed
-
-    private void listaAddUsuariosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_listaAddUsuariosActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_listaAddUsuariosActionPerformed
-
-    private void concluirActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_concluirActionPerformed
-    }// GEN-LAST:event_concluirActionPerformed
-
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
@@ -497,42 +417,14 @@ public class CriarGrupo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CriarGrupo.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
         // </editor-fold>
         // </editor-fold>
         // </editor-fold>
@@ -545,34 +437,31 @@ public class CriarGrupo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CriarGrupo().setVisible(true);
+                new Usuarios().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel associarGrupo;
+    private javax.swing.JLabel cadastrarUsuario;
     private javax.swing.JPanel conteudo;
+    private javax.swing.JLabel deletarUsuario;
     private javax.swing.JLabel fotoPerfil;
-    private javax.swing.JLayeredPane grupoTopico;
+    private javax.swing.JLayeredPane grupoTabelaDocumentos;
     private javax.swing.JLabel itemEditarPerfil;
     private javax.swing.JLabel itemGrupos1;
     private javax.swing.JLabel itemInicio1;
     private javax.swing.JLabel itemSair1;
     private javax.swing.JLabel itemUsuarios1;
     private javax.swing.JLayeredPane itens1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JLabel labelAddUsuario;
-    private javax.swing.JLabel labelCriarGrupo;
-    private javax.swing.JLabel labelNomeGrupo;
     private javax.swing.JSeparator linhaSeparadora;
-    private javax.swing.JTextField listaAddUsuarios;
     private javax.swing.JPanel menu;
-    private javax.swing.JTextField nomeGrupo;
     private javax.swing.JLabel saudacaoUsuario;
     private javax.swing.JLabel tituloPagina;
-    private javax.swing.JLabel voltar;
     // End of variables declaration//GEN-END:variables
+
 }

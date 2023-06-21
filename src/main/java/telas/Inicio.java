@@ -1,6 +1,6 @@
-package newTelas2;
+package telas;
 
-import newTelas2.usuario.Login;
+import telas.usuario.Login;
 
 /**
  *

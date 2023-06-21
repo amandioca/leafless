@@ -1,4 +1,4 @@
-package newTelas2.grupo;
+package telas.grupo;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import leafless.Grupo;
 import leafless.Usuario;
-import newTelas2.TelasUtil;
-import newTelas2.HomeAdmin;
-import newTelas2.usuario.Perfil;
-import newTelas2.usuario.Usuarios;
+import telas.TelasUtil;
+import telas.HomeAdmin;
+import telas.usuario.Perfil;
+import telas.usuario.Usuarios;
 
 public class ExcluirGrupo extends javax.swing.JFrame {
 
