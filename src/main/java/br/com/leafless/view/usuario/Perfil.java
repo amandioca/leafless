@@ -47,6 +47,8 @@ public class Perfil extends javax.swing.JFrame {
         labelGrupos = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
         documents = new javax.swing.JLabel();
+        labelEmail = new javax.swing.JLabel();
+        email = new javax.swing.JLabel();
         telefone = new javax.swing.JLabel();
         grupos = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -272,6 +274,15 @@ public class Perfil extends javax.swing.JFrame {
         documents.setForeground(new java.awt.Color(153, 153, 153));
         documents.setText(String.format("%d documentos", usuario.getDocCriadas().size()));
 
+        labelEmail.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        labelEmail.setForeground(new java.awt.Color(255, 255, 255));
+        labelEmail.setText("E-mail Corporativo:");
+        labelEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        email.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        email.setForeground(new java.awt.Color(153, 153, 153));
+        email.setText(usuario.getEmail());
+
         telefone.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         telefone.setForeground(new java.awt.Color(153, 153, 153));
         telefone.setText(usuario.getTelefoneComMascara());
@@ -313,6 +324,8 @@ public class Perfil extends javax.swing.JFrame {
         jLayeredPane4.setLayer(labelGrupos, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane4.setLayer(username, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane4.setLayer(documents, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(labelEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(email, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane4.setLayer(telefone, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane4.setLayer(grupos, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -322,18 +335,23 @@ public class Perfil extends javax.swing.JFrame {
             jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelUsuario)
+                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelTelefone)
-                    .addComponent(labelDocumentos)
+                    .addComponent(labelDocumentos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelGrupos))
                 .addGap(127, 127, 127)
                 .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(documents)
-                        .addComponent(username)
-                        .addComponent(telefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(grupos, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jLayeredPane4Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(documents)
+                                .addComponent(telefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(grupos, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(username, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jLayeredPane4Layout.setVerticalGroup(
@@ -344,6 +362,10 @@ public class Perfil extends javax.swing.JFrame {
                     .addComponent(labelUsuario)
                     .addComponent(username))
                 .addGap(18, 18, 18)
+                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelEmail)
+                    .addComponent(email))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTelefone)
                     .addComponent(telefone))
@@ -423,7 +445,7 @@ public class Perfil extends javax.swing.JFrame {
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
                 .addComponent(alterarSenha)
                 .addContainerGap())
         );
@@ -536,6 +558,7 @@ public class Perfil extends javax.swing.JFrame {
     private javax.swing.JLabel cargo;
     private javax.swing.JPanel conteudo;
     private javax.swing.JLabel documents;
+    private javax.swing.JLabel email;
     private javax.swing.JLabel fotoPerfil;
     private javax.swing.JLabel fotoUsuario;
     private javax.swing.JScrollPane grupos;
@@ -553,6 +576,7 @@ public class Perfil extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelDocumentos;
+    private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelGrupos;
     private javax.swing.JLabel labelTelefone;
     private javax.swing.JLabel labelUsuario;
