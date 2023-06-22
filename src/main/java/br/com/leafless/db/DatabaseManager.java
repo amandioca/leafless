@@ -18,6 +18,10 @@ public class DatabaseManager {
     private static final String PATH_SCRIPT = "/scripts/create-db_leafless.sql";
     private static final String CREATE_DB_SCRIPT = readScriptFromFile();
 
+    static {
+        setupDatabase();
+    }
+
     /**
      * Conecta banco de dados.
      */
@@ -80,10 +84,5 @@ public class DatabaseManager {
         }
 
         return sb.toString();
-    }
-
-    public static void main(String[] args) throws SQLException {
-        setupDatabase();
-        connectToDatabase();
     }
 }

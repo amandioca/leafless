@@ -26,8 +26,9 @@ public class Acesso {
             cipher.init(Cipher.ENCRYPT_MODE, sks);
 
             byte[] encryptedBytes = cipher.doFinal(param.getBytes(StandardCharsets.UTF_8));
-
-            return Base64.getEncoder().encodeToString(encryptedBytes);
+            
+            String s = Base64.getEncoder().encodeToString(encryptedBytes);
+            return s;
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
                 | BadPaddingException e) {
             // TODO Auto-generated catch block

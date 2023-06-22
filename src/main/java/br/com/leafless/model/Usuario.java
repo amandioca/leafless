@@ -46,7 +46,7 @@ public class Usuario {
             ps.setString(7, usuario.getCargo());
             ps.setString(8, usuario.getTelComercial());
             ps.setString(9, usuario.getUsername());
-            ps.setString(10, usuario.getPassword());
+            ps.setString(10, Acesso.encriptar(usuario.getPassword()));
 
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -66,7 +66,7 @@ public class Usuario {
             String sql = "SELECT * FROM tb_usuarios WHERE username = ? AND password = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, Acesso.encriptar(password));
 
             ResultSet rs = ps.executeQuery();
 
@@ -140,7 +140,7 @@ public class Usuario {
         try {
             String sql = "UPDATE tb_usuarios SET password = ? WHERE username = ?;";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, password);
+            ps.setString(1, Acesso.encriptar(password));
             ps.setString(2, username);
 
             int rowsAffected = ps.executeUpdate();
