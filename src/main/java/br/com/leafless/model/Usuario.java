@@ -30,6 +30,84 @@ public class Usuario {
         telaAtual.dispose();
     }
 
+    public static List<Usuario> getTodosUsuarios() throws SQLException {
+        Connection connection = DatabaseManager.connectToDatabase();
+        try {
+            String sql = "SELECT * FROM db_leafless.tb_usuarios;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Usuario> listaUsuarios = new ArrayList<>();
+            while (rs.next()) {
+                Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("nome_completo"), rs.getString("nome_apresentacao"),
+                        rs.getString("cpf"), rs.getString("email"), rs.getString("cargo"),
+                        rs.getString("telefone_comercial"), rs.getString("username"), rs.getString("password"));
+                usuario.setGrupos(Grupo.obterListaGrupoPorUsername(usuario.getUsername()));
+                usuario.setDocCriadas(Documento.obterListaDocumentosPorUsername(usuario.getUsername(), usuario));
+
+                listaUsuarios.add(usuario);
+            }
+            return listaUsuarios;
+        } finally {
+            connection.close();
+        }
+    }
+
+    public static Usuario obterUsuarioPorUsername(String username) throws SQLException {
+        Connection connection = DatabaseManager.connectToDatabase();
+        try {
+            String sql = "SELECT * FROM db_leafless.tb_usuarios WHERE username = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("nome_completo"), rs.getString("nome_apresentacao"),
+                        rs.getString("cpf"), rs.getString("email"), rs.getString("cargo"),
+                        rs.getString("telefone_comercial"), rs.getString("username"), rs.getString("password"));
+                usuario.setGrupos(Grupo.obterListaGrupoPorUsername(usuario.getUsername()));
+                usuario.setDocCriadas(Documento.obterListaDocumentosPorUsername(usuario.getUsername(), usuario));
+
+                return usuario;
+            }
+            return null;
+        } finally {
+            connection.close();
+        }
+    }
+
+    public static List<Usuario> buscarUsuarios(String buscaTxt) throws SQLException {
+        Connection connection = DatabaseManager.connectToDatabase();
+        try {
+            String sql = "SELECT DISTINCT * FROM db_leafless.tb_usuarios "
+                    + "WHERE LOWER(nome_completo) LIKE LOWER(?) "
+                    + "OR LOWER(username) LIKE LOWER(?) "
+                    + "OR LOWER(email) LIKE LOWER(?);";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + buscaTxt + "%");
+            ps.setString(2, "%" + buscaTxt + "%");
+            ps.setString(3, "%" + buscaTxt + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Usuario> listaUsuarios = new ArrayList<>();
+            while (rs.next()) {
+                Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("nome_completo"), rs.getString("nome_apresentacao"),
+                        rs.getString("cpf"), rs.getString("email"), rs.getString("cargo"),
+                        rs.getString("telefone_comercial"), rs.getString("username"), rs.getString("password"));
+                usuario.setGrupos(Grupo.obterListaGrupoPorUsername(usuario.getUsername()));
+                usuario.setDocCriadas(Documento.obterListaDocumentosPorUsername(usuario.getUsername(), usuario));
+
+                listaUsuarios.add(usuario);
+            }
+            return listaUsuarios;
+        } finally {
+            connection.close();
+        }
+    }
+
     public static boolean cadastrarUsuario(Usuario usuario) throws SQLException {
         Connection connection = DatabaseManager.connectToDatabase();
         try {

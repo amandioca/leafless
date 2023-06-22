@@ -1,36 +1,39 @@
 package br.com.leafless.view.usuario;
 
+import java.awt.Font;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import br.com.leafless.view.usuario.Usuarios;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import br.com.leafless.model.Documento;
-import br.com.leafless.model.Grupo;
 import br.com.leafless.model.Usuario;
-import br.com.leafless.view.AssociarGrupoUsuario;
 import br.com.leafless.util.TelasUtil;
-import br.com.leafless.view.grupo.CriarGrupo;
-import br.com.leafless.view.grupo.ExcluirGrupo;
-import br.com.leafless.view.grupo.Grupos;
-import br.com.leafless.view.usuario.AlterarSenha;
 import br.com.leafless.view.HomeAdmin;
+import br.com.leafless.view.grupo.Grupos;
 import br.com.leafless.view.usuario.Perfil;
 import br.com.leafless.view.usuario.Usuarios;
 
+/**
+ *
+ * @author amandioca
+ */
 public class Usuarios extends javax.swing.JFrame {
 
     Usuario usuario = new Usuario();
+    private DefaultTableModel modeloTabela;
+    private DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+    private Usuario usuarioSelecionado = new Usuario();
 
     public Usuarios() {
+        modeloTabela = montarModel(getTodosUsuarios());
         initComponents();
         TelasUtil.init(this);
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -49,10 +52,16 @@ public class Usuarios extends javax.swing.JFrame {
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         tituloPagina = new javax.swing.JLabel();
-        grupoTabelaDocumentos = new javax.swing.JLayeredPane();
-        cadastrarUsuario = new javax.swing.JLabel();
-        associarGrupo = new javax.swing.JLabel();
-        deletarUsuario = new javax.swing.JLabel();
+        jLayeredPane6 = new javax.swing.JLayeredPane();
+        dadosPessoais2 = new javax.swing.JLayeredPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        botaoAdicionar = new javax.swing.JLabel();
+        botaoExcluir = new javax.swing.JLabel();
+        busca = new javax.swing.JTextField();
+        buscarUsuario = new javax.swing.JButton();
+        lupa = new javax.swing.JLabel();
+        botaoRecarregar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 8, 80));
@@ -209,64 +218,7 @@ public class Usuarios extends javax.swing.JFrame {
         tituloPagina.setForeground(new java.awt.Color(255, 255, 255));
         tituloPagina.setText("Administrar Usuários");
 
-        cadastrarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        cadastrarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        cadastrarUsuario.setText("Cadastrar Usuário");
-        cadastrarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cadastrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cadastrarUsuarioMouseClicked(evt);
-            }
-        });
-
-        associarGrupo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        associarGrupo.setForeground(new java.awt.Color(255, 255, 255));
-        associarGrupo.setText("Associar a um Grupo");
-        associarGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        associarGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                associarGrupoMouseClicked(evt);
-            }
-        });
-
-        deletarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        deletarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        deletarUsuario.setText("Deletar Usuário");
-        deletarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        deletarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                deletarUsuarioMouseClicked(evt);
-            }
-        });
-
-        grupoTabelaDocumentos.setLayer(cadastrarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTabelaDocumentos.setLayer(associarGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        grupoTabelaDocumentos.setLayer(deletarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout grupoTabelaDocumentosLayout = new javax.swing.GroupLayout(grupoTabelaDocumentos);
-        grupoTabelaDocumentos.setLayout(grupoTabelaDocumentosLayout);
-        grupoTabelaDocumentosLayout.setHorizontalGroup(
-            grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(grupoTabelaDocumentosLayout.createSequentialGroup()
-                .addGroup(grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cadastrarUsuario)
-                    .addComponent(associarGrupo)
-                    .addComponent(deletarUsuario))
-                .addGap(0, 612, Short.MAX_VALUE))
-        );
-        grupoTabelaDocumentosLayout.setVerticalGroup(
-            grupoTabelaDocumentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(grupoTabelaDocumentosLayout.createSequentialGroup()
-                .addComponent(cadastrarUsuario)
-                .addGap(18, 18, 18)
-                .addComponent(deletarUsuario)
-                .addGap(18, 18, 18)
-                .addComponent(associarGrupo)
-                .addGap(0, 298, Short.MAX_VALUE))
-        );
-
         jLayeredPane1.setLayer(tituloPagina, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(grupoTabelaDocumentos, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -274,38 +226,197 @@ public class Usuarios extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tituloPagina)
-                    .addComponent(grupoTabelaDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(623, Short.MAX_VALUE))
+                .addComponent(tituloPagina)
+                .addContainerGap(259, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tituloPagina)
-                .addGap(65, 65, 65)
-                .addComponent(grupoTabelaDocumentos)
-                .addContainerGap())
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
+        jScrollPane1.setBackground(new java.awt.Color(0, 0, 255));
+
+        jTable1.setAutoCreateRowSorter(true);
+        jTable1.setBackground(new java.awt.Color(0, 8, 80));
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(modeloTabela);
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.setFocusable(false);
+        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
+        jTable1.setName(""); // NOI18N
+        jTable1.setRowHeight(24);
+        jTable1.setSelectionBackground(new java.awt.Color(41, 105, 230));
+        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        for(int i = 0; i < jTable1.getColumnCount(); i++){
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        botaoAdicionar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botaoAdicionar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/adicionar.png"))); // NOI18N
+        botaoAdicionar.setToolTipText("Cadastrar Usuário");
+        botaoAdicionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAdicionarMouseClicked(evt);
+            }
+        });
+
+        botaoExcluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botaoExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        botaoExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excluir.png"))); // NOI18N
+        botaoExcluir.setToolTipText("Excluir documento");
+        botaoExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoExcluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botaoExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoExcluirMouseClicked(evt);
+            }
+        });
+
+        dadosPessoais2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(botaoAdicionar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dadosPessoais2.setLayer(botaoExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout dadosPessoais2Layout = new javax.swing.GroupLayout(dadosPessoais2);
+        dadosPessoais2.setLayout(dadosPessoais2Layout);
+        dadosPessoais2Layout.setHorizontalGroup(
+            dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dadosPessoais2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1047, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoAdicionar)
+                    .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(773, Short.MAX_VALUE))
+        );
+        dadosPessoais2Layout.setVerticalGroup(
+            dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dadosPessoais2Layout.createSequentialGroup()
+                .addGroup(dadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
+                    .addGroup(dadosPessoais2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoExcluir)
+                        .addGap(27, 27, 27)
+                        .addComponent(botaoAdicionar)))
+                .addGap(85, 85, 85))
+        );
+
+        jLayeredPane6.setLayer(dadosPessoais2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane6Layout = new javax.swing.GroupLayout(jLayeredPane6);
+        jLayeredPane6.setLayout(jLayeredPane6Layout);
+        jLayeredPane6Layout.setHorizontalGroup(
+            jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dadosPessoais2))
+        );
+        jLayeredPane6Layout.setVerticalGroup(
+            jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dadosPessoais2)
+        );
+
+        busca.setBackground(new java.awt.Color(255, 255, 255));
+        busca.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        busca.setForeground(new java.awt.Color(102, 102, 102));
+        busca.setText("Buscar por nome, username ou email");
+
+        buscarUsuario.setBackground(new java.awt.Color(41, 105, 230));
+        buscarUsuario.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buscarUsuario.setForeground(new java.awt.Color(229, 229, 229));
+        buscarUsuario.setText("Buscar");
+        buscarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        buscarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarUsuarioActionPerformed(evt);
+            }
+        });
+
+        lupa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lupa.setForeground(new java.awt.Color(255, 255, 255));
+        lupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/lupa.png"))); // NOI18N
+        lupa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lupa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lupaMouseClicked(evt);
+            }
+        });
+
+        botaoRecarregar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botaoRecarregar.setForeground(new java.awt.Color(255, 255, 255));
+        botaoRecarregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/recarregar.png"))); // NOI18N
+        botaoRecarregar.setToolTipText("Recarregar tabela");
+        botaoRecarregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRecarregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoRecarregarMouseClicked(evt);
+            }
+        });
+
         jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(busca, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(buscarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(lupa, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(botaoRecarregar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(botaoRecarregar)
+                        .addGap(533, 533, 533)
+                        .addComponent(lupa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(busca, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscarUsuario)))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(busca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buscarUsuario))
+                            .addComponent(lupa)))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoRecarregar)))
+                .addGap(18, 18, 18)
+                .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout conteudoLayout = new javax.swing.GroupLayout(conteudo);
@@ -313,16 +424,16 @@ public class Usuarios extends javax.swing.JFrame {
         conteudoLayout.setHorizontalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
+                .addGap(151, 151, 151)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(593, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         conteudoLayout.setVerticalGroup(
             conteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(conteudoLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -337,70 +448,112 @@ public class Usuarios extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(conteudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
+            .addComponent(conteudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cadastrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarUsuarioMouseClicked
-        TelasUtil.trocarTela(Usuarios.this, new Cadastrar());
-    }//GEN-LAST:event_cadastrarUsuarioMouseClicked
+    private DefaultTableModel montarModel(List<Usuario> listaUsuarios) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nome");
+        model.addColumn("Cargo");
+        model.addColumn("E-mail");
+        model.addColumn("Username");
 
-    private void deletarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletarUsuarioMouseClicked
-        TelasUtil.trocarTela(Usuarios.this, new DeletarUsuario());
-    }//GEN-LAST:event_deletarUsuarioMouseClicked
+        for (Usuario user : listaUsuarios) {
+            model.addRow(new Object[]{user.getNomeApresentacao(), user.getCargo(),
+                user.getEmail(), user.getUsername()});
+        }
+        return model;
+    }
 
-    private void associarGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_associarGrupoMouseClicked
-        TelasUtil.trocarTela(this, new AssociarGrupoUsuario(this));
-    }//GEN-LAST:event_associarGrupoMouseClicked
-    // GEN-LAST:event_alterarSenhaActionPerformed
-
-    private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemInicio1MouseClicked
+    private void itemInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInicio1MouseClicked
         TelasUtil.trocarTela(Usuarios.this, new HomeAdmin());
-    }// GEN-LAST:event_itemInicio1MouseClicked
+    }//GEN-LAST:event_itemInicio1MouseClicked
 
-    private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemGrupos1MouseClicked
+    private void itemGrupos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemGrupos1MouseClicked
         TelasUtil.trocarTela(Usuarios.this, new Grupos());
-    }// GEN-LAST:event_itemGrupos1MouseClicked
+    }//GEN-LAST:event_itemGrupos1MouseClicked
 
-    private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemSair1MouseClicked
+    private void itemSair1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemSair1MouseClicked
         Object[] options = {"Sair", "Cancelar"};
         int resposta = JOptionPane.showOptionDialog(null, "Tem certeza que deseja sair?", "Logout", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (resposta == JOptionPane.YES_OPTION) {
             Usuario.logout(Usuarios.this);
         }
-    }// GEN-LAST:event_itemSair1MouseClicked
+    }//GEN-LAST:event_itemSair1MouseClicked
 
-    private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemUsuarios1MouseClicked
-        JOptionPane.showMessageDialog(null, "Você já está nessa opção do menu!", "Administrar Usuários",
-                JOptionPane.INFORMATION_MESSAGE, null);
-    }// GEN-LAST:event_itemUsuarios1MouseClicked
+    private void itemUsuarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemUsuarios1MouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new Usuarios());
+    }//GEN-LAST:event_itemUsuarios1MouseClicked
 
-    private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_itemEditarPerfilMouseClicked
+    private void itemEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemEditarPerfilMouseClicked
         TelasUtil.trocarTela(Usuarios.this, new Perfil());
-    }// GEN-LAST:event_itemEditarPerfilMouseClicked
+    }//GEN-LAST:event_itemEditarPerfilMouseClicked
 
-    private DefaultTableModel modeloTabela() {
-        DefaultTableModel model = new DefaultTableModel();
-        try {
-            model.addColumn("Nome");
-            model.addColumn("Usuário Associados");
-            List<Grupo> listaGrupos = Grupo.getListaGrupo();
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        JTable table = (JTable) evt.getSource();
+        int selectedRow = table.getSelectedRow();
 
-            for (Grupo grupo : listaGrupos) {
-                String usuariosAssociados = grupo.getListaUsuarios().toString();
-                usuariosAssociados = usuariosAssociados.substring(1, usuariosAssociados.length() - 1);
-                model.addRow(new Object[]{grupo.getNomeGrupo(), usuariosAssociados});
+        if (selectedRow != -1) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            String username = (String) model.getValueAt(selectedRow, 3);
+            try {
+                // Obtém usuario através do username selecionado na tabela
+                usuarioSelecionado = Usuario.obterUsuarioPorUsername(username);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            return model;
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void lupaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lupaMouseClicked
+
+    }//GEN-LAST:event_lupaMouseClicked
+
+    private void buscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarUsuarioActionPerformed
+        try {
+            List<Usuario> listaUsuarios = Usuario.buscarUsuarios(busca.getText());
+            DefaultTableModel novoModelo = montarModel(listaUsuarios);
+            jTable1.setModel(novoModelo);
+
+            if (listaUsuarios.get(0) == null || listaUsuarios.get(0).getUsername().isEmpty() || listaUsuarios.get(0).getUsername() == null) {
+                JOptionPane.showMessageDialog(null, "Nenhum usuário encontrado.", "Busca de Usuários",
+                        JOptionPane.INFORMATION_MESSAGE, null);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buscarUsuarioActionPerformed
+
+    private void botaoAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarMouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new Cadastrar());
+    }//GEN-LAST:event_botaoAdicionarMouseClicked
+
+    private void botaoExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoExcluirMouseClicked
+        TelasUtil.trocarTela(Usuarios.this, new DeletarUsuario());
+    }//GEN-LAST:event_botaoExcluirMouseClicked
+
+    private void botaoRecarregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoRecarregarMouseClicked
+        reloadTable();
+    }//GEN-LAST:event_botaoRecarregarMouseClicked
+
+    private void reloadTable() {
+        DefaultTableModel novoModelo = montarModel(getTodosUsuarios());
+        jTable1.setModel(novoModelo);
+    }
+
+    private List<Usuario> getTodosUsuarios() {
+        try {
+            List<Usuario> listaUsuarios = Usuario.getTodosUsuarios();
+            return listaUsuarios;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-            e.getMessage();
         }
         return null;
     }
@@ -410,12 +563,9 @@ public class Usuarios extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-		 * look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -433,14 +583,10 @@ public class Usuarios extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -451,12 +597,14 @@ public class Usuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel associarGrupo;
-    private javax.swing.JLabel cadastrarUsuario;
+    private javax.swing.JLabel botaoAdicionar;
+    private javax.swing.JLabel botaoExcluir;
+    private javax.swing.JLabel botaoRecarregar;
+    private javax.swing.JTextField busca;
+    private javax.swing.JButton buscarUsuario;
     private javax.swing.JPanel conteudo;
-    private javax.swing.JLabel deletarUsuario;
+    private javax.swing.JLayeredPane dadosPessoais2;
     private javax.swing.JLabel fotoPerfil;
-    private javax.swing.JLayeredPane grupoTabelaDocumentos;
     private javax.swing.JLabel itemEditarPerfil;
     private javax.swing.JLabel itemGrupos1;
     private javax.swing.JLabel itemInicio1;
@@ -466,7 +614,11 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JLayeredPane jLayeredPane6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JSeparator linhaSeparadora;
+    private javax.swing.JLabel lupa;
     private javax.swing.JPanel menu;
     private javax.swing.JLabel saudacaoUsuario;
     private javax.swing.JLabel tituloPagina;

@@ -615,7 +615,7 @@ public class AdicionarDocumento extends javax.swing.JFrame {
                                             String.format("Documento criado com sucesso!",
                                                     usuario.getUsername()),
                                             "Adição de Documento", JOptionPane.INFORMATION_MESSAGE, null);
-                            TelasUtil.trocarTela(AdicionarDocumento.this, new HomeAdmin());
+                            TelasUtil.voltar();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null,
