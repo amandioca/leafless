@@ -1,6 +1,6 @@
 package br.com.leafless.model;
 
-import br.com.leafless.db.Conexao;
+import br.com.leafless.db.DatabaseManager;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class Documento {
     private int idAutor;
 
     public static int adicionarDocumento(Documento documento) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             // Excluir associação
             String sql = "INSERT INTO `db_leafless`.`tb_documentos` (`titulo`, `data_inclusao`, `caminho`, `extensao`, `versao`, "
@@ -61,7 +61,7 @@ public class Documento {
     }
 
     public static boolean excluirDocumentoPorId(int idDocumento) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             // Excluir associação
             String sqlDeleteRelacionados = "DELETE FROM tb_grupos_mtm_documentos WHERE tb_documentos_id = ?";
@@ -85,7 +85,7 @@ public class Documento {
     }
 
     public static Documento obterDocumentoPorId(int idDocumento) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM db_leafless.tb_documentos WHERE id = ?;";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -114,7 +114,7 @@ public class Documento {
     }
 
     public static List<Documento> pesquisarDocumentoPorTitulo(String titulo) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM tb_documentos WHERE LOWER(titulo) LIKE LOWER(?);";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -158,7 +158,7 @@ public class Documento {
     }
 
     public static List<Documento> obterListaDocumentosPorUsername(String username, Usuario usuario) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT d.* " + "FROM db_leafless.tb_documentos d "
                     + "JOIN db_leafless.tb_usuarios u ON d.tb_usuarios_id_autor = u.id " + "WHERE u.username = ?;";
@@ -189,7 +189,7 @@ public class Documento {
     }
 
     public static String obterCaminhoDocumentoPorId(int idDocumento) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM db_leafless.tb_documentos WHERE id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -207,7 +207,7 @@ public class Documento {
     }
 
     public static List<Documento> obterListaDocumentosAutor(int idUsuario) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM tb_documentos WHERE tb_usuarios_id_autor = ?;";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -237,7 +237,7 @@ public class Documento {
     }
 
     public static List<Documento> obterListaDocumentos(int idUsuario) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT DISTINCT d.* FROM tb_documentos d "
                     + "LEFT JOIN tb_grupos_mtm_documentos gd ON d.id = gd.tb_documentos_id "

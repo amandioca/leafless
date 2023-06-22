@@ -11,7 +11,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import br.com.leafless.db.Conexao;
+import br.com.leafless.db.DatabaseManager;
 
 public class Acesso {
 

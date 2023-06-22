@@ -1,6 +1,6 @@
 package br.com.leafless.model;
 
-import br.com.leafless.db.Conexao;
+import br.com.leafless.db.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +31,7 @@ public class Usuario {
     }
 
     public static boolean cadastrarUsuario(Usuario usuario) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "INSERT INTO tb_usuarios(`nome_completo`, `nome_apresentacao`, `data_cadastro`, `cpf`, `email`, `empresa`, `cargo`, "
                     + "`telefone_comercial`, `username`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -61,7 +61,7 @@ public class Usuario {
     }
 
     public static boolean login(String username, String password) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM tb_usuarios WHERE username = ? AND password = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class Usuario {
     }
 
     public static boolean deletarUsuario(String username, String cpf) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         int idUsuario = obterIdUsuarioPorUsername(username);
         try {
             if (idUsuario == -1) {
@@ -117,7 +117,7 @@ public class Usuario {
     }
 
     public static boolean confirmarUsuario(String username, String cpf) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM tb_usuarios WHERE username = ? AND cpf = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -136,7 +136,7 @@ public class Usuario {
     }
 
     public static boolean alterarSenha(String username, String password) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "UPDATE tb_usuarios SET password = ? WHERE username = ?;";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -155,7 +155,7 @@ public class Usuario {
     }
 
     public static int obterIdUsuarioPorUsername(String username) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM tb_usuarios WHERE username = ?";
             PreparedStatement ps = connection.prepareStatement(sql);

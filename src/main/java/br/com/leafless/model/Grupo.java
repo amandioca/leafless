@@ -1,6 +1,6 @@
 package br.com.leafless.model;
 
-import br.com.leafless.db.Conexao;
+import br.com.leafless.db.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ public class Grupo {
     private List<String> listaUsuarios;
 
     public static boolean verificaGrupo(String nomeGrupo) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT * FROM tb_grupos WHERE LOWER(nome) = LOWER(?);";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -35,7 +35,7 @@ public class Grupo {
 
     public static boolean excluirGrupoPorNome(String nomeGrupo) throws SQLException {
         int idGrupo = obterIdGrupoPorNome(nomeGrupo);
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             if (idGrupo == -1) {
                 return false;
@@ -64,7 +64,7 @@ public class Grupo {
 
     public static int contarUsuariosAssociadosAoGrupo(String nomeGrupo) throws SQLException {
         int idGrupo = obterIdGrupoPorNome(nomeGrupo);
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT COUNT(*) AS total FROM tb_grupos_mtm_usuarios WHERE tb_grupos_id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -81,7 +81,7 @@ public class Grupo {
     }
 
     public static int obterIdGrupoPorNome(String nomeGrupo) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT id FROM tb_grupos WHERE nome = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -98,7 +98,7 @@ public class Grupo {
     }
 
     public static List<Grupo> obterListaGrupoPorIdDocumento(int id) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT g.* " + "FROM db_leafless.tb_grupos g "
                     + "JOIN db_leafless.tb_grupos_mtm_documentos gm ON g.id = gm.tb_grupos_id "
@@ -123,7 +123,7 @@ public class Grupo {
     }
 
     public static List<Grupo> obterListaGrupoPorUsername(String username) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT g.* " + "FROM db_leafless.tb_grupos g "
                     + "JOIN db_leafless.tb_grupos_mtm_usuarios gu ON g.id = gu.tb_grupos_id "
@@ -149,7 +149,7 @@ public class Grupo {
 
     public static List<Grupo> getListaGrupo() throws SQLException {
         List<Grupo> listaGrupos = new ArrayList<>();
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT id, nome FROM tb_grupos";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -170,7 +170,7 @@ public class Grupo {
 
     private static List<String> obterListaUsuariosAssociadosAoGrupo(int idGrupo) throws SQLException {
         List<String> listaUsuarios = new ArrayList<>();
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "SELECT u.nome AS nome_usuario "
                     + "FROM tb_grupos_mtm_usuarios gu "
@@ -191,7 +191,7 @@ public class Grupo {
     }
 
     public static int criarGrupo(String nomeGrupo) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = "INSERT INTO `db_leafless`.`tb_grupos` (`nome`) VALUES (?);";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -212,7 +212,7 @@ public class Grupo {
     }
 
     public static boolean adicionarDocumentoAoGrupo(int idDocumento, int idGrupo) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = ("INSERT INTO `db_leafless`.`tb_grupos_mtm_documentos` (`tb_grupos_id`, `tb_documentos_id`) VALUES (? , ?)");
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -233,7 +233,7 @@ public class Grupo {
     }
 
     public static boolean adicionarUsuarioAoGrupo(List<Integer> listaIdsUsuarios, int idGrupo) throws SQLException {
-        Connection connection = Conexao.fazConexao();
+        Connection connection = DatabaseManager.connectToDatabase();
         try {
             String sql = ("INSERT INTO `db_leafless`.`tb_grupos_mtm_usuarios` (`tb_grupos_id`, `tb_usuarios_id`) VALUES");
 
